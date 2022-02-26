@@ -70,6 +70,12 @@ app.post("/userLogin", (req, res) => {
     console.log('=== userLogin ');
     console.log('req.body: ', req.body);
     console.log('req.body.id: ', req.body.id);
+    
+    const tempUserInfo = {id : 'jihyun', password: 'jihyun321'};
+    const tempUserInfo2 = {id : '', password: ''};
+    
+    const loginInfo = req.body;
+
     connection.query(
         `SELECT id, password FROM customer WHERE id = "`+ req.body.id + `" and password = "` + req.body.password + `"`,
         (error, result, fields) => {
@@ -79,9 +85,15 @@ app.post("/userLogin", (req, res) => {
             } else {
                 console.log('성공');
                 console.log('== result: ', result); 
+                // console.log('== result: ', JSON.parse(result));                
                 console.log('== result: ', result.length); 
-
-                // ==> [ { id: 'jihyun', password: 'jihyun321' } ]
+                if (result.length == 1) {
+                    // res.redirect('/Home');
+                    // res.sendFile(path.join(__dirname , "../src/components/Home.js"));
+                    res.send(loginInfo);
+                } else {
+                    res.send(loginInfo);
+                }
             }
         }
     );

@@ -32,16 +32,17 @@ class App extends React.Component {
             <div className="App">
                 <BrowserRouter>
                     <Header/>
-                    <Route exact="exact" path="/">
-                        <Home/>
-                    </Route>
-                    <Route path="/login">
-                        <Login/>
-                    </Route>
-                    <Route path="/join">
-                        <Join/>
-                    </Route>
-
+                    <div class="mt-10">
+                        <Route exact="exact" path="/">
+                            <Home/>
+                        </Route>
+                        <Route path="/login">
+                            <Login/>
+                        </Route>
+                        <Route path="/join">
+                            <Join/>
+                        </Route>
+                    </div>
 
                     {/* <Route path='/어쩌구' component={Modal}></Route> */}
                 </BrowserRouter>

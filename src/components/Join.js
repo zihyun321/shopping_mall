@@ -1,4 +1,9 @@
 import React, {useState} from 'react';
+import styled from "styled-components";
+
+// const dbErrorMsg = styled.div`
+
+// `;
 
 function RegisterPage() {
     const [name, setName] = useState("")
@@ -83,128 +88,156 @@ function RegisterPage() {
     }
 
     return (
-        <div class="loginregister w-full max-w-sm">
+        <div class="loginregister w-full max-w-lg mx-auto text-black">
             Sign UP
-
             <form>
-
                 <div class="md:flex md:items-center mb-6">
                     <div class="md:w-1/3">
-                        <label
-                            class="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4"
-                            for="id">
+                        <label class="block md:text-right mb-1 md:mb-0 pr-4" for="id">
                             아이디
                         </label>
                     </div>
                     <div class="md:w-2/3">
                         <input
-                            class="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
+                            required
+                            class="bg-gray-200 appearance-none border-2 border-gray-200  w-full py-2 px-4 leading-tight focus:outline-none focus:bg-white focus:border-black"
                             id="id"
                             type="text"
                             value={id}
-                            onChange={onIdHandler}/>
-                        <button onClick={(id) => checkDup(id)}>중복확인</button>
+                            onChange={onIdHandler}/> {/* <button onClick={(id) => checkDup(id)}>중복확인</button> */}
                     </div>
+                    <div class="md:w-1/3 break-all ml-3"></div>
                 </div>
                 <div class="md:flex md:items-center mb-6">
                     <div class="md:w-1/3">
-                        <label
-                            class="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4"
-                            for="password">
+                        <label class="block md:text-right mb-1 md:mb-0 pr-4" for="password">
                             비밀번호
                         </label>
                     </div>
                     <div class="md:w-2/3">
                         <input
-                            class="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
+                            class="bg-gray-200 appearance-none border-2 border-gray-200  w-full py-2 px-4 leading-tight focus:outline-none focus:bg-white focus:border-black"
                             id="password"
                             type="password"
                             value={password}
                             onChange={onPasswordHandler}
                             placeholder="***********"/>
                     </div>
+                    <div class="md:w-1/3 break-all ml-3"></div>
                 </div>
                 <div class="md:flex md:items-center mb-6">
                     <div class="md:w-1/3">
-                        <label
-                            class="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4"
-                            for="confirm-password">
+                        <label class="block md:text-right mb-1 md:mb-0 pr-4" for="confirm-password">
                             비밀번호확인
                         </label>
                     </div>
                     <div class="md:w-2/3">
                         <input
-                            class="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
+                            class="bg-gray-200 appearance-none border-2 border-gray-200  w-full py-2 px-4 leading-tight focus:outline-none focus:bg-white focus:border-black"
                             id="confirm-password"
                             type="password"
                             value={confirmPassword}
                             onChange={onConfirmPasswordHandler}
                             placeholder="***********"/>
                     </div>
+                    <div class="md:w-1/3 break-all ml-3"></div>
+
                 </div>
                 <div class="md:flex md:items-center mb-6">
                     <div class="md:w-1/3">
-                        <label
-                            class="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4"
-                            for="name">
+                        <label class="block md:text-right mb-1 md:mb-0 pr-4" for="name">
                             이름
                         </label>
                     </div>
                     <div class="md:w-2/3">
                         <input
-                            class="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
+                            class="bg-gray-200 appearance-none border-2 border-gray-200  w-full py-2 px-4 leading-tight focus:outline-none focus:bg-white focus:border-black"
                             id="name"
                             placeholder="ex) 홍길동"
                             value={name}
                             onChange={onNameHandler}/>
                     </div>
+                    <div class="md:w-1/3 break-all ml-3"></div>
+
                 </div>
                 <div class="md:flex md:items-center mb-6">
                     <div class="md:w-1/3">
-                        <label
-                            class="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4"
-                            for="phone">
+                        <label class="block md:text-right mb-1 md:mb-0 pr-4" for="phone">
                             핸드폰
                         </label>
                     </div>
                     <div class="md:w-2/3">
                         <input
-                            class="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
+                            class="bg-gray-200 appearance-none border-2 border-gray-200  w-full py-2 px-4 leading-tight focus:outline-none focus:bg-white focus:border-black"
                             id="phone"
                             type="text"
                             value={phone}
                             onChange={onPhoneHandler}
                             placeholder="010-0000-0000"/>
                     </div>
+                    <div class="md:w-1/3 break-all ml-3"></div>
+
                 </div>
                 <div class="md:flex md:items-center mb-6">
                     <div class="md:w-1/3">
-                        <label
-                            class="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4"
-                            for="address">
+                        <label class="block md:text-right mb-1 md:mb-0 pr-4" for="address">
                             주소
                         </label>
                     </div>
                     <div class="md:w-2/3">
                         <input
-                            class="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
+                            class="bg-gray-200 appearance-none border-2 border-gray-200  w-full py-2 px-4 leading-tight focus:outline-none focus:bg-white focus:border-black"
                             id="address"
                             type="text"
                             value={address}
                             onChange={onAddressHandler}/>
                     </div>
+                    <div class="md:w-1/3 break-all ml-3"></div>
+
                 </div>
                 <div class="md:flex md:items-center mb-6">
                     <div class="md:w-1/3">
-                        <label
-                            class="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4"
-                            for="inline-password">
+                        <label class="block md:text-right mb-1 md:mb-0 pr-4" for="inline-password">
                             성별
                         </label>
                     </div>
                     <div class="md:w-2/3">
                         <div>
-                            <input
+                            <div class="flex place-content-evenly">
+                                <div class="form-check">
+                                    <input
+                                        class="form-check-input rounded-full h-4 w-4 border border-gray-300 bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
+                                        type="radio"
+                                        name="female"
+                                        value="F"
+                                        checked={gender === 'F'}
+                                        onChange={onGenderHandler}
+                                        id="female"/>
+                                    <label class="form-check-label inline-block" for="female">
+                                        여자
+                                    </label>
+
+                                </div>
+
+                                <div class="form-check">
+                                    <input
+                                        class="form-check-input rounded-full h-4 w-4 border border-gray-300 bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
+                                        type="radio"
+                                        value="M"
+                                        name="male"
+                                        checked={gender === 'M'}
+                                        onChange={onGenderHandler}
+                                        id="male"/>
+                                    <label class="form-check-label inline-block" for="male">
+                                        남자
+                                    </label>
+
+                                </div>
+                                
+                            </div>
+                            {/* <div class="md:w-1/3 break-all ml-3"></div> */}
+
+                            {/* <input
                                 type="radio"
                                 id="female"
                                 name="female"
@@ -219,9 +252,13 @@ function RegisterPage() {
                                 value="M"
                                 checked={gender === 'M'}
                                 onChange={onGenderHandler}/>
-                            <label for="male">남자</label>
+                            <label for="male">남자</label> */
+                            }
                         </div>
+
                     </div>
+                    <div class="md:w-1/3 break-all ml-3"></div>
+
                 </div>
                 {/* <div class="md:flex md:items-center mb-6">
                     <div class="md:w-1/3"></div>
@@ -233,50 +270,16 @@ function RegisterPage() {
                     </label>
                 </div> */
                 }
-                <div class="md:flex md:items-center">
-                    <div class="md:w-1/3"></div>
-                    <div class="md:w-2/3">
+                <div class="md:flex md:items-center content-center">
+                    {/* <div class="md:w-1/3"></div> */}
+                    <div >
                         <button
-                            class="shadow bg-purple-500 hover:bg-purple-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded"
+                            class="shadow bg-black hover:bg-gray-700 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4"
                             type="submit">
                             Sign Up
                         </button>
                     </div>
                 </div>
-
-                {/* <div><input
-                    name="name"
-                    type="text"
-                    placeholder="이름"
-                    value={name}
-                    onChange={onNameHandler}
-                    class="loginregister__input"/></div>
-                <div><input
-                    name="email"
-                    type="email"
-                    placeholder="이메일"
-                    value={email}
-                    onChange={onEmailHandler}
-                    class="loginregister__input"/></div>
-                <div><input
-                    name="password"
-                    type="password"
-                    placeholder="비밀번호"
-                    value={password}
-                    onChange={onPasswordHandler}
-                    class="loginregister__input"/></div>
-                <div><input
-                    name="confirmPassword"
-                    type="password"
-                    placeholder="비밀번호 확인"
-                    value={confirmPassword}
-                    onChange={onConfirmPasswordHandler}
-                    class="loginregister__input"/></div> */
-                }
-                {/* <div>
-                    <button type="submit" onSubmit={onSubmit} class="loginregister__button">계정 생성하기</button>
-                </div> */
-                }
             </form>
         </div>
     );

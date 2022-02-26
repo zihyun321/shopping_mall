@@ -1,5 +1,6 @@
 .App {
   text-align: center;
+  font-family: 'NaBaRegular';
 }
 
 .App-logo {
@@ -35,4 +36,53 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+/**
+* Font
+***/
+
+@font-face {
+  font-family: "BebasNeue";
+  src: url('./fonts/BebasNeue-Regular.ttf');
+}
+
+@font-face {
+  font-family: "DancingScript";
+  src: url('./fonts/DancingScript-VariableFont_wght.ttf');
+}
+
+@font-face {
+  font-family: "EBGaramond";
+  src: url('./fonts/EBGaramond-VariableFont_wght.ttf');
+}
+
+@font-face {
+  font-family: "NaBaRegular";
+  src: url('./fonts/NanumBarunGothic.otf');
+}
+
+@font-face {
+  font-family: "NaBaBold";
+  src: url('./fonts/NanumBarunGothicBold.otf');
+}
+
+@font-face {
+  font-family: "NaBaLight";
+  src: url('./fonts/NanumBarunGothicLight.otf');
+}
+
+@font-face {
+  font-family: "NaBaUltraLight";
+  src: url('./fonts/NanumBarunGothicUltraLight.otf');
+}
+
+@font-face {
+  font-family: "Praise";
+  src: url('./fonts/Praise-Regular.ttf');
+}
+
+@font-face {
+  font-family: "Shizuru";
+  src: url('./fonts/Shizuru-Regular.ttf');
 }
