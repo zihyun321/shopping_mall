@@ -6,7 +6,7 @@ const headerMenu = styled.div`
 `;
 
 const menu = {
-    fontSize: '100px'
+    fontSize: '18px'
 };
 
 function Header() {
@@ -287,23 +287,27 @@ function Header() {
                         <div
                             class="flex-1 flex items-center justify-center sm:items-stretch sm:justify-around">
                             <div class="hidden sm:block sm:ml-6">
-                                <div class="flex space-x-4" style={menu}>
+                                <div class="flex space-x-4">
                                     {/* <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" --> */}
                                     <a
                                         href="#"
+                                        style={menu}
                                         class="text-white hover:text-teal-400 px-3 py-2 rounded-md text-sm font-medium"
                                         aria-current="page">Dashboard</a>
 
                                     <a
                                         href="#"
+                                        style={menu}
                                         class="text-white hover:text-teal-400 px-3 py-2 rounded-md text-sm font-medium">Team</a>
 
                                     <a
                                         href="#"
+                                        style={menu}
                                         class="text-white hover:text-teal-400 px-3 py-2 rounded-md text-sm font-medium">Projects</a>
 
                                     <a
                                         href="#"
+                                        style={menu}
                                         class="text-white hover:text-teal-400 px-3 py-2 rounded-md text-sm font-medium">Calendar</a>
                                 </div>
                             </div>

@@ -1,9 +1,7 @@
 import React, {useState} from 'react';
 import styled from "styled-components";
 
-// const dbErrorMsg = styled.div`
-
-// `;
+// const dbErrorMsg = styled.div` `;
 
 function RegisterPage() {
     const [name, setName] = useState("")
@@ -89,7 +87,10 @@ function RegisterPage() {
 
     return (
         <div class="loginregister w-full max-w-lg mx-auto text-black">
-            Sign UP
+
+            <p class="pb-4 text-xl font-weight: 800;">
+                Sign UP
+            </p>
             <form>
                 <div class="md:flex md:items-center mb-6">
                     <div class="md:w-1/3">
@@ -99,7 +100,7 @@ function RegisterPage() {
                     </div>
                     <div class="md:w-2/3">
                         <input
-                            required
+                            required="required"
                             class="bg-gray-200 appearance-none border-2 border-gray-200  w-full py-2 px-4 leading-tight focus:outline-none focus:bg-white focus:border-black"
                             id="id"
                             type="text"
@@ -233,7 +234,7 @@ function RegisterPage() {
                                     </label>
 
                                 </div>
-                                
+
                             </div>
                             {/* <div class="md:w-1/3 break-all ml-3"></div> */}
 
@@ -270,7 +271,7 @@ function RegisterPage() {
                     </label>
                 </div> */
                 }
-                <div class="md:flex md:items-center content-center">
+                <div class="md:flex md:items-center justify-content: center;">
                     {/* <div class="md:w-1/3"></div> */}
                     <div >
                         <button
