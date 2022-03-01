@@ -9,6 +9,7 @@ require('dotenv').config(); // DB 환경변수
  * DB 연동
  */
 const mysql = require('mysql2');
+const ResponseLike = require('responselike');
 const connection = mysql.createPool({
     host: process.env.DB_HOST, 
     port: process.env.SERVER_PORT, 
@@ -41,6 +42,10 @@ app.listen(port, () => {
     console.log(`express is running on ${port}`);
 })
 
+app.get("/", () => {
+    console.log('잘작동중입니다');
+});
+
 app.post("/userJoin", (req, res) => {
     console.log('req.body: ', req.body);
     // const user_id = req.body.inText; console.log(user_id); //query문 추가할 곳/////
@@ -66,33 +71,54 @@ app.post("/userJoin", (req, res) => {
     );
 });
 
+// const loginPage = require('./routes/home/index');
+// app.use('/login', loginPage);
+
 app.post("/userLogin", (req, res) => {
     console.log('=== userLogin ');
     console.log('req.body: ', req.body);
     console.log('req.body.id: ', req.body.id);
-    
-    const tempUserInfo = {id : 'jihyun', password: 'jihyun321'};
-    const tempUserInfo2 = {id : '', password: ''};
-    
+        
     const loginInfo = req.body;
+    // const resultInfo;
 
     connection.query(
-        `SELECT id, password FROM customer WHERE id = "`+ req.body.id + `" and password = "` + req.body.password + `"`,
+        // `SELECT id, password FROM customer WHERE id = "`+ req.body.id + `" and password = "` + req.body.password + `"`,
+        `SELECT id, password FROM customer WHERE id = "`+ req.body.id + `"`,
+
         (error, result, fields) => {
-            console.log('error: ', error);
+
             if (error) {
-                console.log('실패');
+                // TODO (에러처리 어떻게 할지 생각하기)                
+                // return res.json({
+                //     success: true
+                // })
             } else {
-                console.log('성공');
-                console.log('== result: ', result); 
-                // console.log('== result: ', JSON.parse(result));                
-                console.log('== result: ', result.length); 
-                if (result.length == 1) {
-                    // res.redirect('/Home');
-                    // res.sendFile(path.join(__dirname , "../src/components/Home.js"));
-                    res.send(loginInfo);
+                console.log('result: ', result);
+                console.log('result[0]?.id: ', result[0]?.id);
+                console.log('result[0]?.password: ', req.body.password);
+
+                console.log('req.body.id: ', req.body.id);
+                console.log('req.body.password')
+
+                if (result[0]?.id == req.body.id) {
+                    if (result[0]?.password == req.body.password) {
+                        return res.json({
+                            success: true
+                        })
+                    } else {
+                        return res.json({
+                            success: false,
+                            errorCode: 'checkPassword',
+                            msg: '비밀번호를 확인하세요.'
+                        })
+                    }
                 } else {
-                    res.send(loginInfo);
+                    return res.json({
+                        success: false,
+                        errorCode: 'thereIsNoInfo',
+                        msg: '일치하는 정보가 없습니다.'
+                    })
                 }
             }
         }

@@ -292,23 +292,23 @@ function Header() {
                                     <a
                                         href="#"
                                         style={menu}
-                                        class="text-white hover:text-teal-400 px-3 py-2 rounded-md text-sm font-medium"
+                                        class="text-white hover:text-teal-100 px-3 py-2 rounded-md text-sm font-medium"
                                         aria-current="page">Dashboard</a>
 
                                     <a
                                         href="#"
                                         style={menu}
-                                        class="text-white hover:text-teal-400 px-3 py-2 rounded-md text-sm font-medium">Team</a>
+                                        class="text-white hover:text-teal-100 px-3 py-2 rounded-md text-sm font-medium">Team</a>
 
                                     <a
                                         href="#"
                                         style={menu}
-                                        class="text-white hover:text-teal-400 px-3 py-2 rounded-md text-sm font-medium">Projects</a>
+                                        class="text-white hover:text-teal-100 px-3 py-2 rounded-md text-sm font-medium">Projects</a>
 
                                     <a
                                         href="#"
                                         style={menu}
-                                        class="text-white hover:text-teal-400 px-3 py-2 rounded-md text-sm font-medium">Calendar</a>
+                                        class="text-white hover:text-teal-100 px-3 py-2 rounded-md text-sm font-medium">Calendar</a>
                                 </div>
                             </div>
                         </div>

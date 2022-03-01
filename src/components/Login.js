@@ -5,6 +5,8 @@ function Login() {
     const [id, setId] = useState('');
     const [password, setPassword] = useState('');
     const [isPasswordError, setPasswordError] = useState('');
+    const [checkPassword, setCheckPassword] = useState(false);
+    const [errorMsg, setErrorMsg] = useState('');
 
     const doSaveLoginInfo = (event) => {
         if (event.target.id === 'id') 
@@ -21,7 +23,7 @@ function Login() {
         }
 
         fetch("http://localhost:3001/userLogin", {
-            method: "post", //통신방법
+            method: "POST", //통신방법
             headers: {
                 "content-type": "application/json"
             },
@@ -29,8 +31,18 @@ function Login() {
         })
             .then((res) => res.json())
             .then((res) => {
-                console.log(res);
+                setErrorMsg('');
+                if (res.success) {
+                    window.location.href = '/';
+                } else if (res.errorCode == 'checkPassword' || 'thereIsNoInfo') {
+                    setCheckPassword(true);
+                    setErrorMsg(res.msg);
+                }
+
                 // this.setState({text: json.text});
+            })
+            .catch((err) => {
+                console.error(new Error("로그인중 에러발생"));
             });
     }
 
@@ -54,23 +66,28 @@ function Login() {
                     <label class="block text-gray-700 text-sm font-bold mb-2" for="password">
                         Password
                     </label>
-                    <input
-                        class="shadow appearance-none border border-red-500 rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
-                        id="password"
-                        type="password"
-                        onChange={doSaveLoginInfo}
-                        placeholder="******************"/>
-                    <p class="text-red-500 text-xs italic">Please choose a password.</p>
+                    <input className={"shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 lead" +
+                                "ing-tight focus:outline-none focus:shadow-outline" + (
+                            checkPassword
+                                ? "border-red-500"
+                                : "border-green-500"
+                        )}
+                        // class="shadow appearance-none border border-red-500 rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
+                        id="password" type="password" onChange={doSaveLoginInfo} placeholder="******************"/> {
+                        checkPassword
+                            ? <p class="text-red-500 text-xs italic">{errorMsg}</p>
+                            : null
+                    }
                 </div>
                 <div class="flex items-center justify-center">
                     <button
-                        class="bg-black hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                        class="bg-black hover:text-teal-100 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
                         onClick={clickLogin}
                         type="button">
                         Sign In
                     </button>
                     <a
-                        class="inline-block align-baseline font-bold text-sm text-black hover:text-blue-800 ml-5"
+                        class="inline-block align-baseline font-bold text-sm text-black hover:text-teal-100 ml-5"
                         href="/join">
                         Join
                     </a>
@@ -82,6 +99,5 @@ function Login() {
         </div>
     )
 }
-
 
 export default Login;
