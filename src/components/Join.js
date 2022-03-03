@@ -271,7 +271,7 @@ function RegisterPage() {
                     </label>
                 </div> */
                 }
-                <div class="md:flex md:items-center justify-content: center;">
+                <div class="md:flex md:items-center justify-center">
                     {/* <div class="md:w-1/3"></div> */}
                     <div >
                         <button

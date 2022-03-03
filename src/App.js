@@ -9,6 +9,7 @@ import Header from './components/Header';
 import Home from './components/Home';
 import Login from './components/Login';
 import Join from './components/Join';
+import ProductList from './components/ProductList';
 
 class App extends React.Component {
 
@@ -41,6 +42,9 @@ class App extends React.Component {
                         </Route>
                         <Route path="/join">
                             <Join/>
+                        </Route>
+                        <Route path='/ProductList'>
+                          <ProductList/>
                         </Route>
                     </div>
 
