@@ -11,23 +11,17 @@ import Login from './components/Login';
 import Join from './components/Join';
 import ProductList from './components/ProductList';
 
+// TODO 나중에 이런 형식으로 고치기 import { ProductList } from './components/ProductList'
+
 class App extends React.Component {
 
-    constructor(props) {
-        super(props);
-        this.state = {
-            username: null
-        };
-    }
-
-    componentDidMount() {
-        fetch('http://localhost:3001/api')
-            .then(res => res.json())
-            .then(data => this.setState({username: data.username}));
-    }
+    // constructor(props) {     super(props);     this.state = {         username:
+    // null     }; } componentDidMount() {     fetch('http://localhost:3001/api')
+    // .then(res => res.json())         .then(data => this.setState({username:
+    // data.username})); }
 
     render() {
-        const {username} = this.state;
+        // const {username} = this.state;
         return (
 
             <div className="App">
@@ -35,7 +29,7 @@ class App extends React.Component {
                     <Header/>
                     <div class="mt-10">
                         <Route exact="exact" path="/">
-                            <Home/>
+                            <Home name="test"/>
                         </Route>
                         <Route path="/login">
                             <Login/>
@@ -44,8 +38,12 @@ class App extends React.Component {
                             <Join/>
                         </Route>
                         <Route path='/ProductList'>
-                          <ProductList/>
+                            <ProductList/>
                         </Route>
+                        <Route path='/ProductList/Top'>
+                            <ProductList category="Top"> </ProductList>
+                        </Route>
+
                     </div>
 
                     {/* <Route path='/어쩌구' component={Modal}></Route> */}

@@ -14,6 +14,10 @@ MySQL 다운로드: https://www.mysql.com/
 `React 설치`
 npx install create-react-app [프로젝트명]
 
+`Redux 설치`
+npm i redux (위에서 npx가 아닌 npm으로 설치했다면,,)
+npm i react-redux (yarn add redux react-redux)
+
 `Node 설치`
 npm init
 npm install express

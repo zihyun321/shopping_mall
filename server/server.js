@@ -71,6 +71,18 @@ app.post("/userJoin", (req, res) => {
     );
 });
 
+app.post("/getProduct", (req, res) => {
+    connection.query('SELECT * from product', (error, rows, fields) => {
+        if (error) 
+            throw error;
+        else {
+            console.log('Product info is: ', rows);
+            return res.send(rows);
+        }
+    });
+    
+});
+
 // const loginPage = require('./routes/home/index');
 // app.use('/login', loginPage);
 

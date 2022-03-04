@@ -1,35 +1,77 @@
-import { width } from "@mui/system";
-import React from "react";
+import {width} from "@mui/system";
+import React, {useEffect, useState} from "react";
 import styled from "styled-components";
 
-// const Img = styled.img`
-//     width: 15rem,
-//     height: 20rem
-// `;
+// const Img = styled.img`     width: 15rem,     height: 20rem `;
 
 const imgStyle = {
     width: "15rem",
     height: "20rem"
 }
 
-function ProductList() {
-    return (<div>
-        <ul class="inline-grid grid-cols-3 gap-4">
-            <li>
-                <img src="image/acc1.jpg" style={imgStyle}/>
-            </li>
-            <li>
-                <img src="image/acc1.jpg" style={imgStyle}/>
-            </li>
-            <li>
-                <img src="image/acc1.jpg" style={imgStyle}/>
-            </li>
-        </ul>
+function ProductList(props) {
 
-        <ul class="bg-slate-50 p-4 sm:px-8 sm:pt-6 sm:pb-8 lg:p-4 xl:px-8 xl:pt-6 xl:pb-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2 gap-4 text-sm leading-6">
-            <li x-for="project in projects">
-                {/* <a :href="project.url"
-                    class="hover:bg-blue-500 hover:ring-blue-500 hover:shadow-md group rounded-md p-3 bg-white ring-1 ring-slate-200 shadow-sm"> */}
+    const [testData, setTestData] = useState([]);
+
+    const testProps = () => {
+        console.log('prop: ', props.category);
+    }
+
+    // useEffect 뒤에 ,[] 붙이면 한번만 실행된다.
+    useEffect(() => fetch("http://localhost:3001/getProduct", {
+        method: "POST", //통신방법
+        headers: {
+            "content-type": "application/json"
+        },
+        body: JSON.stringify()
+    }).then((res) => res.json()).then((json) => {
+        console.log('json: ', json);
+        json.map(data => setTestData(json))
+        // , tempData.push(data));
+        console.log('testData: ', testData);
+        // console.log('testData: ', testData);
+    }), []);
+
+    return (
+        <div>
+            <ul class="inline-grid grid-cols-3 gap-4">
+                <div>{props.category}</div>
+                <div>
+                <button
+                            class="shadow bg-black hover:bg-gray-700 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4"
+                            onClick={testProps}
+                            type="submit">
+                            test
+                        </button>
+
+                </div>
+            {
+                        testData.map(data => {
+                            return (
+                                <div key={data.id}>
+                                    <img src={data.imgUrl} class="d-block w-100" alt="..." style={imgStyle}/>
+                                </div>
+                                
+                            )
+                        })
+                    }
+                <li>
+                    <img src="image/acc1.jpg" style={imgStyle}/>
+                </li>
+                <li>
+                    <img src="image/acc1.jpg" style={imgStyle}/>
+                </li>
+                <li>
+                    <img src="image/acc1.jpg" style={imgStyle}/>
+                </li>
+            </ul>
+
+            <ul
+                class="bg-slate-50 p-4 sm:px-8 sm:pt-6 sm:pb-8 lg:p-4 xl:px-8 xl:pt-6 xl:pb-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2 gap-4 text-sm leading-6">
+                <li x-for="project in projects">
+                    {/* <a :href="project.url"
+                    class="hover:bg-blue-500 hover:ring-blue-500 hover:shadow-md group rounded-md p-3 bg-white ring-1 ring-slate-200 shadow-sm"> */
+                    }
                     <dl class="grid sm:block lg:grid xl:block grid-cols-2 grid-rows-2 items-center">
                         <div>
                             <dt class="sr-only">Title</dt>
@@ -50,8 +92,8 @@ function ProductList() {
                                     src="image/acc6.jpg"
                                     class="w-6 h-6 rounded-full bg-slate-100 ring-2 ring-white"
                                     loading="lazy"/></dd>
-                            </div>
-                        </dl>
+                        </div>
+                    </dl>
                     {/* </a> */}
                 </li>
                 <li class="flex">
@@ -81,7 +123,7 @@ function ProductList() {
             </span> */
             }
         </div>
-        )
+    )
 }
 
 export default ProductList
