@@ -12,40 +12,49 @@ const imgStyle = {
 function ProductList(props) {
 
     const [testData, setTestData] = useState([]);
+    var category = props.category;
 
     const testProps = () => {
         console.log('prop: ', props.category);
     }
 
     // useEffect 뒤에 ,[] 붙이면 한번만 실행된다.
-    useEffect(() => fetch("http://localhost:3001/getProduct", {
-        method: "POST", //통신방법
-        headers: {
-            "content-type": "application/json"
-        },
-        body: JSON.stringify()
-    }).then((res) => res.json()).then((json) => {
-        console.log('json: ', json);
-        json.map(data => setTestData(json))
-        // , tempData.push(data));
-        console.log('testData: ', testData);
-        // console.log('testData: ', testData);
-    }), []);
+    useEffect(() => {
+
+        const productCategory = { category };
+        fetch("http://localhost:3001/getProduct", {
+            method: "POST", //통신방법
+            headers: {
+                "content-type": "application/json"
+            },
+            body: JSON.stringify(productCategory)
+        }).then((res) => res.json()).then((json) => {
+            console.log('json: ', json);
+            json.map(data => setTestData(json))
+            // , tempData.push(data));
+            console.log('testData: ', testData);
+            // console.log('testData: ', testData);
+        })    
+    }, []);
+    // useEffect(() => 
+    // fetch("http://localhost:3001/getProduct", {
+    //     method: "POST", //통신방법
+    //     headers: {
+    //         "content-type": "application/json"
+    //     },
+    //     body: JSON.stringify(category)
+    // }).then((res) => res.json()).then((json) => {
+    //     console.log('json: ', json);
+    //     json.map(data => setTestData(json))
+    //     // , tempData.push(data));
+    //     console.log('testData: ', testData);
+    //     // console.log('testData: ', testData);
+    // }), []);
 
     return (
         <div>
             <ul class="inline-grid grid-cols-3 gap-4">
-                <div>{props.category}</div>
-                <div>
-                <button
-                            class="shadow bg-black hover:bg-gray-700 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4"
-                            onClick={testProps}
-                            type="submit">
-                            test
-                        </button>
-
-                </div>
-            {
+                {
                         testData.map(data => {
                             return (
                                 <div key={data.id}>
@@ -55,15 +64,6 @@ function ProductList(props) {
                             )
                         })
                     }
-                <li>
-                    <img src="image/acc1.jpg" style={imgStyle}/>
-                </li>
-                <li>
-                    <img src="image/acc1.jpg" style={imgStyle}/>
-                </li>
-                <li>
-                    <img src="image/acc1.jpg" style={imgStyle}/>
-                </li>
             </ul>
 
             <ul

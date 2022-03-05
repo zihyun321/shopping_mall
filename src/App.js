@@ -29,7 +29,7 @@ class App extends React.Component {
                     <Header/>
                     <div class="mt-10">
                         <Route exact="exact" path="/">
-                            <Home name="test"/>
+                            <Home name="test22"/>
                         </Route>
                         <Route path="/login">
                             <Login/>
@@ -37,13 +37,21 @@ class App extends React.Component {
                         <Route path="/join">
                             <Join/>
                         </Route>
-                        <Route path='/ProductList'>
-                            <ProductList/>
+                        <Route exact="exact" path='/ProductList'>
+                            <ProductList category="Top"/>
                         </Route>
-                        <Route path='/ProductList/Top'>
+                        <Route exact="exact" path='/ProductList/Top'>
                             <ProductList category="Top"> </ProductList>
                         </Route>
-
+                        <Route exact="exact" path='/ProductList/Bottom'>
+                            <ProductList category="Bottom"> </ProductList>
+                        </Route>
+                        <Route exact="exact" path='/ProductList/Shoes'>
+                            <ProductList category="Shoes"> </ProductList>
+                        </Route>
+                        <Route exact="exact" path='/ProductList/Acc'>
+                            <ProductList category="Acc"> </ProductList>
+                        </Route>
                     </div>
 
                     {/* <Route path='/어쩌구' component={Modal}></Route> */}

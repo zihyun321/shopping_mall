@@ -67,10 +67,15 @@ function previousSlide() {
         .add('translate-x-0');
 }
 
-function Home() {
+function Home(props) {
+
+    var test = props.name;
 
     return (
         <div>
+            <div>
+                {test}
+            </div>
             <div
                 id="carouselExampleSlidesOnly"
                 class="carousel slide"

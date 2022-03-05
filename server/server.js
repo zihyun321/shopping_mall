@@ -72,7 +72,11 @@ app.post("/userJoin", (req, res) => {
 });
 
 app.post("/getProduct", (req, res) => {
-    connection.query('SELECT * from product', (error, rows, fields) => {
+    console.log('req.body: ', req.body.category);
+    var category = req.body.category;
+    var sql = 'SELECT * FROM product WHERE category = ? ';
+
+    connection.query(sql, [category], (error, rows, fields) => {
         if (error) 
             throw error;
         else {
@@ -80,6 +84,14 @@ app.post("/getProduct", (req, res) => {
             return res.send(rows);
         }
     });
+    // connection.query('SELECT * from product', (error, rows, fields) => {
+    //     if (error) 
+    //         throw error;
+    //     else {
+    //         console.log('Product info is: ', rows);
+    //         return res.send(rows);
+    //     }
+    // });
     
 });
 
