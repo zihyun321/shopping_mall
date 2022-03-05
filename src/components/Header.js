@@ -316,6 +316,11 @@ function Header() {
                                 <div class="flex space-x-4">
                                     {/* <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" --> */}
                                     <a
+                                        href="/ProductList/Outer"
+                                        style={menu}
+                                        class="text-white hover:text-teal-100 px-3 py-2 rounded-md text-sm font-medium"
+                                        aria-current="page">Outer</a>
+                                    <a
                                         href="/ProductList/Top"
                                         style={menu}
                                         class="text-white hover:text-teal-100 px-3 py-2 rounded-md text-sm font-medium"
@@ -330,6 +335,10 @@ function Header() {
                                         href="/ProductList/Shoes"
                                         style={menu}
                                         class="text-white hover:text-teal-100 px-3 py-2 rounded-md text-sm font-medium">Shoes</a>
+                                    <a
+                                        href="/ProductList/Bag"
+                                        style={menu}
+                                        class="text-white hover:text-teal-100 px-3 py-2 rounded-md text-sm font-medium">Bag</a>
 
                                     <a
                                         href="/ProductList/Acc"

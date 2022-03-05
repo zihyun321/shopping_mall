@@ -40,6 +40,9 @@ class App extends React.Component {
                         <Route exact="exact" path='/ProductList'>
                             <ProductList category="Top"/>
                         </Route>
+                        <Route exact="exact" path='/ProductList/Outer'>
+                            <ProductList category="Outer"/>
+                        </Route>                          
                         <Route exact="exact" path='/ProductList/Top'>
                             <ProductList category="Top"> </ProductList>
                         </Route>
@@ -48,6 +51,9 @@ class App extends React.Component {
                         </Route>
                         <Route exact="exact" path='/ProductList/Shoes'>
                             <ProductList category="Shoes"> </ProductList>
+                        </Route>
+                        <Route exact="exact" path='/ProductList/Bag'>
+                            <ProductList category="Bag"> </ProductList>
                         </Route>
                         <Route exact="exact" path='/ProductList/Acc'>
                             <ProductList category="Acc"> </ProductList>
