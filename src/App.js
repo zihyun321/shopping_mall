@@ -10,6 +10,7 @@ import Home from './components/Home';
 import Login from './components/Login';
 import Join from './components/Join';
 import ProductList from './components/ProductList';
+import ProductDetailPage from './components/ProductDetailPage';
 
 // TODO 나중에 이런 형식으로 고치기 import { ProductList } from './components/ProductList'
 
@@ -28,8 +29,17 @@ class App extends React.Component {
                 <BrowserRouter>
                     <Header/>
                     <div class="mt-10">
+                        {/* <Route exact path='/ProductDetail/:id' component={ProductDetailPage} /> */}
+                        <Route 
+                        exact path='/ProductDetail/:id'
+                        render={({location}) => {
+                          return (
+                            <ProductDetailPage />
+                          )
+                        }}/>
+
                         <Route exact="exact" path="/">
-                            <Home name="test22"/>
+                            <Home/>
                         </Route>
                         <Route path="/login">
                             <Login/>
@@ -58,6 +68,9 @@ class App extends React.Component {
                         <Route exact="exact" path='/ProductList/Acc'>
                             <ProductList category="Acc"> </ProductList>
                         </Route>
+                        {/* <Route exact="exact" path='/ProductDetailPage'>
+                            <ProductDetailPage/>
+                        </Route> */}
                     </div>
 
                     {/* <Route path='/어쩌구' component={Modal}></Route> */}

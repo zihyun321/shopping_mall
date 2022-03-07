@@ -1,6 +1,8 @@
 import {width} from "@mui/system";
 import React, {useEffect, useState} from "react";
+import {NavLink} from "react-router-dom";
 import styled from "styled-components";
+import ProductDetailPage from "./ProductDetailPage";
 
 // const Img = styled.img`     width: 15rem,     height: 20rem `;
 
@@ -9,61 +11,89 @@ const imgStyle = {
     height: "20rem"
 }
 
-function ProductList(props) {
+function ProductList(props, history) {
 
     const [testData, setTestData] = useState([]);
+    const [showProduct, setShowProduct] = useState(false);
     var category = props.category;
 
     const testProps = () => {
         console.log('prop: ', props.category);
     }
 
+    const clickProduct = () => {
+        console.log('버튼 클릭');
+
+        setShowProduct(!showProduct);
+        console.log(showProduct);
+    }
+
     // useEffect 뒤에 ,[] 붙이면 한번만 실행된다.
     useEffect(() => {
 
-        const productCategory = { category };
+        const productCategory = {
+            category
+        };
         fetch("http://localhost:3001/getProduct", {
             method: "POST", //통신방법
             headers: {
                 "content-type": "application/json"
             },
             body: JSON.stringify(productCategory)
-        }).then((res) => res.json()).then((json) => {
-            console.log('json: ', json);
-            json.map(data => setTestData(json))
-            // , tempData.push(data));
-            console.log('testData: ', testData);
-            // console.log('testData: ', testData);
-        })    
+        })
+            .then((res) => res.json())
+            .then((json) => {
+                console.log('json: ', json);
+                json.map(data => setTestData(json))
+                // , tempData.push(data));
+                console.log('testData: ', testData);
+                // console.log('testData: ', testData);
+            })
     }, []);
-    // useEffect(() => 
-    // fetch("http://localhost:3001/getProduct", {
-    //     method: "POST", //통신방법
-    //     headers: {
-    //         "content-type": "application/json"
-    //     },
-    //     body: JSON.stringify(category)
-    // }).then((res) => res.json()).then((json) => {
-    //     console.log('json: ', json);
-    //     json.map(data => setTestData(json))
-    //     // , tempData.push(data));
-    //     console.log('testData: ', testData);
-    //     // console.log('testData: ', testData);
-    // }), []);
+    // useEffect(() => fetch("http://localhost:3001/getProduct", {     method:
+    // "POST", 통신방법     headers: {         "content-type": "application/json"     },
+    // body: JSON.stringify(category) }).then((res) => res.json()).then((json) => {
+    // console.log('json: ', json);     json.map(data => setTestData(json))      ,
+    // tempData.push(data));     console.log('testData: ', testData);
+    // console.log('testData: ', testData); }), []);
 
     return (
         <div>
+            <NavLink to="/ProductDetailPage">detail page</NavLink>
             <ul class="inline-grid grid-cols-3 gap-4">
                 {
-                        testData.map(data => {
-                            return (
-                                <div key={data.id}>
-                                    <img src={data.imgUrl} class="d-block w-100" alt="..." style={imgStyle}/>
+                    testData.map(data => {
+                        return (
+                            <div key={data.id}>
+                                {/* <NavLink to={"/ProductDetail/" + data.id}> */}
+                                <NavLink to={{
+                                    pathname: "/ProductDetail/" + data.id
+                                    }} state={{ productInfo : data }}>
+                                    <img
+                                        src={data.imgUrl}
+                                        alt="Lights"
+                                        style={{
+                                            "width" : "100%"
+                                        }}/>
+                                </NavLink>
+
+                                <img
+                                    // onClick={() => {history.push("/ProductDetailPage")}}
+                                    src={data.imgUrl} class="d-block w-100" alt="..." style={imgStyle}/>
+                                <div class="mt-2">
+                                    <div>{data.productName}</div>
+                                    <div>{data.productPrice}</div>
                                 </div>
-                                
-                            )
-                        })
-                    }
+                                {
+                                    showProduct
+                                        ? <div>yse</div>
+                                        : null
+                                }
+                            </div>
+
+                        )
+                    })
+                }
             </ul>
 
             <ul
