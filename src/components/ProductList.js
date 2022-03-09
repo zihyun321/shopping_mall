@@ -1,6 +1,6 @@
 import {width} from "@mui/system";
 import React, {useEffect, useState} from "react";
-import {NavLink} from "react-router-dom";
+import {Link, NavLink, useHistory, useParams} from "react-router-dom";
 import styled from "styled-components";
 import ProductDetailPage from "./ProductDetailPage";
 
@@ -59,27 +59,32 @@ function ProductList(props, history) {
 
     return (
         <div>
-            <NavLink to="/ProductDetailPage">detail page</NavLink>
+            {/* <NavLink to="/ProductDetailPage">detail page</NavLink> */}
             <ul class="inline-grid grid-cols-3 gap-4">
                 {
                     testData.map(data => {
                         return (
                             <div key={data.id}>
-                                {/* <NavLink to={"/ProductDetail/" + data.id}> */}
-                                <NavLink to={{
-                                    pathname: "/ProductDetail/" + data.id
-                                    }} state={{ productInfo : data }}>
+                                {/* <Link to={"/ProductDetail/" + data.id} state={{data: data}}> */}
+                                <Link to={{
+                                    pathname: "/ProductDetail/" + data.id,
+                                    state: {productInfo: data}
+                                }}>
+                                {/* <NavLink to={{
+                                    pathname: "/ProductDetail/" + data.id,
+                                    state: {
+                                        productInfo: data
+                                    }
+                                    }} >*/}
                                     <img
                                         src={data.imgUrl}
                                         alt="Lights"
-                                        style={{
-                                            "width" : "100%"
-                                        }}/>
-                                </NavLink>
+                                        style={imgStyle}/>
+                                </Link> 
 
-                                <img
+                                {/* <img
                                     // onClick={() => {history.push("/ProductDetailPage")}}
-                                    src={data.imgUrl} class="d-block w-100" alt="..." style={imgStyle}/>
+                                    src={data.imgUrl} class="d-block w-100" alt="..." style={imgStyle}/> */}
                                 <div class="mt-2">
                                     <div>{data.productName}</div>
                                     <div>{data.productPrice}</div>

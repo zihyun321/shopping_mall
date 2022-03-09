@@ -118,13 +118,6 @@ app.post("/userLogin", (req, res) => {
                 //     success: true
                 // })
             } else {
-                console.log('result: ', result);
-                console.log('result[0]?.id: ', result[0]?.id);
-                console.log('result[0]?.password: ', req.body.password);
-
-                console.log('req.body.id: ', req.body.id);
-                console.log('req.body.password')
-
                 if (result[0]?.id == req.body.id) {
                     if (result[0]?.password == req.body.password) {
                         return res.json({

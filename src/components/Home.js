@@ -8,7 +8,10 @@ function handleClickJoin(e) {
     window.location.href = '/join';
 }
 
-
+const imgStyle = {
+    // width: "40rem",
+    // height: "45rem"
+}
 
 
 
@@ -78,8 +81,8 @@ function Home(props) {
                 class="carousel slide"
                 data-bs-ride="carousel">
                 <div class="carousel-inner">
-                    <div class="carousel-item active">
-                        <img src="image/acc6.jpg" class="d-block w-100" alt="..."/>
+                    <div class="carousel-item active ">
+                        <img src="image/acc6.jpg" class="d-block w-100" alt="..." style={imgStyle}/>
                     </div>
                 </div>
             </div>

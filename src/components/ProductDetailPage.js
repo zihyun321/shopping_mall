@@ -4,18 +4,18 @@ import React, {useState, useLocation} from "react-router-dom";
 
 function ProductDetailPage() {
     const location = useLocation();
-    const { productInfo } = location.state.productInfo;
-
+    // const { productInfo } = location.state;
+    // console.log('location.state: ', location.state);
+    // const productImg = props.productImg;
+    const data = location.state.productInfo;
+    console.log('data: ', data);
 
     return(
         <div>
-            <div>
-                productInfo : {location.productInfo}
-            </div>
             <div class="flex font-sans">
                 <div class="flex-none w-48 relative">
                     <img
-                        src={productInfo.imgUrl}
+                        src={data.imgUrl}
                         alt=""
                         class="absolute inset-0 w-full h-full object-cover"/>
                 </div>
