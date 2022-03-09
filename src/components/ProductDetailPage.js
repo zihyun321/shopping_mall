@@ -22,14 +22,14 @@ function ProductDetailPage() {
                 <form class="flex-auto p-6">
                     <div class="flex flex-wrap">
                         <h1 class="flex-auto text-lg font-semibold text-slate-900">
-                            Classic Utility Jacket
+                            {data.productName}
                         </h1>
                         <div class="text-lg font-semibold text-slate-500">
-                            $110.00
+                            {data.productPrice}
                         </div>
-                        <div class="w-full flex-none text-sm font-medium text-slate-700 mt-2">
+                        {/* <div class="w-full flex-none text-sm font-medium text-slate-700 mt-2">
                             In stock
-                        </div>
+                        </div> */}
                     </div>
                     <div class="flex items-baseline mt-4 mb-6 pb-6 border-b border-slate-200">
                         <div class="space-x-2 flex text-sm">
