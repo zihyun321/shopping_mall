@@ -21,25 +21,57 @@ exports.addUser = (req, res) => {
     console.log('req.body: ', req.body);
     // const user_id = req.body.inText; console.log(user_id); //query문 추가할 곳/////
     console.log('req.body.id: ', req.body.id);
+    // var userInsertSQL = 'INSERT INTO customer(id, password, name, phone, address, gender) values(?, ?, ?, ?, ?, ?)';
+    var userInsertSQL = "INSERT INTO customer SET ? ";
+
+    var userInfo = {
+        id: req.body.id,
+        password: req.body.password,
+        name: req.body.name,
+        phone: req.body.phone,
+        address: req.body.address,
+        gender: req.body.gender
+    }
+
+    var searchSameUserSQL = 'SELECT id FROM customer WHERE id = ? ';
+
+    // 쿼리 두번해야할땐 어떻게 해야하나?
     connection.query(
-        'INSERT INTO customer(id, password, name, phone, address, gender) values(?, ?, ?, ?, ?, ?)',
-        [
-            req.body.id,
-            req.body.password,
-            req.body.name,
-            req.body.phone,
-            req.body.address,
-            req.body.gender
-        ],
-        (error, rows, fields) => {
+        searchSameUserSQL, userInfo['id'], (error, result, fields) => {
             console.log('error: ', error);
             if (error) {
                 console.log('실패');
             } else {
-                console.log('성공');
+                if (result.length == 0) {
+                    insertUser();
+                } else {
+                    return res.json({
+                        success: false,
+                        errorCode: 'duplicateId',
+                        msg: '중복된 아이디가 존재합니다.'
+                    })
+                }
             }
         }
-    );    
+    );   
+    
+    const insertUser = () => {
+        connection.query(
+            userInsertSQL, userInfo, (error, result, fields) => {
+                console.log('error: ', error);
+                if (error) {
+                    console.log('실패');
+                } else {
+                    return res.json({
+                        success: true,
+                        msg: '회원가입 성공!'
+                    })
+                }
+            }
+        );    
+
+    }
+
 };
 
 exports.getProductList = (req, res) => {

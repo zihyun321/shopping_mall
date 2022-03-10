@@ -12,13 +12,14 @@ function RegisterPage() {
     const [address, setAddress] = useState("");
     const [id, setId] = useState("");
     const [gender, setGender] = useState("F");
+    
+    const [errorMsgPassword, setErrorMsgPassword] = useState("");
 
     const onIdHandler = (event) => {
         setId(event.currentTarget.value)
     }
 
     const onNameHandler = (event) => {
-        console.log('event.currentTarget.value: ', event.currentTarget.value);
         setName(event.currentTarget.value)
     }
     const onEmailHandler = (event) => {
@@ -30,7 +31,10 @@ function RegisterPage() {
     }
 
     const onConfirmPasswordHandler = (event) => {
-        setConfirmPassword(event.currentTarget.value)
+        setConfirmPassword(event.currentTarget.value);
+        
+        if (event.currentTarget.value !== password) setErrorMsgPassword("비밀번호를 확인해주세요.");
+        else setErrorMsgPassword("");
     }
 
     const onPhoneHandler = (event) => {
@@ -46,13 +50,7 @@ function RegisterPage() {
     }
 
     const onSubmit = (event) => {
-        console.log('password: ', password);
-        console.log('confirmPassword: ', confirmPassword);
-
-        event.preventDefault()
-        if (password !== confirmPassword) {
-            return alert('비밀번호와 비밀번호확인은 같아야 합니다.')
-        }
+        event.preventDefault();        
 
         const userInfo = {
             id,
@@ -63,28 +61,44 @@ function RegisterPage() {
             gender
         }
 
-        console.log('userInfo: ', userInfo);
+        // TODO 해당 처리 고민하기.. null 값 이렇게 하는게 맞나?
+        var hasEmptyInfo = false;
+        for (var i in userInfo) {
+            if (!userInfo[i]) {
+                hasEmptyInfo = true;                
+            }
+        }
 
-        fetch("http://localhost:3001/userJoin", {
-            method: "post", //통신방법
-            headers: {
-                "content-type": "application/json"
-            },
-            body: JSON.stringify(userInfo)
-        })
-            .then((res) => res.json())
-            .then((json) => {
-                console.log('json: ', json);
-                // this.setState({text: json.text});
-            });
+        if (hasEmptyInfo) alert('모든 항목을 다 입력해야 합니다.');
+        else {
+            fetch("http://localhost:3001/userJoin", {
+                method: "post", //통신방법
+                headers: {
+                    "content-type": "application/json"
+                },
+                body: JSON.stringify(userInfo)
+            })
+                .then((res) => res.json())
+                .then((res) => {
+                    if (res.success) {
+                        alert(res.msg);
+                        window.location.href = '/';
+                    } else {
+                        alert(res.msg);
+                    }
+                    // this.setState({text: json.text});
+                });
+            }
+
     }
-
-    const checkDup = (id) => {
-        console.log('=== checkDup ===');
-        console.log('=== id: ', id);
-
-    }
-
+    
+    /**
+     * Todo
+     * - 해당 필드들 다 필수값 지정하기
+     * - 아이디 중복확인처리 하기
+     * - 비밀번호 및 비밀번호 확인 같은지 확인 
+     * - 비밀번호 해시값 처리해서 저장하기
+     */
     return (
         <div class="loginregister w-full max-w-lg mx-auto text-black">
 
@@ -140,9 +154,14 @@ function RegisterPage() {
                             value={confirmPassword}
                             onChange={onConfirmPasswordHandler}
                             placeholder="***********"/>
+                            {
+                                errorMsgPassword !== "" ? (
+                                    <div class="text-red-600">{errorMsgPassword}</div>) : null
+                                    
+                            }
+                            
                     </div>
                     <div class="md:w-1/3 break-all ml-3"></div>
-
                 </div>
                 <div class="md:flex md:items-center mb-6">
                     <div class="md:w-1/3">
@@ -276,6 +295,7 @@ function RegisterPage() {
                     <div >
                         <button
                             class="shadow bg-black hover:bg-gray-700 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4"
+                            onClick={onSubmit}
                             type="submit">
                             Sign Up
                         </button>
