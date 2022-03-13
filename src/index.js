@@ -5,10 +5,23 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter } from 'react-router-dom';
 
+import { Provider } from 'react-redux';
+import { createStore } from 'redux';
+
+const user = '';
+// reducer: store에 저장할 state와 state를 바꿀 함수를 정의하는 것
+function reducer(state = user, action) {
+  return state;
+}
+
+let store = createStore(reducer);
+
 ReactDOM.render(
   <React.StrictMode>
     {/* <BrowserRouter> */}
+    <Provider store={store}>
       <App />
+    </Provider>
     {/* </BrowserRouter> */}
   </React.StrictMode>,
   document.getElementById('root')

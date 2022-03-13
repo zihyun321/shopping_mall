@@ -1,4 +1,5 @@
 import React, {useEffect, useState} from 'react';
+import { useSelector } from 'react-redux';
 
 function handleClickLogin(e) {
     window.location.href = '/login';
@@ -70,12 +71,17 @@ function previousSlide() {
         .add('translate-x-0');
 }
 
+
+
 function Home(props) {
 
     var test = props.name;
 
+    const 꺼내온거 = useSelector( (state) => state);
+
     return (
         <div>
+            <div>{꺼내온거}</div>
             <div
                 id="carouselExampleSlidesOnly"
                 class="carousel slide"

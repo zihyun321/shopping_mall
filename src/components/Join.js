@@ -61,7 +61,7 @@ function RegisterPage() {
             gender
         }
 
-        // TODO 해당 처리 고민하기.. null 값 이렇게 하는게 맞나?
+        // TODO 해당 처리 고민하기.. 해당 필드들 필수값 지정하는거... null 값 이렇게 하는게 맞나?
         var hasEmptyInfo = false;
         for (var i in userInfo) {
             if (!userInfo[i]) {
@@ -94,9 +94,6 @@ function RegisterPage() {
     
     /**
      * Todo
-     * - 해당 필드들 다 필수값 지정하기
-     * - 아이디 중복확인처리 하기
-     * - 비밀번호 및 비밀번호 확인 같은지 확인 
      * - 비밀번호 해시값 처리해서 저장하기
      */
     return (

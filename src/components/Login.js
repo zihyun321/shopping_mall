@@ -33,6 +33,7 @@ function Login() {
             .then((res) => {
                 setErrorMsg('');
                 if (res.success) {
+                    // TODO 여기에 redux에 user 정보 넣기
                     window.location.href = '/';
                 } else if (res.errorCode == 'checkPassword' || 'thereIsNoInfo') {
                     setCheckPassword(true);
