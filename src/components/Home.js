@@ -78,10 +78,10 @@ function Home(props) {
     var test = props.name;
 
     const 꺼내온거 = useSelector( (state) => state);
-
+    console.log('꺼내온거: ', 꺼내온거);
     return (
         <div>
-            <div>{꺼내온거}</div>
+            {/* <div>user정보: {꺼내온거}</div> */}
             <div
                 id="carouselExampleSlidesOnly"
                 class="carousel slide"

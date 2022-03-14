@@ -88,7 +88,13 @@ exports.getProductList = (req, res) => {
         }
     });
 }
-
+ 
+/**
+ * 로그인 시 User와 연관된 기본 정보, 주문 정보, 장바구니 정보 다 불러와야한다?
+ * 한꺼번에 모든 정보를 저장해야할지, 아니면 페이지 선택했을때 정보를 업데이트 해야할지
+ * @param {*} req 
+ * @param {*} res 
+ */
 exports.getUserInfo = (req, res) => {
     console.log('=== userLogin ');
     console.log('req.body: ', req.body);
@@ -104,6 +110,7 @@ exports.getUserInfo = (req, res) => {
         (error, result, fields) => {
 
             if (error) {
+                console.log('error: ', error);
                 // TODO (에러처리 어떻게 할지 생각하기)                
                 // return res.json({
                 //     success: true

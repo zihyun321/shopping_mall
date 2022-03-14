@@ -99,7 +99,7 @@ function Header() {
                         <div
                             class="flex-1 flex items-center justify-center sm:items-stretch sm:justify-start">
                             <div class="flex-shrink-0 flex items-center">
-                                <p class="mt-4 cursor-pointer" onClick={handelClickHome} style={headerStyle}>Shopping Mall</p>
+                                <p class="my-0	cursor-pointer" onClick={handelClickHome} style={headerStyle}>Shopping Mall</p>
                                 {/* <img
                                         class="block lg:hidden h-8 w-auto"
                                         src="https://tailwindui.com/img/logos/workflow-mark-indigo-500.svg"

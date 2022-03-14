@@ -1,4 +1,7 @@
 import React, {useState} from 'react';
+import { useDispatch, useSelector } from 'react-redux'
+import allActions from "../redux/reducers";
+
 
 function Login() {
 
@@ -7,6 +10,14 @@ function Login() {
     const [isPasswordError, setPasswordError] = useState('');
     const [checkPassword, setCheckPassword] = useState(false);
     const [errorMsg, setErrorMsg] = useState('');
+
+    const dispatch = useDispatch();
+    const updateUserInfo = (loginInfo) => {
+        console.log('dispatch!!');
+        console.log('loginInfo: ', loginInfo);
+        // dispatch(allActions.userActions.loginUser(loginInfo));
+        dispatch({type: 'LOG_IN', user: loginInfo});
+    };
 
     const doSaveLoginInfo = (event) => {
         if (event.target.id === 'id') 
@@ -34,6 +45,7 @@ function Login() {
                 setErrorMsg('');
                 if (res.success) {
                     // TODO 여기에 redux에 user 정보 넣기
+                    updateUserInfo(loginInfo);
                     window.location.href = '/';
                 } else if (res.errorCode == 'checkPassword' || 'thereIsNoInfo') {
                     setCheckPassword(true);
