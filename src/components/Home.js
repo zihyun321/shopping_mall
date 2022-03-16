@@ -77,7 +77,7 @@ function Home(props) {
 
     var test = props.name;
 
-    const 꺼내온거 = useSelector( (state) => state);
+    const 꺼내온거 = useSelector( (state) => state.user);
     console.log('꺼내온거: ', 꺼내온거);
     return (
         <div>

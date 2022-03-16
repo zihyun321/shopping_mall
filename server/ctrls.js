@@ -4,6 +4,7 @@
  */
  require('dotenv').config(); // DB 환경변수
  const mysql = require('mysql2');
+ 
 
  // DB 연결시작
  const connection = mysql.createPool({

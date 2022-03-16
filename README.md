@@ -37,6 +37,14 @@ yarn add antd
 npm install @mui/material @emotion/react @emotion/styled
 yarn add @mui/icons-material
 
-### 2. 로그인 기능 구축
-**Note: !**
+### 2. 회원가입 기능 구축
+**Note: 회원가입시, 비밀번호는 암호화해야한다!**
+- MySQL DB에 User 컬럼 구성
+- 구성한 컬럼대로 회원가입 form 생성 (디자인은 Tailwind)
+- 세부 기능 살피기: 비밀번호 확인 기능, 중복 User Id 처리, 주소는 카카오톡 map api 연동
 
+### 3. 로그인 기능 구축
+**Note: 로그인 유지하기 위해선 redux 사용!**
+- 아이디와 패스워드를 입력하여 로그인 기능 구현
+- 세부 기능 살피기: 에러별로 alert 처리 상세하게 (ex. 입력한 아이디 없을 경우)
+- 로그인 후, 해당 user 정보를 전역 state 값에 저장하고 -> 홈화면으로 이동시키기

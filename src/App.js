@@ -2,8 +2,7 @@ import React from 'react';
 import logo from './logo.svg';
 import './App.css';
 
-import {Link, Route, Switch} from 'react-router-dom';
-import {BrowserRouter} from 'react-router-dom';
+import {BrowserRouter, Switch, Link, Route} from 'react-router-dom';
 
 import Header from './components/Header';
 import Home from './components/Home';
@@ -26,17 +25,16 @@ class App extends React.Component {
         return (
 
             <div className="App">
-                <BrowserRouter>
-                    <Header/>
-                    <div class="mt-10">
-                        {/* <Route exact path='/ProductDetail/:id' component={ProductDetailPage} /> */}
-                        <Route 
-                        exact path='/ProductDetail/:id'
+                <Header/>
+                <div class="mt-10">
+                    {/* <Route exact path='/ProductDetail/:id' component={ProductDetailPage} /> */}
+                    <Route
+                        exact="exact"
+                        path='/ProductDetail/:id'
                         render={({location}) => {
-                          return (
-                            <ProductDetailPage />
-                          )
+                            return (<ProductDetailPage/>)
                         }}/>
+                    <Switch>
 
                         <Route exact="exact" path="/">
                             <Home/>
@@ -52,29 +50,31 @@ class App extends React.Component {
                         </Route>
                         <Route exact="exact" path='/ProductList/Outer'>
                             <ProductList category="Outer"/>
-                        </Route>                          
+                        </Route>
                         <Route exact="exact" path='/ProductList/Top'>
-                            <ProductList category="Top"> </ProductList>
+                            <ProductList category="Top"></ProductList>
                         </Route>
                         <Route exact="exact" path='/ProductList/Bottom'>
-                            <ProductList category="Bottom"> </ProductList>
+                            <ProductList category="Bottom"></ProductList>
                         </Route>
                         <Route exact="exact" path='/ProductList/Shoes'>
-                            <ProductList category="Shoes"> </ProductList>
+                            <ProductList category="Shoes"></ProductList>
                         </Route>
                         <Route exact="exact" path='/ProductList/Bag'>
-                            <ProductList category="Bag"> </ProductList>
+                            <ProductList category="Bag"></ProductList>
                         </Route>
                         <Route exact="exact" path='/ProductList/Acc'>
-                            <ProductList category="Acc"> </ProductList>
+                            <ProductList category="Acc"></ProductList>
                         </Route>
                         {/* <Route exact="exact" path='/ProductDetailPage'>
                             <ProductDetailPage/>
-                        </Route> */}
-                    </div>
+                        </Route> */
+                        }
+                    </Switch>
 
-                    {/* <Route path='/어쩌구' component={Modal}></Route> */}
-                </BrowserRouter>
+                </div>
+
+                {/* <Route path='/어쩌구' component={Modal}></Route> */}
                 {/* <p>
             <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
               Login

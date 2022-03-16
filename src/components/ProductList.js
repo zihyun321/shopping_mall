@@ -70,12 +70,6 @@ function ProductList(props, history) {
                                     pathname: "/ProductDetail/" + data.id,
                                     state: {productInfo: data}
                                 }}>
-                                {/* <NavLink to={{
-                                    pathname: "/ProductDetail/" + data.id,
-                                    state: {
-                                        productInfo: data
-                                    }
-                                    }} >*/}
                                     <img
                                         src={data.imgUrl}
                                         alt="Lights"

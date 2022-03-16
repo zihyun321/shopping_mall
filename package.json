@@ -24,6 +24,7 @@
     "redux": "^4.1.2",
     "redux-devtools-extension": "^2.13.9",
     "redux-logger": "^3.0.6",
+    "sha256": "^0.2.0",
     "styled-components": "^5.3.3",
     "tw-elements": "^1.0.0-alpha11",
     "web-vitals": "^2.1.4"
