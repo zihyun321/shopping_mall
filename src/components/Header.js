@@ -3,7 +3,9 @@ import styled from "styled-components";
 import { UserOutlined } from '@ant-design/icons';
 import 'antd/dist/antd.css';
 // import { Input } from '@mui/icons-material';
-
+import { useSelector } from 'react-redux';
+import currentUser from '../redux/reducers/userReducer';
+import Login from './Login';
 
 const headerMenu = styled.div`
     font: large;
@@ -37,6 +39,14 @@ function Header() {
         console.log('click Profile');
         setProfileModalOpen(!isProfileModalOpen);
     }
+
+    const 꺼내온거 = useSelector( (state) => state);
+    console.log('header useEffect 꺼내온거: ', 꺼내온거);
+    console.log('header useEffect 꺼내온거2: ', 꺼내온거.login);
+    console.log('header useEffect 꺼내온거2: ', 꺼내온거.currentUser.login);
+
+    // console.log('header useEffect 꺼내온거: ', 꺼내온거[currentUser].login);
+
 
     return (
         <div class="font-[BebasNeue] text-xl">

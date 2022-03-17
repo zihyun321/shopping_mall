@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import { useDispatch, useSelector } from 'react-redux'
 import allActions from "../redux/reducers";
 import { useHistory, withRouter } from 'react-router-dom';
@@ -19,6 +19,7 @@ function Login() {
         console.log('loginInfo: ', loginInfo);
         // dispatch(allActions.userActions.loginUser(loginInfo));
         dispatch({type: 'LOG_IN', user: loginInfo});
+        
     };
 
     const doSaveLoginInfo = (event) => {
@@ -49,6 +50,7 @@ function Login() {
                     // TODO 여기에 redux에 user 정보 넣기
                     updateUserInfo(loginInfo);
                     history.push('/');
+
                     // window.location.href = '/';  // 이건 화면 새로고침이라 가능하지 않음
                 } else if (res.errorCode == 'checkPassword' || 'thereIsNoInfo') {
                     setCheckPassword(true);

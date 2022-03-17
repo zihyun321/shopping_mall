@@ -1,16 +1,73 @@
 import {render} from "react-dom";
-import React, {useState, useLocation} from "react-router-dom";
-
+import {useLocation} from "react-router-dom";
+import React, {useState} from 'react'
 
 function ProductDetailPage() {
     const location = useLocation();
-    // const { productInfo } = location.state;
-    // console.log('location.state: ', location.state);
-    // const productImg = props.productImg;
+    // const { productInfo } = location.state; console.log('location.state: ',
+    // location.state); const productImg = props.productImg;
     const data = location.state.productInfo;
     console.log('data: ', data);
+    
+    const [quantity, setQuantity] = useState(1);
+    
+    const handleCount = (type) => {
+        var count = quantity;
+        if (type === 'minus') {
+            if (quantity != 0) count--;
+        } else {
+            count++;
+        }
+        setQuantity(count);
+    }
+    const decrement = () => {
+        console.log('감소');
+        console.log('quantity: ', quantity);
+        
+        setQuantity(--quantity);
+        console.log(quantity);
+        // const btn = e
+        //     .target
+        //     .parentNode
+        //     .parentElement
+        //     .querySelector('button[data-action="decrement"]');
+        // const target = btn.nextElementSibling;
+        // let value = Number(target.value);
+        // value--;
+        // target.value = value;
+    }
 
-    return(
+    const increment = (e) => {
+        console.log('증가');
+        // const btn = e
+        //     .target
+        //     .parentNode
+        //     .parentElement
+        //     .querySelector('button[data-action="decrement"]');
+        // const target = btn.nextElementSibling;
+        // let value = Number(target.value);
+        // value++;
+        // target.value = value;
+    }
+
+    // const decrementButtons = document.querySelectorAll(
+    //     `button[data-action="decrement"]`
+    // );
+
+    // const incrementButtons = document.querySelectorAll(
+    //     `button[data-action="increment"]`
+    // );
+
+    // decrementButtons.forEach(btn => {
+    //     console.log('감소!');
+    //     btn.addEventListener("click", decrement);
+    // });
+
+    // incrementButtons.forEach(btn => {
+    //     btn.addEventListener("click", increment);
+    // });
+
+    return (
         <div>
             <div class="flex font-sans">
                 <div class="flex-none w-48 relative">
@@ -29,7 +86,8 @@ function ProductDetailPage() {
                         </div>
                         {/* <div class="w-full flex-none text-sm font-medium text-slate-700 mt-2">
                             In stock
-                        </div> */}
+                        </div> */
+                        }
                     </div>
                     <div class="flex items-baseline mt-4 mb-6 pb-6 border-b border-slate-200">
                         <div class="space-x-2 flex text-sm">
@@ -75,6 +133,36 @@ function ProductDetailPage() {
                             </label>
                         </div>
                     </div>
+
+                    {/* counter22 */}
+                    <div class="flex flex-row border h-10 w-24 mb-3 border-gray-300 relative">
+                        <button
+                            onClick={() => handleCount('minus')}
+                            type="button"
+                            class="font-semibold border-r border-gray-300 h-full w-20 flex rounded-l focus:outline-none cursor-pointer">
+                            <span class="m-auto">-</span>
+                        </button>
+                        {/* input number로 할시, 문제가 아주 많다 */}
+                        <input
+                            type="hidden"
+                            class="md:p-2 w-10 p-1 text-xs md:text-base border-gray-300 focus:outline-none text-center"
+                            value={quantity}
+                            name="custom-input-number"/>
+                        <div
+                            class="bg-white w-24 text-xs md:text-base flex items-center justify-center cursor-default">
+                            <span>{quantity}</span>
+                        </div>
+
+
+                        <button
+                            onClick={() => handleCount('plus')}
+                            type="button"
+                            class="font-semibold border-l border-gray-300 h-full w-20 flex rounded-r focus:outline-none cursor-pointer">
+                            <span class="m-auto">+</span>
+                        </button>
+                    </div>
+
+
                     <div class="flex space-x-4 mb-6 text-sm font-medium">
                         <div class="flex-auto flex space-x-4">
                             <button
