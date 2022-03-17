@@ -1,13 +1,13 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import styled from "styled-components";
-import { UserOutlined } from '@ant-design/icons';
+import {UserOutlined} from '@ant-design/icons';
 import 'antd/dist/antd.css';
 // import { Input } from '@mui/icons-material';
-import { useSelector } from 'react-redux';
+import {useSelector} from 'react-redux';
 import currentUser from '../redux/reducers/userReducer';
 import Login from './Login';
 
-const headerMenu = styled.div`
+const headerMenu = styled.div `
     font: large;
 `;
 
@@ -31,22 +31,23 @@ function handelClickHome() {
     window.location.href = '/';
 }
 
-
 function Header() {
 
+    const [userInfo, setUserInfo] = useState({});
+    const [isUserLogin, setIsUserLogin] = useState(false);
     const [isProfileModalOpen, setProfileModalOpen] = useState(false);
     const clickProfile = () => {
         console.log('click Profile');
         setProfileModalOpen(!isProfileModalOpen);
     }
+    const loginStatus = useSelector((state) => state);
 
-    const 꺼내온거 = useSelector( (state) => state);
-    console.log('header useEffect 꺼내온거: ', 꺼내온거);
-    console.log('header useEffect 꺼내온거2: ', 꺼내온거.login);
-    console.log('header useEffect 꺼내온거2: ', 꺼내온거.currentUser.login);
+    useEffect(() => {
+        setIsUserLogin(loginStatus.currentUser.login);
+        setUserInfo(loginStatus.currentUser.user);
+    }, [loginStatus])
 
     // console.log('header useEffect 꺼내온거: ', 꺼내온거[currentUser].login);
-
 
     return (
         <div class="font-[BebasNeue] text-xl">
@@ -145,12 +146,9 @@ function Header() {
                         </div>
                         <div
                             class="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
-                            <button
-                                type="button"
-                                class="mt-1 p-1"
-                                onClick={handleClickJoin}
+                            <button type="button" class="mt-1 p-1" onClick={handleClickJoin}
                                 // class="bg-gray-800 p-1 rounded-full text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white"
-                                >
+                            >
                                 <span class="sr-only">View notifications</span>
                                 {/* <!-- Heroicon name: outline/bell --> */}
                                 {/* <svg
@@ -165,32 +163,39 @@ function Header() {
                                         stroke-linejoin="round"
                                         stroke-width="2"
                                         d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"/>
-                                        
-                                </svg> */}
-                                    {/* <Input/> */}
-                                    <p class="text-xs mb-1">Join</p>
+
+                                </svg> */
+                                }
+                                {/* <Input/> */}
+                                <p class="text-xs mb-1">Join</p>
                             </button>
 
                             {/* <!-- Profile dropdown --> */}
                             <div class="ml-3 relative">
-                                <div>
-                                    <button
-                                        type="button"
-                                        onClick={handleClickLogin}
-                                        // class="bg-gray-800 flex text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white"
-                                        id="user-menu-button"
-                                        aria-expanded="false"
-                                        aria-haspopup="true"
-                                        >
-                                        <span class="sr-only">Open user menu</span>      
-                                        <UserOutlined/>                                  
-                                        {/* <img
+                                {
+                                    isUserLogin
+                                        ? (
+                                            <div>
+                                                <button type="button" onClick={handleClickLogin}
+                                                    // class="bg-gray-800 flex text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white"
+                                                    id="user-menu-button" aria-expanded="false" aria-haspopup="true">
+                                                    <span class="sr-only">Open user menu</span>
+                                                    <UserOutlined/> {/* <img
                                             class="h-8 w-8 rounded-full"
                                             src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-                                            alt=""/> */}
-                                    </button>
-                                    <p class="text-xs mb-1">Login</p>
-                                </div>
+                                            alt=""/> */
+                                                    }
+                                                </button>
+                                                <p class="text-xs mb-1">Login</p>
+                                            </div>
+                                        )
+                                        : (
+                                            <div>
+                                                <p class="text-xs mb-1">Logout</p>
+
+                                            </div>
+                                        )
+                                }
 
                                 {/* <!--
                                 Dropdown menu, show/hide based on menu state.
@@ -265,7 +270,8 @@ function Header() {
                             href="#"
                             class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Calendar</a>
                     </div>
-                </div> */}
+                </div> */
+                }
             </nav>
 
             <nav class="bg-black">
