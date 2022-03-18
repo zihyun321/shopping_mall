@@ -10,6 +10,7 @@ import Login from './components/Login';
 import Join from './components/Join';
 import ProductList from './components/ProductList';
 import ProductDetailPage from './components/ProductDetailPage';
+import ShoppingCart from './components/ShoppingCart';
 
 // TODO 나중에 이런 형식으로 고치기 import { ProductList } from './components/ProductList'
 
@@ -66,40 +67,11 @@ class App extends React.Component {
                         <Route exact="exact" path='/ProductList/Acc'>
                             <ProductList category="Acc"></ProductList>
                         </Route>
-                        {/* <Route exact="exact" path='/ProductDetailPage'>
-                            <ProductDetailPage/>
-                        </Route> */
-                        }
+                        <Route exact="exact" path='/ShoppingCart'>
+                            <ShoppingCart/>
+                        </Route>
                     </Switch>
-
                 </div>
-
-                {/* <Route path='/어쩌구' component={Modal}></Route> */}
-                {/* <p>
-            <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-              Login
-            </button>
-          </p> */
-                }
-
-                {/* <header className="App-header">
-            ========== 테스트
-            {username ? `Hello ${username}` : 'Hello World'}
-          </header>
-          <h1 className="text-3xl font-bold underline">
-            Hello world!
-          </h1>
-          <div class="w-72 bg-white shadow rounded">
-            w-72
-          </div>
-          <h1 className="text-3xl font-bold underline">
-            Hello world!
-          </h1>
-          <div class="chat-notification-content">
-            <h4 class="chat-notification-title">ChitChat</h4>
-            <p class="chat-notification-message">You have a new message!</p>
-          </div> */
-                }
             </div>
         );;
     }

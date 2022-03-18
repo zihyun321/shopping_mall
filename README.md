@@ -48,3 +48,4 @@ yarn add @mui/icons-material
 - 아이디와 패스워드를 입력하여 로그인 기능 구현
 - 세부 기능 살피기: 에러별로 alert 처리 상세하게 (ex. 입력한 아이디 없을 경우)
 - 로그인 후, 해당 user 정보를 전역 state 값에 저장하고 -> 홈화면으로 이동시키기
+- 로그인 후, Header 정보 변경 (ex. Login -> Logout)
