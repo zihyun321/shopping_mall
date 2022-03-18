@@ -72,7 +72,7 @@ function RegisterPage() {
 
         if (hasEmptyInfo) alert('모든 항목을 다 입력해야 합니다.');
         else {
-            fetch("http://localhost:3001/userJoin", {
+            fetch("http://localhost:3001/createUser", {
                 method: "post", //통신방법
                 headers: {
                     "content-type": "application/json"
