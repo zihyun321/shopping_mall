@@ -18,7 +18,9 @@
      queueLimit: 0,
  });
 
-exports.addUser = (req, res) => {
+console.log('user ctrl');
+
+exports.checkAndCreateUser = (req, res) => {
     console.log('req.body: ', req.body);
     // const user_id = req.body.inText; console.log(user_id); //query문 추가할 곳/////
     console.log('req.body.id: ', req.body.id);
@@ -36,7 +38,6 @@ exports.addUser = (req, res) => {
 
     var searchSameUserSQL = 'SELECT id FROM customer WHERE id = ? ';
 
-    // 쿼리 두번해야할땐 어떻게 해야하나?
     connection.query(
         searchSameUserSQL, userInfo['id'], (error, result, fields) => {
             console.log('error: ', error);
@@ -44,7 +45,7 @@ exports.addUser = (req, res) => {
                 console.log('실패');
             } else {
                 if (result.length == 0) {
-                    insertUser();
+                    createUser();
                 } else {
                     return res.json({
                         success: false,
@@ -56,7 +57,7 @@ exports.addUser = (req, res) => {
         }
     );   
     
-    const insertUser = () => {
+    const createUser = () => {
         connection.query(
             userInsertSQL, userInfo, (error, result, fields) => {
                 console.log('error: ', error);
@@ -75,20 +76,6 @@ exports.addUser = (req, res) => {
 
 };
 
-exports.getProductList = (req, res) => {
-    console.log('req.body: ', req.body.category);
-    var category = req.body.category;
-    var sql = 'SELECT * FROM product WHERE category = ? ';
-
-    connection.query(sql, [category], (error, rows, fields) => {
-        if (error) 
-            throw error;
-        else {
-            console.log('Product info is: ', rows);
-            return res.send(rows);
-        }
-    });
-}
  
 /**
  * 로그인 시 User와 연관된 기본 정보, 주문 정보, 장바구니 정보 다 불러와야한다?
@@ -96,6 +83,7 @@ exports.getProductList = (req, res) => {
  * @param {*} req 
  * @param {*} res 
  */
+// readUser로 변경
 exports.getUserInfo = (req, res) => {
     console.log('=== userLogin ');
     console.log('req.body: ', req.body);
@@ -140,15 +128,4 @@ exports.getUserInfo = (req, res) => {
         }
     );
 }
-
-// exports.getUserInfo = (req, res) => {
-//     connection.query("SELECT id FROM customer", function(error, rows, fields) {
-//         if (error) {
-//             console.log('실패');
-//             console.log('res: ', res);
-//         } else {
-//             console.log('성공');
-//         }
-//     })
-// }
 

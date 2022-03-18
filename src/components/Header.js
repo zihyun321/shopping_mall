@@ -25,9 +25,6 @@ const headerStyle = {
 };
 
 
-const handleClickCart = () => {
-
-}
 
 
 
@@ -44,6 +41,10 @@ function LoggedinHeader() {
         setProfileModalOpen(!isProfileModalOpen);
     }
 
+    const useHandleClickCart = () => {
+        const history = useHistory();
+        history.push('/ShoppingCart');
+    }
 
     return (
         <div>
@@ -67,7 +68,7 @@ function LoggedinHeader() {
                 </div>
                 <div class="ml-3 relative">
                     <div>
-                        <button type="button" class="mt-1 p-1" onClick={handleClickCart}>
+                        <button type="button" class="mt-1 p-1" onClick={useHandleClickCart}>
                             <ShoppingCartOutlined/>
                             <p class="text-xs mb-1">Cart</p>
                         </button>
@@ -130,7 +131,9 @@ function LoggedOutHeader() {
         window.location.href = '/join';
     }
 
-
+    function  handleClickCart() {
+        window.location.href = '/login';
+    }
     
     return (
         <div>

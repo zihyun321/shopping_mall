@@ -4,7 +4,8 @@ const cors = require('cors');
 const bodyParser = require('body-parser');
 
 // Module 가져오기
-const router = require('./routers');
+// const router = require('./routers');
+
 
 require('dotenv').config(); // DB 환경변수
 
@@ -19,9 +20,27 @@ app.listen(port, () => {
     console.log(`express is running on ${port}`);
 })
 
-app.post("/userJoin", router);      // 회원가입
-app.post("/getProduct", router);    // 제품 정보 조회
-app.post("/userLogin", router);     // 로그인
-app.post("/getUserInfo", router);   // user 정보 조회
+// 수정전
+// app.post("/userJoin", router);      // 회원가입
+// app.post("/getProduct", router);    // 제품 정보 조회
+// app.post("/userLogin", router);     // 로그인
+// app.post("/getUserInfo", router);   // user 정보 조회
 
-// connection.end();
+
+
+
+// 수정후
+// 라우팅 
+const userRouter = require('./routes/user/index');
+const productRouter = require('./routes/Product/index');
+
+/** User */
+app.post("/createUser", userRouter);        // 회원가입
+app.post("/getUserInfo", userRouter);       // user 정보 조회
+
+/** Product */
+app.post("/getProduct", productRouter);      // 제품 정보 조회
+
+
+
+
