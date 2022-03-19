@@ -1,6 +1,7 @@
 import {render} from "react-dom";
-import {useLocation} from "react-router-dom";
+import {useLocation, useHistory, withRouter} from "react-router-dom";
 import React, {useState} from 'react'
+import Modal from './Modal';
 
 function ProductDetailPage() {
     const location = useLocation();
@@ -8,64 +9,62 @@ function ProductDetailPage() {
     // location.state); const productImg = props.productImg;
     const data = location.state.productInfo;
     console.log('data: ', data);
-    
+
     const [quantity, setQuantity] = useState(1);
-    
+    const [isCartModalOpen, setCartModalOpen] = useState(false);
+
+    const history = useHistory();
+
     const handleCount = (type) => {
         var count = quantity;
         if (type === 'minus') {
-            if (quantity != 0) count--;
-        } else {
+            if (quantity != 0) 
+                count--;
+            }
+        else {
             count++;
         }
         setQuantity(count);
     }
+
     const decrement = () => {
         console.log('감소');
         console.log('quantity: ', quantity);
-        
+
         setQuantity(--quantity);
         console.log(quantity);
-        // const btn = e
-        //     .target
-        //     .parentNode
-        //     .parentElement
-        //     .querySelector('button[data-action="decrement"]');
-        // const target = btn.nextElementSibling;
-        // let value = Number(target.value);
-        // value--;
+        // const btn = e     .target     .parentNode     .parentElement
+        // .querySelector('button[data-action="decrement"]'); const target =
+        // btn.nextElementSibling; let value = Number(target.value); value--;
         // target.value = value;
     }
 
     const increment = (e) => {
         console.log('증가');
-        // const btn = e
-        //     .target
-        //     .parentNode
-        //     .parentElement
-        //     .querySelector('button[data-action="decrement"]');
-        // const target = btn.nextElementSibling;
-        // let value = Number(target.value);
-        // value++;
+        // const btn = e     .target     .parentNode     .parentElement
+        // .querySelector('button[data-action="decrement"]'); const target =
+        // btn.nextElementSibling; let value = Number(target.value); value++;
         // target.value = value;
     }
 
     // const decrementButtons = document.querySelectorAll(
-    //     `button[data-action="decrement"]`
-    // );
+    // `button[data-action="decrement"]` ); const incrementButtons =
+    // document.querySelectorAll(     `button[data-action="increment"]` );
+    // decrementButtons.forEach(btn => {     console.log('감소!');
+    // btn.addEventListener("click", decrement); }); incrementButtons.forEach(btn =>
+    // {     btn.addEventListener("click", increment); });
 
-    // const incrementButtons = document.querySelectorAll(
-    //     `button[data-action="increment"]`
-    // );
+    const handleOpenCartModal = () => {
+        console.log('창 닫기');
+        setCartModalOpen(!isCartModalOpen);
+        // history.push({
+        //    pathname: '/ShoppingCart',
+        //    state: {
+        //        productInfo: data
+        //    }  
+        // });
 
-    // decrementButtons.forEach(btn => {
-    //     console.log('감소!');
-    //     btn.addEventListener("click", decrement);
-    // });
-
-    // incrementButtons.forEach(btn => {
-    //     btn.addEventListener("click", increment);
-    // });
+    }
 
     return (
         <div>
@@ -76,6 +75,7 @@ function ProductDetailPage() {
                         alt=""
                         class="absolute inset-0 w-full h-full object-cover"/>
                 </div>
+
                 <form class="flex-auto p-6">
                     <div class="flex flex-wrap">
                         <h1 class="flex-auto text-lg font-semibold text-slate-900">
@@ -153,7 +153,6 @@ function ProductDetailPage() {
                             <span>{quantity}</span>
                         </div>
 
-
                         <button
                             onClick={() => handleCount('plus')}
                             type="button"
@@ -162,16 +161,16 @@ function ProductDetailPage() {
                         </button>
                     </div>
 
-
                     <div class="flex space-x-4 mb-6 text-sm font-medium">
                         <div class="flex-auto flex space-x-4">
                             <button
-                                class="h-10 px-6 font-semibold rounded-md bg-black text-white"
+                                class="h-10 px-6 font-semibold bg-black text-white"
                                 type="submit">
                                 Buy now
                             </button>
                             <button
-                                class="h-10 px-6 font-semibold rounded-md border border-slate-200 text-slate-900"
+                                onClick={handleOpenCartModal}
+                                class="h-10 px-6 font-semibold border border-slate-200 text-slate-900"
                                 type="button">
                                 Add to cart
                             </button>
@@ -193,6 +192,14 @@ function ProductDetailPage() {
                     </p>
                 </form>
             </div>
+
+            {
+                isCartModalOpen && (
+                    <div>
+                        <Modal productInfo={data} close={handleOpenCartModal}/>
+                    </div>
+                )
+            }
         </div>
     )
 }

@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import {useSelector} from 'react-redux';
-import {useHistory, withRouter} from 'react-router-dom';
+import {useHistory, useLocation, withRouter} from 'react-router-dom';
 
 import {Table, Radio, Divider, Tag, Space} from 'antd';
 
@@ -40,6 +40,15 @@ function ShoppingCart() {
     const [selectedRows, setSelectedRows] = useState([]);
     const loginStatus = useSelector((state) => state);
     const hasSelected = selectedRows.length > 0 ? true : false;
+    const history = useHistory();
+
+    const location = useLocation();
+    console.log('location: ', location);
+    console.log('Product: ', location.state.productInfo);
+
+    // const data = location.state.productInfo;
+    // console.log('Product data in Shopping Cart: ', data);
+
 
     useEffect(() => {
         // setIsUserLogin(loginStatus.currentUser.login);
