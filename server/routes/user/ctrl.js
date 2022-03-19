@@ -18,12 +18,9 @@
      queueLimit: 0,
  });
 
-console.log('user ctrl');
 
 exports.checkAndCreateUser = (req, res) => {
-    console.log('req.body: ', req.body);
     // const user_id = req.body.inText; console.log(user_id); //query문 추가할 곳/////
-    console.log('req.body.id: ', req.body.id);
     // var userInsertSQL = 'INSERT INTO customer(id, password, name, phone, address, gender) values(?, ?, ?, ?, ?, ?)';
     var userInsertSQL = "INSERT INTO customer SET ? ";
 

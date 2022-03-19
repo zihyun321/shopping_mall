@@ -2,7 +2,7 @@ import {width} from "@mui/system";
 import React, {useEffect, useState} from "react";
 import {Link, NavLink, useHistory, useParams} from "react-router-dom";
 import styled from "styled-components";
-import ProductDetailPage from "./ProductDetailPage";
+import ProductDetail from "./ProductDetail";
 
 // const Img = styled.img`     width: 15rem,     height: 20rem `;
 

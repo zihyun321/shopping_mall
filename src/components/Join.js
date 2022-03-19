@@ -1,8 +1,4 @@
 import React, {useState} from 'react';
-import styled from "styled-components";
-import { useDispatch } from 'react-redux'
-
-// const dbErrorMsg = styled.div` `;
 
 function RegisterPage() {
     const [name, setName] = useState("")
@@ -253,27 +249,7 @@ function RegisterPage() {
                                 </div>
 
                             </div>
-                            {/* <div class="md:w-1/3 break-all ml-3"></div> */}
-
-                            {/* <input
-                                type="radio"
-                                id="female"
-                                name="female"
-                                value="F"
-                                checked={gender === 'F'}
-                                onChange={onGenderHandler}/>
-                            <label for="female">여자</label>
-                            <input
-                                type="radio"
-                                id="male"
-                                name="male"
-                                value="M"
-                                checked={gender === 'M'}
-                                onChange={onGenderHandler}/>
-                            <label for="male">남자</label> */
-                            }
                         </div>
-
                     </div>
                     <div class="md:w-1/3 break-all ml-3"></div>
 

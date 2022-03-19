@@ -4,27 +4,28 @@ import './App.css';
 
 import {BrowserRouter, Switch, Link, Route} from 'react-router-dom';
 
-import Header from './components/Header';
+import Header from './layouts/Header';
 import Home from './components/Home';
 import Login from './components/Login';
 import Join from './components/Join';
 import ProductList from './components/ProductList';
-import ProductDetailPage from './components/ProductDetailPage';
+import ProductDetail from './components/ProductDetail';
 import ShoppingCart from './components/ShoppingCart';
+
+import HomePage from './pages/HomePage';
+import JoinPage from './pages/JoinPage';
+import LoginPage from './pages/LoginPage';
+import OrderPage from './pages/OrderPage';
+import ProductDetailPage from './pages/ProductDetailPage';
+import ProductListPage from './pages/ProductListPage';
+import ShoppingCartPage from './pages/ShoppingCartPage';
 
 // TODO 나중에 이런 형식으로 고치기 import { ProductList } from './components/ProductList'
 
 class App extends React.Component {
 
-    // constructor(props) {     super(props);     this.state = {         username:
-    // null     }; } componentDidMount() {     fetch('http://localhost:3001/api')
-    // .then(res => res.json())         .then(data => this.setState({username:
-    // data.username})); }
-
     render() {
-        // const {username} = this.state;
         return (
-
             <div className="App">
                 <Header/>
                 <div class="mt-10">
@@ -33,18 +34,18 @@ class App extends React.Component {
                         exact="exact"
                         path='/ProductDetail/:id'
                         render={({location}) => {
-                            return (<ProductDetailPage/>)
+                            return (<ProductDetail/>)
                         }}/>
                     <Switch>
 
                         <Route exact="exact" path="/">
-                            <Home/>
+                            <HomePage/>
                         </Route>
                         <Route path="/login">
-                            <Login/>
+                            <LoginPage/>
                         </Route>
                         <Route path="/join">
-                            <Join/>
+                            <JoinPage/>
                         </Route>
                         <Route exact="exact" path='/ProductList'>
                             <ProductList category="Top"/>
@@ -68,7 +69,7 @@ class App extends React.Component {
                             <ProductList category="Acc"></ProductList>
                         </Route>
                         <Route exact="exact" path='/ShoppingCart'>
-                            <ShoppingCart/>
+                            <ShoppingCartPage/>
                         </Route>
                     </Switch>
                 </div>
