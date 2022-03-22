@@ -11,8 +11,8 @@ function ProductDetailPage() {
     const location = useLocation();
     // const { productInfo } = location.state; console.log('location.state: ',
     // location.state); const productImg = props.productImg;
-    const data = location.state.productInfo;
-    console.log('data: ', data);
+    const productInfo = location.state.productInfo;
+    console.log('productInfo: ', productInfo);
 
     const [quantity, setQuantity] = useState(1);
     const [isCartModalOpen, setCartModalOpen] = useState(false);
@@ -67,11 +67,55 @@ function ProductDetailPage() {
 
     const handleOpenCartModal = () => {
         console.log('창 닫기');
-        if (!handleOpenCartModal) setCartModalOpen(!isCartModalOpen);
+        if (isUserLogin) setCartModalOpen(!isCartModalOpen);
         else {
             alert('로그인 후 이용가능합니다.');
             history.push('/login');
         }        
+    }
+
+    const clickCheckCartBtn = () => {
+        console.log('clickCheckCartBtn 버튼 누름');
+
+        // user db에 장바구니 데이터 넣기
+        addProductToCart().then(
+            (data) => {
+                if (data.success) {
+                    console.log('성공!!!!! ');
+                    // alert(data.msg);
+                    // window.location.href = '/';                                
+                } else {
+                    alert(data.msg);
+                }
+            } 
+        );
+
+        handleOpenCartModal();
+
+
+    }
+
+    async function addProductToCart() {
+        const createCartInfo = {
+            customerId: userInfo.id,
+            productId: productInfo.id,
+            quantity: quantity 
+        }
+
+        const requestOptions = {
+            method: "post", //통신방법
+            headers: {
+                "content-type": "application/json"
+            },
+            body: JSON.stringify(createCartInfo)
+        };
+
+        const response = await fetch('http://localhost:3001/createCart', requestOptions);
+        const data = await response.json();
+        console.log('response: ', response);
+        console.log('data: ', data);
+
+        return data    
     }
 
     return (
@@ -79,7 +123,7 @@ function ProductDetailPage() {
             <div class="flex font-sans">
                 <div class="flex-none w-48 relative">
                     <img
-                        src={data.imgUrl}
+                        src={productInfo.imgUrl}
                         alt=""
                         class="absolute inset-0 w-full h-full object-cover"/>
                 </div>
@@ -87,10 +131,10 @@ function ProductDetailPage() {
                 <form class="flex-auto p-6">
                     <div class="flex flex-wrap">
                         <h1 class="flex-auto text-lg font-semibold text-slate-900">
-                            {data.productName}
+                            {productInfo.productName}
                         </h1>
                         <div class="text-lg font-semibold text-slate-500">
-                            {data.productPrice}
+                            {productInfo.productPrice}
                         </div>
                         {/* <div class="w-full flex-none text-sm font-medium text-slate-700 mt-2">
                             In stock
@@ -177,7 +221,7 @@ function ProductDetailPage() {
                                 Buy now
                             </button>
                             <button
-                                onClick={handleOpenCartModal}
+                                onClick={clickCheckCartBtn}
                                 class="h-10 px-6 font-semibold border border-slate-200 text-slate-900"
                                 type="button">
                                 Add to cart
@@ -204,7 +248,7 @@ function ProductDetailPage() {
             {
                 isCartModalOpen && isUserLogin && (
                     <div>
-                        <Modal productInfo={data} close={handleOpenCartModal}/>
+                        <Modal productInfo={productInfo} close={handleOpenCartModal} quantity={quantity}/>
                     </div>
                 )
             }

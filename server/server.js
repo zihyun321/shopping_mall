@@ -33,6 +33,8 @@ app.listen(port, () => {
 // 라우팅 
 const userRouter = require('./routes/user/index');
 const productRouter = require('./routes/Product/index');
+const cartRouter = require('./routes/Cart/index');
+
 
 console.log('서버탐');
 /** User */
@@ -42,6 +44,7 @@ app.post("/getUserInfo", userRouter);       // user 정보 조회
 /** Product */
 app.post("/getProduct", productRouter);      // 제품 정보 조회
 
-
+/** Cart */
+app.post("/createCart", cartRouter);      // cart 생성
 
 

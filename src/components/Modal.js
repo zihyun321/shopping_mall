@@ -1,12 +1,23 @@
-import React, {useState} from 'react';
+/* eslint-disable */
+
+import React, {useState, useEffect} from 'react';
 import { useHistory, withRouter } from 'react-router-dom';
+import {useSelector} from 'react-redux';
 
 const Modal = (props) => {
     const history = useHistory();
     // var productInfo = props.productInfo;
 
-    const {productInfo, close} = props;
+    const {productInfo, close, quantity} = props;
     const [isModalVisible, setIsModalVisible] = useState(false);
+    const [userInfo, setUserInfo] = useState({});
+
+    const loginStatus = useSelector((state) => state);
+
+    useEffect(() => {
+        setUserInfo(loginStatus.currentUser.user);
+    }, [loginStatus])
+
 
     const showModal = () => {
         setIsModalVisible(true);
@@ -22,13 +33,53 @@ const Modal = (props) => {
     };
 
     const clickCheckCartBtn = () => {
-        history.push({
-           pathname: '/ShoppingCart',
-           state: {
-               productInfo: productInfo
-           }  
-        });
+        // console.log('clickCheckCartBtn 버튼 누름');
+
+        // user DB에 장바구니 데이터 넣기
+        // addProductToCart().then(
+        //     (data) => {
+        //         if (data.success) {
+        //             console.log('성공!!!!! ');
+        //             // alert(data.msg);
+        //             // window.location.href = '/';                                
+        //         } else {
+        //             alert(data.msg);
+        //         }
+        //     } 
+        // );
+
+        // 이동
+        // history.push({
+        //    pathname: '/ShoppingCart',
+        //    state: {
+        //        productInfo: productInfo
+        //    }  
+        // });
     }
+
+    // async function addProductToCart() {
+
+    //     const createCartInfo = {
+    //         customerId: userInfo.id,
+    //         productId: productInfo.id,
+    //         quantity: quantity 
+    //     }
+
+    //     const requestOptions = {
+    //         method: "post", //통신방법
+    //         headers: {
+    //             "content-type": "application/json"
+    //         },
+    //         body: JSON.stringify(createCartInfo)
+    //     };
+
+    //     const response = await fetch('http://localhost:3001/createCart', requestOptions);
+    //     const data = await response.json();
+    //     console.log('response: ', response);
+    //     console.log('data: ', data);
+
+    //     return data
+    // }
 
     return (
         <div>
