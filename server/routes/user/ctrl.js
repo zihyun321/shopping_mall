@@ -20,6 +20,7 @@
 
 
 exports.checkAndCreateUser = (req, res) => {
+    console.log('===checkAndCreateUser===');
     // const user_id = req.body.inText; console.log(user_id); //query문 추가할 곳/////
     // var userInsertSQL = 'INSERT INTO customer(id, password, name, phone, address, gender) values(?, ?, ?, ?, ?, ?)';
     var userInsertSQL = "INSERT INTO customer SET ? ";

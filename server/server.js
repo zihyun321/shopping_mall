@@ -34,6 +34,7 @@ app.listen(port, () => {
 const userRouter = require('./routes/user/index');
 const productRouter = require('./routes/Product/index');
 
+console.log('서버탐');
 /** User */
 app.post("/createUser", userRouter);        // 회원가입
 app.post("/getUserInfo", userRouter);       // user 정보 조회

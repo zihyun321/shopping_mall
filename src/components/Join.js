@@ -1,6 +1,8 @@
+/* eslint-disable */
+
 import React, {useState} from 'react';
 
-function RegisterPage() {
+function Join() {
     const [name, setName] = useState("")
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("")
@@ -46,6 +48,7 @@ function RegisterPage() {
         setGender(event.currentTarget.value)
     }
 
+    // 원래꺼
     const onSubmit = (event) => {
         event.preventDefault();        
 
@@ -68,41 +71,84 @@ function RegisterPage() {
 
         if (hasEmptyInfo) alert('모든 항목을 다 입력해야 합니다.');
         else {
-            fetch("http://localhost:3001/createUser", {
-                method: "post", //통신방법
-                headers: {
-                    "content-type": "application/json"
-                },
-                body: JSON.stringify(userInfo)
-            })
-                .then((res) => res.json())
-                .then((res) => {
-                    if (res.success) {
-                        alert(res.msg);
-                        window.location.href = '/';
+
+            createUserFetch(userInfo).then(
+                (data) => {
+                    if (data.success) {
+                        console.log('성공!!!!! ');
+                        alert(data.msg);
+                        window.location.href = '/';                                
                     } else {
-                        alert(res.msg);
+                        alert(data.msg);
                     }
-                    // this.setState({text: json.text});
-                });
+                } 
+            );
+
+
+            // const result = createUserFetch(userInfo);
+            // console.log('=== result: ', result);
+            // if (result.success) {
+            //     console.log('성공!!!!! ');
+
+            //     alert(result.msg);
+            //     window.location.href = '/';
+            // } else {
+            //     alert(result.msg);
+            // }
+
+
+            // fetch("http://localhost:3001/createUser", {
+            //     method: "post", //통신방법
+            //     headers: {
+            //         "content-type": "application/json"
+            //     },
+            //     body: JSON.stringify(userInfo)
+            // })
+            //     .then((res) => res.json())
+            //     .then((res) => {
+            //         if (res.success) {
+            //             alert(res.msg);
+            //             window.location.href = '/';
+            //         } else {
+            //             alert(res.msg);
+            //         }
+            //         // this.setState({text: json.text});
+            //     });
             }
 
     }
+
+    async function createUserFetch(userInfo) {
+        const requestOptions = {
+            method: "post", //통신방법
+            headers: {
+                "content-type": "application/json"
+            },
+            body: JSON.stringify(userInfo)
+        };
+
+        const response = await fetch('http://localhost:3001/createUser', requestOptions);
+        const data = await response.json();
+        console.log('response: ', response);
+        console.log('data: ', data);
+
+        return data
+    }
     
+     
     /**
      * Todo
      * - 비밀번호 해시값 처리해서 저장하기
      */
     return (
-        <div class="loginregister w-full max-w-lg mx-auto text-black">
-
-            <p class="pb-4 text-xl font-weight: 800;">
+        <div class="w-full max-w-lg mx-auto text-black">
+            <p class="pb-4 text-2xl">
                 Sign UP
             </p>
             <form>
                 <div class="md:flex md:items-center mb-6">
                     <div class="md:w-1/3">
-                        <label class="block md:text-right mb-1 md:mb-0 pr-4" for="id">
+                        <label class="block md:text-right mb-1 md:mb-0 pr-4" htmlFor="id">
                             아이디
                         </label>
                     </div>
@@ -119,7 +165,7 @@ function RegisterPage() {
                 </div>
                 <div class="md:flex md:items-center mb-6">
                     <div class="md:w-1/3">
-                        <label class="block md:text-right mb-1 md:mb-0 pr-4" for="password">
+                        <label class="block md:text-right mb-1 md:mb-0 pr-4" htmlFor="password">
                             비밀번호
                         </label>
                     </div>
@@ -136,7 +182,7 @@ function RegisterPage() {
                 </div>
                 <div class="md:flex md:items-center mb-6">
                     <div class="md:w-1/3">
-                        <label class="block md:text-right mb-1 md:mb-0 pr-4" for="confirm-password">
+                        <label class="block md:text-right mb-1 md:mb-0 pr-4" htmlFor="confirm-password">
                             비밀번호확인
                         </label>
                     </div>
@@ -159,7 +205,7 @@ function RegisterPage() {
                 </div>
                 <div class="md:flex md:items-center mb-6">
                     <div class="md:w-1/3">
-                        <label class="block md:text-right mb-1 md:mb-0 pr-4" for="name">
+                        <label class="block md:text-right mb-1 md:mb-0 pr-4" htmlFor="name">
                             이름
                         </label>
                     </div>
@@ -176,7 +222,7 @@ function RegisterPage() {
                 </div>
                 <div class="md:flex md:items-center mb-6">
                     <div class="md:w-1/3">
-                        <label class="block md:text-right mb-1 md:mb-0 pr-4" for="phone">
+                        <label class="block md:text-right mb-1 md:mb-0 pr-4" htmlFor="phone">
                             핸드폰
                         </label>
                     </div>
@@ -194,7 +240,7 @@ function RegisterPage() {
                 </div>
                 <div class="md:flex md:items-center mb-6">
                     <div class="md:w-1/3">
-                        <label class="block md:text-right mb-1 md:mb-0 pr-4" for="address">
+                        <label class="block md:text-right mb-1 md:mb-0 pr-4" htmlFor="address">
                             주소
                         </label>
                     </div>
@@ -211,7 +257,7 @@ function RegisterPage() {
                 </div>
                 <div class="md:flex md:items-center mb-6">
                     <div class="md:w-1/3">
-                        <label class="block md:text-right mb-1 md:mb-0 pr-4" for="inline-password">
+                        <label class="block md:text-right mb-1 md:mb-0 pr-4" htmlFor="inline-password">
                             성별
                         </label>
                     </div>
@@ -227,7 +273,7 @@ function RegisterPage() {
                                         checked={gender === 'F'}
                                         onChange={onGenderHandler}
                                         id="female"/>
-                                    <label class="form-check-label inline-block" for="female">
+                                    <label class="form-check-label inline-block" htmlFor="female">
                                         여자
                                     </label>
 
@@ -242,7 +288,7 @@ function RegisterPage() {
                                         checked={gender === 'M'}
                                         onChange={onGenderHandler}
                                         id="male"/>
-                                    <label class="form-check-label inline-block" for="male">
+                                    <label class="form-check-label inline-block" htmlFor="male">
                                         남자
                                     </label>
 
@@ -278,6 +324,8 @@ function RegisterPage() {
             </form>
         </div>
     );
-}
+};
 
-export default RegisterPage;
+
+
+export default Join;
