@@ -53,4 +53,9 @@ yarn add @mui/icons-material
 ### 4. 장바구니 기능
 - 로그인 상태시에만 장바구니 사용 가능
 - 제품 상세 페이지에서 제품 선택 후, Add to Cart 버튼을 누르면 모달창 (쇼핑 계속하기, 장바구니로 이동)
-- User DB에 있는 장바구니 정보 가져오기 
+- User DB에 있는 장바구니 정보 가져오기 (FOREIGN KEY 제약 조건 해제 필수? user/product 중복시 count 올리기?, )
+
+
+### 수정해야할 사항들
+- 전체 product list 페이지 렌더링 너무 늦음 (+ 로딩 아이콘 삽입)
+- 회원가입시, 비밀번호 hash 알고리즘 사용하여 저장

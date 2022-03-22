@@ -33,28 +33,14 @@ const Modal = (props) => {
     };
 
     const clickCheckCartBtn = () => {
-        // console.log('clickCheckCartBtn 버튼 누름');
+        console.log('clickCheckCartBtn 버튼 누름');
 
-        // user DB에 장바구니 데이터 넣기
-        // addProductToCart().then(
-        //     (data) => {
-        //         if (data.success) {
-        //             console.log('성공!!!!! ');
-        //             // alert(data.msg);
-        //             // window.location.href = '/';                                
-        //         } else {
-        //             alert(data.msg);
-        //         }
-        //     } 
-        // );
-
-        // 이동
-        // history.push({
-        //    pathname: '/ShoppingCart',
-        //    state: {
-        //        productInfo: productInfo
-        //    }  
-        // });
+        history.push({
+           pathname: '/ShoppingCart',
+           state: {
+               productInfo: productInfo
+           }  
+        });
     }
 
     // async function addProductToCart() {
