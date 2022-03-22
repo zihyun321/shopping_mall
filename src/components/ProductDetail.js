@@ -1,9 +1,13 @@
 import {render} from "react-dom";
 import {useLocation, useHistory, withRouter} from "react-router-dom";
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import Modal from './Modal';
+import {useSelector} from 'react-redux';
 
 function ProductDetailPage() {
+    const [userInfo, setUserInfo] = useState({});
+    const [isUserLogin, setIsUserLogin] = useState(false);
+
     const location = useLocation();
     // const { productInfo } = location.state; console.log('location.state: ',
     // location.state); const productImg = props.productImg;
@@ -14,6 +18,13 @@ function ProductDetailPage() {
     const [isCartModalOpen, setCartModalOpen] = useState(false);
 
     const history = useHistory();
+    const loginStatus = useSelector((state) => state);
+
+    useEffect(() => {
+        setIsUserLogin(loginStatus.currentUser.login);
+        setUserInfo(loginStatus.currentUser.user);
+    }, [loginStatus])
+
 
     const handleCount = (type) => {
         var count = quantity;
@@ -56,14 +67,11 @@ function ProductDetailPage() {
 
     const handleOpenCartModal = () => {
         console.log('창 닫기');
-        setCartModalOpen(!isCartModalOpen);
-        // history.push({
-        //    pathname: '/ShoppingCart',
-        //    state: {
-        //        productInfo: data
-        //    }  
-        // });
-
+        if (!handleOpenCartModal) setCartModalOpen(!isCartModalOpen);
+        else {
+            alert('로그인 후 이용가능합니다.');
+            history.push('/login');
+        }        
     }
 
     return (
@@ -194,7 +202,7 @@ function ProductDetailPage() {
             </div>
 
             {
-                isCartModalOpen && (
+                isCartModalOpen && isUserLogin && (
                     <div>
                         <Modal productInfo={data} close={handleOpenCartModal}/>
                     </div>

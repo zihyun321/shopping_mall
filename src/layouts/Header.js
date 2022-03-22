@@ -31,7 +31,9 @@ const headerStyle = {
 
 function LoggedinHeader() {
     const [isProfileModalOpen, setProfileModalOpen] = useState(false);
-    
+
+    const history = useHistory();
+
     const handleClickLogout = () => {
         window.location.href = '/';
     }
@@ -42,7 +44,6 @@ function LoggedinHeader() {
     }
 
     const useHandleClickCart = () => {
-        const history = useHistory();
         history.push('/ShoppingCart');
     }
 
@@ -185,6 +186,9 @@ function Header() {
         setUserInfo(loginStatus.currentUser.user);
     }, [loginStatus])
 
+    const history = useHistory();
+
+
     /**
      * - React Hook을 사용할 경우 => 메서드명 맨앞 글자가 대문자
      * - React Custom Hook을 사용할 경우 => 메서드명 맨앞에 use 붙이기
@@ -255,7 +259,9 @@ function Header() {
                         <div
                             class="flex-1 flex items-center justify-center sm:items-stretch sm:justify-start">
                             <div class="flex-shrink-0 flex items-center">
-                                <p class="my-0	cursor-pointer" onClick={useHandleClickHome} style={headerStyle}>Shopping Mall</p>
+                                <p class="my-0	cursor-pointer" 
+                                onClick={()=>{history.push('/')}}
+                                style={headerStyle}>Shopping Mall</p>
                             </div>
                         </div>
 
@@ -355,32 +361,33 @@ function Header() {
                                 <div class="flex space-x-4">
                                     {/* <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" --> */}
                                     <a
-                                        href="/ProductList/Outer"
+                                        // href="/ProductList/Outer"
+                                        onClick={() => {history.push('/ProductList/Outer')}}
                                         style={menu}
                                         class="text-white hover:text-teal-100 px-3 py-2 rounded-md text-sm font-medium"
                                         aria-current="page">Outer</a>
                                     <a
-                                        href="/ProductList/Top"
+                                        onClick={() => {history.push('/ProductList/Top')}}
                                         style={menu}
                                         class="text-white hover:text-teal-100 px-3 py-2 rounded-md text-sm font-medium"
                                         aria-current="page">Top</a>
 
                                     <a
-                                        href="/ProductList/Bottom"
+                                        onClick={() => {history.push('/ProductList/Bottom')}}
                                         style={menu}
                                         class="text-white hover:text-teal-100 px-3 py-2 rounded-md text-sm font-medium">Bottom</a>
 
                                     <a
-                                        href="/ProductList/Shoes"
+                                        onClick={() => {history.push('/ProductList/Shoes')}}
                                         style={menu}
                                         class="text-white hover:text-teal-100 px-3 py-2 rounded-md text-sm font-medium">Shoes</a>
                                     <a
-                                        href="/ProductList/Bag"
+                                        onClick={() => {history.push('/ProductList/Bag')}}
                                         style={menu}
                                         class="text-white hover:text-teal-100 px-3 py-2 rounded-md text-sm font-medium">Bag</a>
 
                                     <a
-                                        href="/ProductList/Acc"
+                                        onClick={() => {history.push('/ProductList/Acc')}}
                                         style={menu}
                                         class="text-white hover:text-teal-100 px-3 py-2 rounded-md text-sm font-medium">Acc</a>
                                 </div>
