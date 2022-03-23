@@ -37,13 +37,11 @@ class App extends React.Component {
                             return (<ProductDetail/>)
                         }}/>
                     <Switch>
-
-                        <Route exact="exact" path="/">
+                        <Route exact="exact" path="/" component={props => <HomePage {...props}/>}/> {/* <Route path="/">
                             <HomePage/>
-                        </Route>
-                        <Route path="/login">
-                            <LoginPage/>
-                        </Route>
+                        </Route> */
+                        }
+                        <Route path="/login" component={props => <LoginPage {...props}/>}/>
                         <Route path="/join">
                             <JoinPage/>
                         </Route>

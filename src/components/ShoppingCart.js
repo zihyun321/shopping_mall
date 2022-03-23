@@ -34,26 +34,84 @@ const columns = [
     }
 ];
 
+const columns2 = [
+    {
+        title: 'id',
+        dataIndex: 'id',
+        key: 'id'
+    }, {
+        title: 'customerId',
+        dataIndex: 'customerId',
+        key: 'customerId'
+    }, {
+        title: 'productId',
+        dataIndex: 'productId',
+        key: 'productId'
+    }, {
+        title: 'quantity',
+        dataIndex: 'quantity',
+        key: 'quantity'
+    }
+];
+
 function ShoppingCart() {
     const [selectionType, setSelectionType] = useState('checkbox');
     const [selectedRowKeys, setSelectedRowKeys] = useState([]);
     const [selectedRows, setSelectedRows] = useState([]);
     const loginStatus = useSelector((state) => state);
-    const hasSelected = selectedRows.length > 0 ? true : false;
+    const hasSelected = selectedRows.length > 0
+        ? true
+        : false;
     const history = useHistory();
+    const [userInfo, setUserInfo] = useState({});
+    const [cartList, setCartList] = useState([]);
 
     const location = useLocation();
+    const userId = loginStatus.currentUser.user;
     console.log('location: ', location);
-    console.log('Product: ', location.state.productInfo);
-
-    // const data = location.state.productInfo;
-    // console.log('Product data in Shopping Cart: ', data);
-
+    // console.log('Product: ', location.state.productInfo); const data =
+    // location.state.productInfo; console.log('Product data in Shopping Cart: ',
+    // data);
 
     useEffect(() => {
         // setIsUserLogin(loginStatus.currentUser.login);
-        // setUserInfo(loginStatus.currentUser.user);
-    }, [loginStatus]);
+        setUserInfo(loginStatus.currentUser.user);
+        console.log('userInfo: ', userInfo);
+        console.log('loginStatus.currentUser.user: ', loginStatus.currentUser.user);
+        if (loginStatus.currentUser.user) {
+            getCartList().then((data) => {
+                if (data) {
+                    console.log('성공!!!!! ');
+
+                } else {
+                    setCartList(data);
+                    console.log('실패!!');
+                }
+            });
+        }
+
+    }, []);
+
+    async function getCartList() {
+        const requestOptions = {
+            method: "post", //통신방법
+            headers: {
+                "content-type": "application/json"
+            },
+            body: JSON.stringify(loginStatus.currentUser.user)
+        };
+
+        const response = await fetch(
+            'http://localhost:3001/getCartList',
+            requestOptions
+        );
+        const data = await response.json();
+        console.log('response: ', response);
+        console.log('data: ', data);
+
+        return data
+
+    }
 
     const rowSelection = {
         onChange: (selectedRowKeys, selectedRows) => {
@@ -75,21 +133,19 @@ function ShoppingCart() {
         })
     };
 
-    const onSubmit = () => {
-
-    } 
+    const onSubmit = () => {}
 
     const handleClickDelete = () => {
-        if (!hasSelected) notSelectedItem();
-        else {
-
-        }
+        if (!hasSelected) 
+            notSelectedItem();
+        else {}
     }
 
     const handleClickOrder = () => {
-        if (!hasSelected) notSelectedItem(); 
-    }
-
+        if (!hasSelected) 
+            notSelectedItem();
+        }
+    
     const notSelectedItem = () => {
         alert('제품을 선택해주세요.');
     }
@@ -110,6 +166,14 @@ function ShoppingCart() {
                     }}
                     dataSource={dataSource}
                     columns={columns}/>
+                <Table
+                    rowSelection={{
+                        type: 'checkbox',
+                        ...rowSelection
+                    }}
+                    dataSource={cartList}
+                    columns={columns2}/>
+
             </div>
             <div>
                 총 상품 금액
@@ -127,7 +191,6 @@ function ShoppingCart() {
                     type="submit">
                     선택 상품 주문
                 </button>
-
 
             </div>
         </div>

@@ -2,8 +2,8 @@ import React, {useEffect, useState} from 'react';
 import { useSelector } from 'react-redux';
 
 const imgStyle = {
-    // width: "40rem",
-    // height: "45rem"
+    width: "640px",
+    height: "600px"
 }
 
 function Home(props) {

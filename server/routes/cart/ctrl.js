@@ -72,18 +72,25 @@ exports.checkAndCreateCart = (req, res) => {
     // console.log('getCartInfoResult: ', getCartInfoResult);
 }
 
-async function getCartList(cartInfo) {
-    console.log('cartInfo: ', cartInfo);
-    var sql = 'SELECT id, quantity FROM shoppingCart WHERE customerId = ?';
-    await connection.query(sql, [cartInfo.customerId, cartInfo.productId], (error, rows, fields) => {
+exports.getCartList = (req, res) => {
+    console.log('req: ', req.body);
+    var customerId = req.body.id;
+
+
+    var sql = ' SELECT cart.id, cart.customerId, customer.name, cart.productId, product.productName, product.productPrice, product.size, product.color, product.imgUrl, cart.quantity ';
+    sql += ' FROM shoppingcart as cart ';
+    sql += ' join customer on customer.id = cart.customerId  ';
+    sql += ' join product on product.id = cart.productId ';
+    sql += ' where customer.id = ? ';
+
+    console.log('sql: ', sql);
+    // var sql = 'SELECT * FROM shoppingCart WHERE customerId = ?';
+    connection.query(sql, customerId, (error, rows, fields) => {
         if (error) {
-            console.log('error: ', error);
-            return error
-            // throw error;
+            throw error;
         }
         else {
-            console.log('rows: ', rows);
-            return rows
+            return res.send(rows);
         }        
     })
 }

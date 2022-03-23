@@ -42,9 +42,10 @@ app.post("/createUser", userRouter);        // 회원가입
 app.post("/getUserInfo", userRouter);       // user 정보 조회
 
 /** Product */
-app.post("/getProduct", productRouter);      // 제품 정보 조회
+app.post("/getProduct", productRouter);     // 제품 정보 조회
 
 /** Cart */
-app.post("/createCart", cartRouter);      // cart 생성
+app.post("/createCart", cartRouter);        // cart 생성
+app.post("/getCartList", cartRouter);       // cart 조회
 
 
