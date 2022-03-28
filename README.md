@@ -37,6 +37,10 @@ yarn add antd
 npm install @mui/material @emotion/react @emotion/styled
 yarn add @mui/icons-material
 
+`React Table 설치`
+npm install react-table --save
+
+
 ### 2. 회원가입 기능 
 **Note: 회원가입시, 비밀번호는 암호화해야한다!**
 - MySQL DB에 User 컬럼 구성

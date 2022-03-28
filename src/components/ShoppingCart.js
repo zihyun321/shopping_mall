@@ -1,8 +1,9 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useMemo} from 'react';
 import {useSelector} from 'react-redux';
 import {useHistory, useLocation, withRouter} from 'react-router-dom';
 
 import {Table, Radio, Divider, Tag, Space} from 'antd';
+import ReactTable from "react-table";
 
 const dataSource = [
     {
@@ -36,9 +37,19 @@ const columns = [
 
 const columns2 = [
     {
-        title: 'id',
-        dataIndex: 'id',
-        key: 'id'
+        title: 'product',
+        children: [
+            {
+                title: 'productName',
+                dataIndex: 'productName',
+                key: 'productName'
+            }, {
+                title: 'imgUrl',
+                dataIndex: 'imgUrl',
+                key: 'imgUrl',
+                render: imgUrl => <img alt={imgUrl} src={imgUrl} />
+            }
+        ]
     }, {
         title: 'customerId',
         dataIndex: 'customerId',
@@ -82,9 +93,10 @@ function ShoppingCart() {
             getCartList().then((data) => {
                 if (data) {
                     console.log('성공!!!!! ');
-
-                } else {
                     setCartList(data);
+                    console.log(cartList);
+                    setTableData();
+                } else {
                     console.log('실패!!');
                 }
             });
@@ -110,6 +122,11 @@ function ShoppingCart() {
         console.log('data: ', data);
 
         return data
+
+    }
+
+    function setTableData() {
+        console.log('=== setTableData ===');
 
     }
 
@@ -155,6 +172,49 @@ function ShoppingCart() {
             <div>
                 Shopping Cart
             </div>
+            {/* <div>
+                <ReactTable
+                    data={cartList}
+                    columns={[
+                        {
+                            Header: "product",
+                            columns: [
+                                {
+                                    Header: "Product Name",
+                                    accessor: "productName"
+                                }, {
+                                    Header: "",
+                                    id: "imgUrl",
+                                    accessor: d => d.lastName
+                                }
+                            ]
+                        }, {
+                            Header: "Info",
+                            columns: [
+                                {
+                                    Header: "Age",
+                                    accessor: "age"
+                                }, {
+                                    Header: "Status",
+                                    Cell: (row) => {
+                                        return <div><img height={34} src={row.original.ImgPath}/></div>
+                                    },
+                                    id: "status"
+                                }
+                            ]
+                        }, {
+                            Header: 'Stats',
+                            columns: [
+                                {
+                                    Header: "Visits",
+                                    accessor: "visits"
+                                }
+                            ]
+                        }
+                    ]}
+                    defaultPageSize={10}
+                    className="-striped -highlight"/>
+            </div> */}
 
             <div class='mt-5'>
 
