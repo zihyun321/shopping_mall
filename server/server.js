@@ -47,5 +47,6 @@ app.post("/getProduct", productRouter);     // 제품 정보 조회
 /** Cart */
 app.post("/createCart", cartRouter);        // cart 생성
 app.post("/getCartList", cartRouter);       // cart 조회
+app.post("/deleteCart", cartRouter);       // cart 삭제
 
 

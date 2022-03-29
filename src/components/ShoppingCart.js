@@ -54,6 +54,7 @@ function ShoppingCart() {
     const [changedProductInfo, setChangedProductInfo] = useState([]);
     const [prodQuantity, setProdQuantity] = useState();
     const [totalAmount, setTotalAmount] = useState();
+    const [selectedAmount, setSelectedAmount] = useState();
 
     console.log('location: ', location);
     // console.log('Product: ', location.state.productInfo); const data =
@@ -178,6 +179,25 @@ function ShoppingCart() {
 
     }
 
+    async function deleteCart() {
+        const requestOptions = {
+            method: "post", //통신방법
+            headers: {
+                "content-type": "application/json"
+            },
+            body: JSON.stringify(selectedRowKeys)
+        };
+        const response = await fetch(
+            'http://localhost:3001/deleteCart',
+            requestOptions
+        );
+        const data = await response.json();
+        console.log('response: ', response);
+        console.log('data: ', data);
+
+        return data
+    }
+
     function setTableData() {
         console.log('=== setTableData ===');
 
@@ -218,6 +238,12 @@ function ShoppingCart() {
             console.log('--- selectedRows: ', selectedRows);
 
             setSelectedRowKeys(selectedRowKeys);
+            var selected = 0;
+            selectedRows.map((data) => {
+                console.log('가격 정보', data.productPrice);
+                selected = data.productPrice;
+            })
+            setSelectedAmount(selected);
         }
         
         // getCheckboxProps: (record) => ({
@@ -230,9 +256,20 @@ function ShoppingCart() {
     const onSubmit = () => {}
 
     const handleClickDelete = () => {
-        if (!hasSelected) 
-            notSelectedItem();
-        else {}
+        console.log('=== handleClickDelete ===');
+        console.log('selectedRows: ', selectedRows);
+        console.log('selectedRowKeys: ', selectedRowKeys);
+        // if (!hasSelected) 
+        //     notSelectedItem();
+        // else {
+            deleteCart().then((data) => {
+                if (data) {
+                    console.log('성공!!!!! ');
+                } else {
+                    console.log('실패!!');
+                }
+            });
+        // }
     }
 
     const handleClickOrder = () => {
@@ -308,7 +345,12 @@ function ShoppingCart() {
 
             </div>
             <div>
-                총 상품 금액: {totalAmount}
+                <div>
+                    선택 상품 금액: {selectedAmount}
+                </div>
+                <div class='ml-1'>
+                    총 상품 금액: {totalAmount}
+                </div>
             </div>
             <div>
                 <button

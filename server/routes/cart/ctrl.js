@@ -120,4 +120,11 @@ exports.updateCart = (updateInfo) => {
     });
 }
 
+exports.deleteCart = (req, res) => {
+    console.log('===deleteCart===');
+    console.log('req.body: ', req.body);
+    var sql = 'DELETE shoppingCart WHERE id=? ';
+
+}
+
  
