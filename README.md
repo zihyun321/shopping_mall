@@ -38,8 +38,8 @@ npm install @mui/material @emotion/react @emotion/styled
 yarn add @mui/icons-material
 
 `React Table 설치`
-npm install react-table --save
 
+npm install react-table --save
 
 ### 2. 회원가입 기능 
 **Note: 회원가입시, 비밀번호는 암호화해야한다!**
@@ -57,7 +57,9 @@ npm install react-table --save
 ### 4. 장바구니 기능
 - 로그인 상태시에만 장바구니 사용 가능
 - 제품 상세 페이지에서 제품 선택 후, Add to Cart 버튼을 누르면 모달창 (쇼핑 계속하기, 장바구니로 이동)
-- User DB에 있는 장바구니 정보 가져오기 (FOREIGN KEY 제약 조건 끄고 작업 => 'SET FOREIGN_KEY_CHECKS=0;' ) 
+- User DB에 있는 장바구니 정보 가져오기 (FOREIGN KEY 제약 조건 끄고 작업 => 'SET FOREIGN_KEY_CHECKS=0;' )
+- Antd 라이브러리로 Table 장바구니 리스트 그리기
+- 테이블 선택을 통해 선택된 상품 장바구니 삭제
 
 
 ### 수정해야할 사항들
