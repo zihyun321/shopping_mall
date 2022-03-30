@@ -45,7 +45,7 @@ exports.checkAndCreateCart = (req, res) => {
             console.log('rows: ', rows);
             // return rows
             if (rows.length == 0) {
-                // this.createCart(cartInfo);
+                this.createCart(cartInfo);
                 console.log('결과가 0이다.');
 
             } else {
@@ -122,9 +122,28 @@ exports.updateCart = (updateInfo) => {
 
 exports.deleteCart = (req, res) => {
     console.log('===deleteCart===');
-    console.log('req.body: ', req.body);
-    var sql = 'DELETE shoppingCart WHERE id=? ';
 
+    var idList = req.body;
+    console.log('idList: ', idList);
+    console.log('idList.length: ', idList.length);
+
+    var sql = ' DELETE FROM shoppingCart ';
+    // sql += ' WHERE id in ?';
+
+    if (idList.length = 1) {
+        sql += ' WHERE id=? ';
+    } else {
+        sql += ' WHERE id in ?';
+    }
+
+    connection.query(sql, [idList], (error, rows, fields) => {
+        if (error)
+            throw error;
+        else {
+            console.log('성공!!');
+            return rows
+        }
+    })
 }
 
  
