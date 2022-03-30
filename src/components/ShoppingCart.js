@@ -113,16 +113,32 @@ function ShoppingCart() {
                 </div>
                 <button 
                 class="shadow text-black font-bold w-3"
-                type='submit' onClick={()=> console.log(record.id)}>
+                type='submit' onClick={()=> record.quantity+1}>
                 +
                 </button>
                 <button 
                 class="shadow text-black font-bold w-3"
-                type='submit' onClick={()=> console.log(record.id)}>
+                type='submit' onClick={()=> clickProdQuantity(record)}>
                 -
+                </button>
+                <button 
+                    class="shadow text-black font-bold w-3"
+                    onClick={() => changeProdQuantity()}                    
+                >
+                    변경
                 </button>
             </div>        
         )
+    }
+
+    const clickProdQuantity = (record) => {
+        console.log('=== clickProdQuantity ===');
+        console.log('record: ', record);
+        console.log('cartList: ', cartList);
+    }
+
+    const changeProdQuantity = () => {
+        console.log('=== changeProdQuantity ===');
     }
 
     useEffect(() => {
