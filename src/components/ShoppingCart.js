@@ -104,21 +104,24 @@ function ShoppingCart() {
             render: (text, record) => setProductCount(text, record) }
     ];
 
+    const [test, setTest] = useState(0);
     const setProductCount = (text, record) => {
-        var prodQuantity = record.quantity;
+        console.log('cartList: ', cartList);
+        console.log('record: ', record);
+        var prodId = record.id;
         return (
             <div class='grid '>
                 <div class="box-border h-4 w-4 p-4 border">
-                    {prodQuantity}
+                    {test}
                 </div>
                 <button 
                 class="shadow text-black font-bold w-3"
-                type='submit' onClick={()=> record.quantity+1}>
+                type='submit' onClick={()=> clickProdQuantity(record, 'plus')}>
                 +
                 </button>
                 <button 
                 class="shadow text-black font-bold w-3"
-                type='submit' onClick={()=> clickProdQuantity(record)}>
+                type='submit' onClick={()=> clickProdQuantity(record, 'minus')}>
                 -
                 </button>
                 <button 
@@ -131,10 +134,23 @@ function ShoppingCart() {
         )
     }
 
-    const clickProdQuantity = (record) => {
+    const clickProdQuantity = (record, type) => {
         console.log('=== clickProdQuantity ===');
-        console.log('record: ', record);
-        console.log('cartList: ', cartList);
+        console.log('record.quantity: ', record.quantity);
+
+        var prodQuan = record.quantity;
+        var targetIndex = cartList.findIndex(v => record.id == v.id);
+
+        console.log('=== 비교시작 ===');  
+        console.log('targetIndex: ', targetIndex);
+
+        if (type === 'minus') {
+            if (prodQuan != 0) prodQuan --;
+        } else prodQuan ++;
+
+        var changeList = [];
+        // setCartList(changeList);
+
     }
 
     const changeProdQuantity = () => {
