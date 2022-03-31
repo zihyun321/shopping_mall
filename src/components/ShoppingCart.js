@@ -148,7 +148,14 @@ function ShoppingCart() {
             if (prodQuan != 0) prodQuan --;
         } else prodQuan ++;
 
-        var changeList = [];
+        var changeList = cartList[targetIndex];
+        var changeListAll = cartList.splice(targetIndex, 0, changeList);
+        console.log('changeList: ', changeList);            // {id: 6, customerId: 'test', name: 'test', productId: 19, productName: 'hole heel', …}
+        console.log('cartList: ', cartList);
+        console.log('changeListAll: ', changeListAll);  // 0: {id: 6, customerId: 'test',}
+
+        
+
         // setCartList(changeList);
 
     }
