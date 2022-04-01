@@ -112,7 +112,7 @@ function ShoppingCart() {
         return (
             <div class='grid '>
                 <div class="box-border h-4 w-4 p-4 border">
-                    {test}
+                    {record.quantity}
                 </div>
                 <button 
                 class="shadow text-black font-bold w-3"
@@ -126,7 +126,7 @@ function ShoppingCart() {
                 </button>
                 <button 
                     class="shadow text-black font-bold w-3"
-                    onClick={() => changeProdQuantity()}                    
+                    onClick={() => changeProdQuantity(record)}                    
                 >
                     변경
                 </button>
@@ -135,33 +135,69 @@ function ShoppingCart() {
     }
 
     const clickProdQuantity = (record, type) => {
-        console.log('=== clickProdQuantity ===');
-        console.log('record.quantity: ', record.quantity);
 
-        var prodQuan = record.quantity;
-        var targetIndex = cartList.findIndex(v => record.id == v.id);
-
-        console.log('=== 비교시작 ===');  
-        console.log('targetIndex: ', targetIndex);
+        let prodQuan = record.quantity;
+        let targetIndex = cartList.findIndex(v => record.id == v.id);
 
         if (type === 'minus') {
             if (prodQuan != 0) prodQuan --;
         } else prodQuan ++;
 
-        var changeList = cartList[targetIndex];
-        var changeListAll = cartList.splice(targetIndex, 0, changeList);
-        console.log('changeList: ', changeList);            // {id: 6, customerId: 'test', name: 'test', productId: 19, productName: 'hole heel', …}
-        console.log('cartList: ', cartList);
-        console.log('changeListAll: ', changeListAll);  // 0: {id: 6, customerId: 'test',}
+        let changeList = cartList[targetIndex];
+        changeList.quantity = prodQuan;
 
-        
+        let changeListAll = [...cartList];
+        changeListAll[targetIndex] = changeList;
+        console.log('changeListAll: ', changeListAll);
+        // todo 배열 새로 선언하지 말고 setState 써서 활용하기 
+         // setState(prev => { 
+        //     const newArray = prev로이런저런작업
+        //    return newArray 
+        //    })
+
+        setCartList(changeListAll);
 
         // setCartList(changeList);
 
     }
 
-    const changeProdQuantity = () => {
+    const changeProdQuantity = (record) => {
         console.log('=== changeProdQuantity ===');
+        console.log('cartList: ', cartList);
+        // 이제 product 업데이트
+        let targetIndex = cartList.findIndex(v => record.id == v.id);
+
+
+        updateCart(cartList[targetIndex]).then((data) => {
+            if (data) {
+                console.log('성공!!!!! ');
+            } else {
+                console.log('실패');
+            }
+        })
+    }
+
+    async function updateCart(cartList) {
+        console.log('update 하기!!');
+        console.log('cartList: ', cartList);
+        const requestOptions = {
+            method: "post",
+            headers: {
+                "content-type": "application/json"
+            },
+            body: JSON.stringify(cartList)
+        };
+        console.log('requestOptions: ', requestOptions);
+
+        const response = await fetch(
+            'http://localhost:3001/updateCart',
+            requestOptions
+        );
+        const data = await response.json();
+        console.log('response: ', response);
+        console.log('data: ', data);
+
+        return data
     }
 
     useEffect(() => {

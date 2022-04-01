@@ -110,14 +110,26 @@ exports.createCart = (cartInfo) => {
 exports.updateCart = (updateInfo) => {
     console.log('=== updateInfo ===');
     var sql = 'UPDATE shoppingCart SET quantity=? WHERE id=? ';
-    connection.query(sql, [updateInfo['quantity'], updateInfo['id']], (error, rows, fields) => {
-        if (error) 
-            throw error;
-        else {
-            console.log('성공!!');
-            return rows
-        }
-    });
+    console.log('updateInfo: ', updateInfo.body);
+    if (updateInfo.body == undefined) {
+        connection.query(sql, [updateInfo['quantity'], updateInfo['id']], (error, rows, fields) => {
+            if (error) 
+                throw error;
+            else {
+                console.log('성공!!');
+                return rows
+            }
+        });    
+    } else {
+        connection.query(sql, [updateInfo.body.quantity, updateInfo.body.id], (error, rows, fields) => {
+            if (error) 
+                throw error;
+            else {
+                console.log('성공!!');
+                return rows
+            }
+        });    
+    }
 }
 
 exports.deleteCart = (req, res) => {
