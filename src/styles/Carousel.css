@@ -1,0 +1,35 @@
+.container-slider {
+    /* width: 300vw;
+    transition: transform 0.5s; */
+    width: 300vw;
+    position: relative;
+    display: flex;
+    /* justify-content: center;
+    align-items: center; */
+    /* height: 100vh; */
+}
+
+.slide {
+    /* width: 100vw; */
+
+}
+
+.img {
+
+}
+
+.left-arrow {
+    position: absolute;   
+    top: 50%;
+    left: 32px;
+    font-size: 3rem;
+    user-select: none;
+}
+
+.right-arrow {
+    position: absolute;   
+    top: 50%;
+    /* right: 10px; */
+    font-size: 3rem;
+    user-select: none;
+}

@@ -15,7 +15,7 @@ function ProductList(props, history) {
 
     const [testData, setTestData] = useState([]);
     const [showProduct, setShowProduct] = useState(false);
-    var category = props.category;
+    let category = props.category;
 
     const testProps = () => {
         console.log('prop: ', props.category);

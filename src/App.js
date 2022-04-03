@@ -28,7 +28,7 @@ class App extends React.Component {
         return (
             <div className="App">
                 <Header/>
-                <div class="mt-10">
+                <div >
                     {/* <Route exact path='/ProductDetail/:id' component={ProductDetailPage} /> */}
                     <Route
                         exact="exact"
