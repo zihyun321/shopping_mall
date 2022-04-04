@@ -3,23 +3,6 @@ import styled from "styled-components";
 import '../styles/Carousel.css';
 import {LeftOutlined, RightOutlined} from '@ant-design/icons';
 
-
-const imgStyle = {
-    // width: "640px", height: "600px"
-}
-
-const Container = styled.div `
-    width: 300vw;
-    transition: transform 0.5s;
-`;
-    // transform: translate(-100vw);
-
-
-const InnerContainer = styled.div `
-    width: 100vw;
-    float: left;
-`;
-
 function Carousel(props) {
     const dataSlider = props.dataSlider;
 
@@ -38,8 +21,8 @@ function Carousel(props) {
     return (
         <div>
             <div className='container-slider'>
-            <LeftOutlined className='left-arrow' onClick={() => moveSlide('prev')}/>
-            <RightOutlined className='right-arrow' onClick={() => moveSlide('next')}/>
+                <LeftOutlined className='left-arrow' onClick={() => moveSlide('prev')}/>
+                <RightOutlined className='right-arrow' onClick={() => moveSlide('next')}/>
 
             {
                 dataSlider && 
@@ -59,29 +42,7 @@ function Carousel(props) {
         
 
 
-        // <div class="overflow-hidden">
-        //     <Container>
-        //         <InnerContainer>
-        //             <img src="image/carousel1.jpg"/>
-        //         </InnerContainer>
-        //         <InnerContainer>
-        //             <img src="image/carousel2.jpg"/>
-        //         </InnerContainer>
-        //         <InnerContainer>
-        //             <img src="image/carousel3.jpg"/>
-        //         </InnerContainer>
-        //     </Container>
-        //     <button
-        //         class="shadow ml-3 bg-black hover:bg-gray-700 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4"
-        //     >1</button>
-        //     <button
-        //         class="shadow border hover:bg-slate-200 focus:shadow-outline focus:outline-none text-black font-bold py-2 px-4"
-        //     >2</button>
-        //     <button
-        //         class="shadow ml-3 bg-black hover:bg-gray-700 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4"
-        //     >3</button>
 
-        // </div>
     )
 }
 
