@@ -107,10 +107,9 @@ exports.createCart = (cartInfo) => {
     });
 }
 
-exports.updateCart = (updateInfo) => {
+exports.updateCart = (updateInfo, res) => {
     console.log('=== updateInfo ===');
     var sql = 'UPDATE shoppingCart SET quantity=? WHERE id=? ';
-    console.log('updateInfo: ', updateInfo.body);
     if (updateInfo.body == undefined) {
         connection.query(sql, [updateInfo['quantity'], updateInfo['id']], (error, rows, fields) => {
             if (error) 
@@ -120,25 +119,23 @@ exports.updateCart = (updateInfo) => {
                 return rows
             }
         });    
-    } else {
+    } 
+    // 프론트에서 호출시, 해당 로직 적용
+    else {
         connection.query(sql, [updateInfo.body.quantity, updateInfo.body.id], (error, rows, fields) => {
             if (error) 
                 throw error;
             else {
-                console.log('성공!!');
-                return rows
+                return res.json({
+                    success: true
+                })
             }
         });    
     }
 }
 
 exports.deleteCart = (req, res) => {
-    console.log('===deleteCart===');
-
     var idList = req.body;
-    console.log('idList: ', idList);
-    console.log('idList.length: ', idList.length);
-
     var sql = ' DELETE FROM shoppingCart ';
     // sql += ' WHERE id in ?';
 
@@ -152,8 +149,9 @@ exports.deleteCart = (req, res) => {
         if (error)
             throw error;
         else {
-            console.log('성공!!');
-            return rows
+            return res.json({
+                success: true
+            })
         }
     })
 }
