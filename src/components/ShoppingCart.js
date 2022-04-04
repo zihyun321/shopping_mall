@@ -7,6 +7,8 @@ import ReactTable from "react-table";
 
 function ShoppingCart() {
 
+    const history = useHistory();
+
     const [selectedRowKeys, setSelectedRowKeys] = useState([]);
     const [selectedRows, setSelectedRows] = useState([]);
     const loginStatus = useSelector((state) => state);
@@ -15,8 +17,8 @@ function ShoppingCart() {
     const [cartList, setCartList] = useState([]);
 
     const location = useLocation();
-    const [totalAmount, setTotalAmount] = useState();
-    const [selectedAmount, setSelectedAmount] = useState();
+    const [totalAmount, setTotalAmount] = useState(0);
+    const [selectedAmount, setSelectedAmount] = useState(0);
 
     console.log('location: ', location);
 
@@ -174,7 +176,7 @@ function ShoppingCart() {
 
     /**
      * @param {List<object>} cartList 
-     * @description cart list에 존재하는 Product에 가격합 구함
+     * @description cart list에 있는 Product의 총 합계
      */
     function calcTotalAmount(cartList) {
         var total = 0;
@@ -182,6 +184,7 @@ function ShoppingCart() {
             cartList.map((data) => {
                 total += data.productPrice;
             })
+            console.log('total: ', total);
             setTotalAmount(total);
         }
     }
@@ -228,7 +231,6 @@ function ShoppingCart() {
     }
 
     const rowSelection = {
-        
         selectedRowKeys: selectedRowKeys,
         onSelectAll: (selected, selectedRows, changeRows) => {
           if (selectedRowKeys.length !== 0) {
@@ -245,7 +247,7 @@ function ShoppingCart() {
             setSelectedRowKeys(selectedRowKeys);
             var selected = 0;
             selectedRows.map((data) => {
-                selected = data.productPrice;
+                selected += data.productPrice;
             })
             setSelectedRows(selectedRows);
             setSelectedAmount(selected);
@@ -280,7 +282,7 @@ function ShoppingCart() {
             if (selectedRows.length === 0) alert('제품을 선택해주세요.');
         }
         else {
-
+            history.push({pathname: '/Order', state: {productList: cartList}});
         }
     }
     
