@@ -1,7 +1,7 @@
 import {render} from "react-dom";
 import {useLocation, useHistory, withRouter} from "react-router-dom";
 import React, {useState, useEffect} from 'react'
-import Modal from './Modal';
+import AddToCartModal from "./modal/AddToCartModal";
 import {useSelector} from 'react-redux';
 
 function ProductDetailPage() {
@@ -248,7 +248,7 @@ function ProductDetailPage() {
             {
                 isCartModalOpen && isUserLogin && (
                     <div>
-                        <Modal productInfo={productInfo} close={handleOpenCartModal} quantity={quantity}/>
+                        <AddToCartModal productInfo={productInfo} close={handleOpenCartModal} quantity={quantity}/>
                     </div>
                 )
             }

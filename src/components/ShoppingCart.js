@@ -280,6 +280,7 @@ function ShoppingCart() {
         if (type === 'part') {
             console.log('selectedRows.length: ', selectedRows.length);
             if (selectedRows.length === 0) alert('제품을 선택해주세요.');
+            else history.push({pathname: '/Order', state: {productList: selectedRows}});
         }
         else {
             history.push({pathname: '/Order', state: {productList: cartList}});

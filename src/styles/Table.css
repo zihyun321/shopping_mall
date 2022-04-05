@@ -4,6 +4,26 @@
 }
 
 table {
-    width: 60rem;
-    border: 1px solid;
+    width: 960px;
+    border-top: 1.5px solid;
+    border-bottom: 1px solid;
+}
+
+.shipping-info > tbody > tr {
+    height: 68px;
+}
+
+.shipping-info > tbody > tr > th {
+    width: 230px;
+    font-weight: 100;
+    font-size: 14px;
+}
+
+.shipping-info > tbody > tr > td {
+    width: 730px;
+}
+
+input {
+    height: 40px;
+    background-color: #f2f2f2;
 }

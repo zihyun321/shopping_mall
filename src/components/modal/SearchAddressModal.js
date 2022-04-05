@@ -3,8 +3,9 @@
 import React, {useState, useEffect} from 'react';
 import {useHistory, withRouter} from 'react-router-dom';
 import {useSelector} from 'react-redux';
+import DaumPostcode from 'react-daum-postcode';
 
-const Modal = (props) => {
+const SearchAddressModal = (props) => {
     const history = useHistory();
     // var productInfo = props.productInfo;
 
@@ -28,6 +29,8 @@ const Modal = (props) => {
         });
     }
 
+    const onComplete = (data) => { console.log(data); }
+
     return (
         <div>
             <div
@@ -50,12 +53,14 @@ const Modal = (props) => {
                             <div class="sm:flex sm:items-start">
                                 <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
                                     <div class="mt-2">
-                                        <p class="text-sm text-black">선택하신 제품이 쇼핑카트에 추가되었습니다.</p>
+                                        <DaumPostcode onComplete={onComplete}/>
+
+                                        {/* <p class="text-sm text-black">선택하신 제품이 쇼핑카트에 추가되었습니다.</p> */}
                                     </div>
                                 </div>
                             </div>
                         </div>                        
-                        <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+                        {/* <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
                             <button
                                 type="button"
                                 onClick={clickCheckCartBtn}
@@ -64,7 +69,7 @@ const Modal = (props) => {
                                 type="button"
                                 onClick={close}
                                 class="mt-3 w-full inline-flex justify-center border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm">쇼핑 계속하기</button>
-                        </div>
+                        </div> */}
                     </div>
                 </div>
             </div>
@@ -72,4 +77,4 @@ const Modal = (props) => {
     )
 }
 
-export default Modal;
+export default SearchAddressModal;

@@ -4,7 +4,7 @@ import React, {useState, useEffect} from 'react';
 import {useHistory, withRouter} from 'react-router-dom';
 import {useSelector} from 'react-redux';
 
-const Modal = (props) => {
+const AddToCartModal = (props) => {
     const history = useHistory();
     // var productInfo = props.productInfo;
 
@@ -72,4 +72,4 @@ const Modal = (props) => {
     )
 }
 
-export default Modal;
+export default AddToCartModal;

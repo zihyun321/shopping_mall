@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import {useLocation} from "react-router";
 import '../styles/Table.css'
 import DaumPostcode from 'react-daum-postcode';
+import SearchAddressModal from './modal/SearchAddressModal';
 
 const Order = props =>  {
     
@@ -14,9 +15,16 @@ const Order = props =>  {
 
     const [selectFirstPN, setSelectFirstPN] = useState('1');
     const [deliveryAddress, setDeliveryAddress] = useState('');
+    const [isSearchAddressModalOpen, setSearchAddressModalOpen] = useState(false);
+
     const handleSelectFirstPN = (e) => {
         setSelectFirstPN(e.target.value);
     }
+
+    const handleOpenSearchModal = () => {
+        setSearchAddressModalOpen(!isSearchAddressModalOpen);
+    }
+
 
 
     const onComplete = (data) => { console.log(data); }
@@ -25,17 +33,13 @@ const Order = props =>  {
     return (
         <div>
             <div>
-                <div>
-                <DaumPostcode onComplete={onComplete}/>
-
-                </div>
                 <div>배송지 정보</div>
-                <table>
+                <table className='shipping-info'>
                     <tbody>
                         <tr>
                             <th>받으시는 분</th>
                             <td class=''>
-                                <input class='bg-gray-200 focus:bg-white focus:outline-black outline-1'></input>
+                                <input class=' focus:bg-white focus:outline-black outline-1'></input>
                             </td>
                         </tr>
                         <tr>
@@ -47,15 +51,17 @@ const Order = props =>  {
                                     <option value="4">017</option>
                                     <option value="5">018</option>
                                 </select>
-                                <input class='bg-gray-200 focus:bg-white focus:outline-black outline-1 w-124 ml-1'></input>
-                                <input class='bg-gray-200 focus:bg-white focus:outline-black outline-1'></input>
+                                <input class=' focus:bg-white focus:outline-black outline-1 w-124 ml-1'></input>
+                                <input class=' focus:bg-white focus:outline-black outline-1'></input>
                             </td>
                         </tr>
                         <tr>
                             <th>배송 주소</th>
                             <td class=''>
-
-                                <input class='bg-gray-200 focus:bg-white focus:outline-black outline-1'></input>
+                                <button 
+                                class="font-semibold border-r border-gray-300 h-full w-20 flex rounded-l focus:outline-none cursor-pointer"
+                                type="button" onClick={() => {handleOpenSearchModal()}}>주소찾기</button>
+                                <input class=' focus:bg-white focus:outline-black outline-1'></input>
 
 
                                 <input type="text" id="sample4_postcode" placeholder="우편번호"></input>                                
@@ -64,7 +70,7 @@ const Order = props =>  {
                         <tr>
                             <th>배송 메세지</th>
                             <td class=''>
-                                <input class='bg-gray-200 focus:bg-white focus:outline-black outline-1'></input>
+                                <input class='focus:bg-white focus:outline-black outline-1'></input>
                             </td>
                         </tr>
                     </tbody>
@@ -73,7 +79,7 @@ const Order = props =>  {
 
             <div>
                 <div>주문상품</div>
-                <table>
+                <table className='order-info'>
                     <thead>
                         <th>상품정보</th>
                         <th>수량</th>
@@ -108,7 +114,7 @@ const Order = props =>  {
 
             <div>
                 <div>주문상품</div>
-                <table>
+                <table className='point-info'>
                     <thead>
                         <th>결제 예정금액</th>
                         <th>포인트</th>
@@ -118,6 +124,14 @@ const Order = props =>  {
                     </tbody>
                 </table>
             </div>
+
+            {
+                isSearchAddressModalOpen && (
+                    <div>
+                        <SearchAddressModal/>
+                    </div>
+                )
+            }
         </div>
     )
 }
