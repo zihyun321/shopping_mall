@@ -90,20 +90,22 @@ const Order = props =>  {
                             productList.map((data) => {
                                 return (
                                     <tr key={data.id}>
-                                        <tb>
-                                            <span>
+                                        <td>
+                                            <a href= {'http://localhost:3000/ProductDetail/' + data.id}>
                                                 <img class="w-20 h-30" alt={data.imgUrl} src={data.imgUrl} />
-                                                <span>{data.productName}</span>
-                                                <span>{data.color}</span>
-                                                <span>{data.size}</span>
-                                            </span>
-                                        </tb>
-                                        <tb>
+                                                <div>
+                                                    <p>{data.productName}</p>
+                                                    <p>{data.color}</p>
+                                                    <p>{data.size}</p>
+                                                </div>
+                                            </a>
+                                        </td>
+                                        <td>
                                             {data.quantity}
-                                        </tb>
-                                        <tb>
+                                        </td>
+                                        <td>
                                             {data.productPrice}
-                                        </tb>
+                                        </td>
                                     </tr>
                                 )
                             })

@@ -3,6 +3,10 @@
     /* margin-right: 100px; */
 }
 
+.a {
+    text-decoration: none !important;
+}
+
 table {
     width: 960px;
     border-top: 1.5px solid;
@@ -23,7 +27,12 @@ table {
     width: 730px;
 }
 
+.order-info > thead {
+    height: 68px;
+}
+
 input {
     height: 40px;
     background-color: #f2f2f2;
+    
 }
