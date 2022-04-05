@@ -8430,6 +8430,14 @@
     "regenerator-runtime" "^0.13.9"
     "whatwg-fetch" "^3.6.2"
 
+"react-daum-postcode@^3.0.1":
+  "integrity" "sha512-TBA6p+5yFy4YrH3jneNPyqNR+9igCb/XhQfnDBOABX38Hgf4n5EMmXf3NZptPSqg3UldHQ+8HPHCJ5L6zjskkg=="
+  "resolved" "https://registry.npmjs.org/react-daum-postcode/-/react-daum-postcode-3.0.1.tgz"
+  "version" "3.0.1"
+  dependencies:
+    "prop-types" "^15.7.2"
+    "react" "^17.0.2"
+
 "react-dev-utils@^12.0.0":
   "integrity" "sha512-xBQkitdxozPxt1YZ9O1097EJiVpwHr9FoAuEVURCKV0Av8NBERovJauzP7bo1ThvuhZ4shsQ1AJiu4vQpoT1AQ=="
   "resolved" "https://registry.npmjs.org/react-dev-utils/-/react-dev-utils-12.0.0.tgz"

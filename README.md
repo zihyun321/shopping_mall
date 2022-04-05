@@ -37,9 +37,8 @@ yarn add antd
 npm install @mui/material @emotion/react @emotion/styled
 yarn add @mui/icons-material
 
-`React Table 설치`
-
-npm install react-table --save
+<!-- `React Table 설치`  
+npm install react-table --save -->
 
 ### 2. 회원가입 기능 
 **Note: 회원가입시, 비밀번호는 암호화해야한다!**
@@ -81,3 +80,4 @@ npm install react-table --save
 - 로그아웃 한 후, 장바구니 주소 들어가면 캐시가 남아있어 이전 로그인했던 기록이 남아있음. 이같은 상황 수정
 - 사용하지 않는 버튼 제거
 - 코드 정리 및 리팩토링
+- 주소 검색 api를 활용한 주소 입력

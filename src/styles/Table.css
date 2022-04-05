@@ -1,0 +1,9 @@
+
+.tbody > tr > th {
+    /* margin-right: 100px; */
+}
+
+table {
+    width: 60rem;
+    border: 1px solid;
+}
