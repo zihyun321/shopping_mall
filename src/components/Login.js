@@ -36,7 +36,7 @@ function Login() {
             password
         }
 
-        fetch("http://localhost:3001/getUserInfo", {
+        fetch("http://localhost:3001/checkUserInfo", {
             method: "POST", //통신방법
             headers: {
                 "content-type": "application/json"

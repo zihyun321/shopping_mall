@@ -39,6 +39,7 @@ const cartRouter = require('./routes/Cart/index');
 console.log('서버탐');
 /** User */
 app.post("/createUser", userRouter);        // 회원가입
+app.post("/checkUserInfo", userRouter);     // logi한 user 정보 확인
 app.post("/getUserInfo", userRouter);       // user 정보 조회
 
 /** Product */

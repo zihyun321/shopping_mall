@@ -8,6 +8,8 @@ console.log('index탐');
 /* user 라우팅 로직 */
 router.post("/createUser", controller.checkAndCreateUser);
 router.post("/getUserInfo", controller.getUserInfo);
+router.post("/getUserInfo", controller.getUserInfo);
+router.post("/checkUserInfo", controller.checkUserInfo);
 
 module.exports = router;
 

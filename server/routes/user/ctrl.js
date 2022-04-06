@@ -82,7 +82,7 @@ exports.checkAndCreateUser = (req, res) => {
  * @param {*} res 
  */
 // readUser로 변경
-exports.getUserInfo = (req, res) => {
+exports.checkUserInfo = (req, res) => {
     console.log('=== userLogin ');
     console.log('req.body: ', req.body);
     console.log('req.body.id: ', req.body.id);
@@ -125,5 +125,21 @@ exports.getUserInfo = (req, res) => {
             }
         }
     );
+}
+
+exports.getUserInfo = (req, res) => {
+    const userInfo = req.body;
+
+    var id = req.body.id;
+    var sql = 'SELECT * FROM customer WHERE id = ? ';
+
+    connection.query(sql, [id], (error, rows, fields) => {
+        if (error) 
+            throw error;
+        else {
+            return res.send(rows);
+        }
+    });
+
 }
 
