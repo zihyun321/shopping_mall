@@ -8,7 +8,6 @@ import SearchAddressModal from './modal/SearchAddressModal';
 const Order = props => {
 
     console.log('=== Order ===');
-
     const location = useLocation();
 
     const productList = location.state.productList;
@@ -20,6 +19,7 @@ const Order = props => {
     const [isSearchAddressModalOpen, setSearchAddressModalOpen] = useState(false);
     const [loginInfo, setLoginInfo] = useState({});
     const [userInfo, setUserInfo] = useState({});
+    const [loading, setLoading] = useState(true);
 
     const handleSelectFirstPN = (e) => {
         setSelectFirstPN(e.target.value);
@@ -35,13 +35,16 @@ const Order = props => {
 
     useEffect(() => {
         setLoginInfo(loginStatus.currentUser.user);
+
+        console.log('=== useEffect ===');
+        console.log('loginStatus.currentUser.user: ', loginStatus.currentUser.user);
+        console.log('loginInfo: ', loginInfo);
         if (loginStatus.currentUser.user) {
-            getUserInfo(loginInfo).then((data) => {
+            getUserInfo(loginStatus.currentUser.user).then((data) => {
                 if (data) {
                     console.log('성공!!!!! ');
                     console.log('data: ', data);
                     setUserInfo(data);
-                    console.log('userInfo: ', userInfo);
                 } else {
                     console.log('실패!!');
                 }
@@ -79,6 +82,8 @@ const Order = props => {
                             <tr>
                                 <th>받으시는 분</th>
                                 <td class=''>
+                                    user: {userInfo.id}
+
                                     <input class=' focus:bg-white focus:outline-black outline-1'></input>
                                 </td>
                             </tr>
