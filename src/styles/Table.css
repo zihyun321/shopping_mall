@@ -31,6 +31,19 @@ table {
     height: 68px;
 }
 
+.order-info > tbody > tr > td {
+    padding: 20px;
+}
+.order-info > tbody > tr > td > a > img {
+    display: block;    
+    float: left;
+    margin-right: 20px;
+}
+
+.order-info > tbody > tr > td > a > div {
+    text-align: left;
+}
+
 input {
     height: 40px;
     background-color: #f2f2f2;

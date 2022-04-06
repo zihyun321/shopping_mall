@@ -84,6 +84,8 @@ const Order = props =>  {
                         <th>상품정보</th>
                         <th>수량</th>
                         <th>가격</th>
+                        <th>총 상품금액</th>
+                        <th>배송비</th>
                     </thead>
                     <tbody>
                         {
@@ -105,6 +107,12 @@ const Order = props =>  {
                                         </td>
                                         <td>
                                             {data.productPrice}
+                                        </td>
+                                        <td>
+                                            {data.productPrice}
+                                        </td>
+                                        <td>
+                                            3000원
                                         </td>
                                     </tr>
                                 )
