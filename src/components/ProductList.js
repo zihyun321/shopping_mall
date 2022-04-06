@@ -11,15 +11,15 @@ const imgStyle = {
     height: "20rem"
 }
 
-function ProductList(props, history) {
+function ProductList(props) {
 
+    console.log('=== 22props: ', props);
+    // console.log('=== match: ', match);
+    
     const [testData, setTestData] = useState([]);
     const [showProduct, setShowProduct] = useState(false);
+    // let category = 'Outer';
     let category = props.category;
-
-    const testProps = () => {
-        console.log('prop: ', props.category);
-    }
 
     const clickProduct = () => {
         console.log('버튼 클릭');

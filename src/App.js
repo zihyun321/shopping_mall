@@ -46,9 +46,14 @@ class App extends React.Component {
                         <Route path="/join">
                             <JoinPage/>
                         </Route>
-                        <Route exact="exact" path='/ProductList'>
-                            <ProductList category="Top"/>
-                        </Route>
+                        {/* <Route exact="exact" path='/ProductList' Component={ProductList} category="Top"/> */}
+                        {/* <Route exact="exact" path='/ProductList/Outer' Component={ProductList} category="Outer"/>
+                        <Route exact="exact" path='/ProductList/Top' Component={ProductList} category="Top"/>
+                        <Route exact="exact" path='/ProductList/Bottom' Component={ProductList} category="Bottom"/>
+                        <Route exact="exact" path='/ProductList/Shoes' Component={ProductList} category="Shoes"/>
+                        <Route exact="exact" path='/ProductList/Bag' Component={ProductList} category="Bag"/>
+                        <Route exact="exact" path='/ProductList/Acc' Component={ProductList} category="Acc"/> */}
+
                         <Route exact="exact" path='/ProductList/Outer'>
                             <ProductList category="Outer"/>
                         </Route>
