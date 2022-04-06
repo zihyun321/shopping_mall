@@ -37,6 +37,9 @@ yarn add antd
 npm install @mui/material @emotion/react @emotion/styled
 yarn add @mui/icons-material
 
+`주소 검색 api`
+npm i react-daum-postcode
+
 <!-- `React Table 설치`  
 npm install react-table --save -->
 
@@ -67,12 +70,16 @@ npm install react-table --save -->
 - 주문 취소시, DB에 있는 제품 수량 업데이트 및 고객 포인트 차감
 
 ### 기타 기능
+
+### 남은 기능
 [홈화면]
 - 자동 Carousel
 - Carousel 밑에 어떤 식으로 꾸밀지 레이아웃 그리기 (css 최대한 활용)
 
 [제품디테일화면]
 - 제품 상세 & 리뷰 페이지 레이아웃 고민
+
+[로딩]
 
 ### 수정해야할 사항들
 - 전체 product list 페이지 렌더링 너무 늦음 (+ 로딩 아이콘 삽입)
