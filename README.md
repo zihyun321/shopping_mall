@@ -1,10 +1,10 @@
 # 쇼핑몰 구축 프로젝트
 
-`사용언어`
-Server: Node Express
-Front: React
-CSS: Tailwind, antd
-DB: MySQL
+`사용언어` <br>
+Server: Node Express <br>
+Front: React <br>
+CSS: Tailwind, antd <br>
+DB: MySQL <br>
 
 ## 1. 설치
 
