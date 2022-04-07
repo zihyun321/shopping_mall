@@ -20,10 +20,10 @@ npx install create-react-app [프로젝트명]
 ```
 npm i redux // (위에서 npx가 아닌 npm으로 설치했다면,,)
 npm i react-redux (yarn add redux react-redux)
-yarn add redux <br> 
-react-redux <br> 
-redux-devtools-extension <br> 
-redux-logger <br>
+yarn add redux 
+react-redux 
+redux-devtools-extension 
+redux-logger 
 ```
 * redux-devtools-extension: 크롬 확장 프로그램에서 redux dev tools를 통해 설치 할 수 있고, redux의 데이터 흐름을 알아보기 쉽게 하기 위해 사용
 * redux-logger: redux를 통해 바뀔 이전 state, dispatch 실행으로 인해 바뀐 state가 콘솔에 찍혀 디버깅 쉽게 해주는 라이브러리
@@ -86,19 +86,17 @@ npm i react-daum-postcode
 ## 기타 기능
 
 ### 남은 기능
-[][홈화면]
-- 자동 Carousel
-- Carousel 밑에 어떤 식으로 꾸밀지 레이아웃 그리기 (css 최대한 활용)
+[홈화면]
+[ ] 자동 Carousel
+[ ] Carousel 밑에 어떤 식으로 꾸밀지 레이아웃 그리기 (css 최대한 활용)
 
-[][제품디테일화면]
-- 제품 상세 & 리뷰 페이지 레이아웃 고민
+[제품디테일화면]
+[ ] 제품 상세 & 리뷰 페이지 레이아웃 고민
 
-[][로딩]
-
-### 수정해야할 사항들
-- 전체 product list 페이지 렌더링 너무 늦음 (+ 로딩 아이콘 삽입)
-- 회원가입시, 비밀번호 hash 알고리즘 사용하여 저장
-- 로그아웃 한 후, 장바구니 주소 들어가면 캐시가 남아있어 이전 로그인했던 기록이 남아있음. 이같은 상황 수정
-- 사용하지 않는 버튼 제거
-- 코드 정리 및 리팩토링
-- 주소 검색 api를 활용한 주소 입력
+[기타]
+[ ] 스피너
+[ ] 회원가입시, 비밀번호 hash 알고리즘 사용하여 저장
+[ ] 로그아웃 한 후, 장바구니 주소 들어가면 캐시가 남아있어 이전 로그인했던 기록이 남아있음. 이같은 상황 수정
+[ ] 사용하지 않는 버튼 제거
+[ ] 코드 정리 및 리팩토링
+[ ] 주소 검색 api를 활용한 주소 입력
