@@ -52,6 +52,12 @@ npm install @mui/material @emotion/react @emotion/styled
 yarn add @mui/icons-material
 ```
 
+`react router 및 router dom 설치`
+```
+npm install --save react-router
+npm install react-router-dom --save
+```
+
 `주소 검색 api`
 ```
 npm i react-daum-postcode
