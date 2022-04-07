@@ -11,15 +11,15 @@ const imgStyle = {
     height: "20rem"
 }
 
-function ProductList(props) {
+function ProductList({match}) {
 
-    console.log('=== 22props: ', props);
+    console.log('=== match: ', match);
     // console.log('=== match: ', match);
     
     const [testData, setTestData] = useState([]);
     const [showProduct, setShowProduct] = useState(false);
     // let category = 'Outer';
-    let category = props.category;
+    let category = match.params.category;
 
     const clickProduct = () => {
         console.log('버튼 클릭');
@@ -49,7 +49,7 @@ function ProductList(props) {
                 console.log('testData: ', testData);
                 // console.log('testData: ', testData);
             })
-    }, []);
+    }, [match.params.category]);
     // useEffect(() => fetch("http://localhost:3001/getProduct", {     method:
     // "POST", 통신방법     headers: {         "content-type": "application/json"     },
     // body: JSON.stringify(category) }).then((res) => res.json()).then((json) => {
