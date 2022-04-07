@@ -21,6 +21,7 @@
 
 
 exports.getProductList = (req, res) => {
+    console.log('=== getProductList ===');
     var category = req.body.category;
     var sql = 'SELECT * FROM product WHERE category = ? ';
 

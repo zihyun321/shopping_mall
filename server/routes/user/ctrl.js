@@ -92,7 +92,7 @@ exports.checkUserInfo = (req, res) => {
 
     connection.query(
         // `SELECT id, password FROM customer WHERE id = "`+ req.body.id + `" and password = "` + req.body.password + `"`,
-        `SELECT id, password FROM customer WHERE id = "`+ req.body.id + `"`,
+        `SELECT * FROM customer WHERE id = "`+ req.body.id + `"`,
 
         (error, result, fields) => {
 
@@ -106,7 +106,8 @@ exports.checkUserInfo = (req, res) => {
                 if (result[0]?.id == req.body.id) {
                     if (result[0]?.password == req.body.password) {
                         return res.json({
-                            success: true
+                            success: true,
+                            userInfo: result
                         })
                     } else {
                         return res.json({
@@ -127,19 +128,19 @@ exports.checkUserInfo = (req, res) => {
     );
 }
 
-exports.getUserInfo = (req, res) => {
-    const userInfo = req.body;
+// exports.getUserInfo = (req, res) => {
+//     const userInfo = req.body;
 
-    var id = req.body.id;
-    var sql = 'SELECT * FROM customer WHERE id = ? ';
+//     var id = req.body.id;
+//     var sql = 'SELECT * FROM customer WHERE id = ? ';
 
-    connection.query(sql, [id], (error, rows, fields) => {
-        if (error) 
-            throw error;
-        else {
-            return res.send(rows);
-        }
-    });
+//     connection.query(sql, [id], (error, rows, fields) => {
+//         if (error) 
+//             throw error;
+//         else {
+//             return res.send(rows);
+//         }
+//     });
 
-}
+// }
 

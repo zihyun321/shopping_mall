@@ -47,8 +47,10 @@ function Login() {
             .then((res) => {
                 setErrorMsg('');
                 if (res.success) {
+                    console.log('res: ', res.userInfo[0]);
                     // TODO 여기에 redux에 user 정보 넣기
-                    updateUserInfo(loginInfo);
+                    updateUserInfo(res.userInfo[0]);
+                    console.log('')
                     history.push('/');
 
                     // window.location.href = '/';  // 이건 화면 새로고침이라 가능하지 않음

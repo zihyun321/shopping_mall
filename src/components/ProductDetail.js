@@ -19,6 +19,7 @@ function ProductDetailPage() {
 
     const history = useHistory();
     const loginStatus = useSelector((state) => state);
+    console.log('=== loginStatus.currentUser.user: ', loginStatus.currentUser.user);
 
     useEffect(() => {
         setIsUserLogin(loginStatus.currentUser.login);

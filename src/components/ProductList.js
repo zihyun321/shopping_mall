@@ -15,7 +15,7 @@ function ProductList({match}) {
 
     console.log('=== match: ', match);
     // console.log('=== match: ', match);
-    
+
     const [testData, setTestData] = useState([]);
     const [showProduct, setShowProduct] = useState(false);
     // let category = 'Outer';
@@ -34,6 +34,8 @@ function ProductList({match}) {
         const productCategory = {
             category
         };
+        console.log('productCategory: ', productCategory);
+
         fetch("http://localhost:3001/getProduct", {
             method: "POST", //통신방법
             headers: {
@@ -49,6 +51,22 @@ function ProductList({match}) {
                 console.log('testData: ', testData);
                 // console.log('testData: ', testData);
             })
+
+        // fetch("http://localhost:3001/getProduct", {
+        //     method: "POST", //통신방법
+        //     headers: {
+        //         "content-type": "application/json"
+        //     },
+        //     body: JSON.stringify(productCategory)
+        // })
+        //     .then((res) => res.json())
+        //     .then((json) => {
+        //         console.log('json: ', json);
+        //         json.map(data => setTestData(json))
+        //         // , tempData.push(data));
+        //         console.log('testData: ', testData);
+        //         // console.log('testData: ', testData);
+        //     })
     }, [match.params.category]);
     // useEffect(() => fetch("http://localhost:3001/getProduct", {     method:
     // "POST", 통신방법     headers: {         "content-type": "application/json"     },
@@ -66,19 +84,20 @@ function ProductList({match}) {
                         return (
                             <div key={data.id}>
                                 {/* <Link to={"/ProductDetail/" + data.id} state={{data: data}}> */}
-                                <Link to={{
-                                    pathname: "/ProductDetail/" + data.id,
-                                    state: {productInfo: data}
-                                }}>
-                                    <img
-                                        src={data.imgUrl}
-                                        alt="Lights"
-                                        style={imgStyle}/>
-                                </Link> 
+                                <Link
+                                    to={{
+                                        pathname: "/ProductDetail/" + data.id,
+                                        state: {
+                                            productInfo: data
+                                        }
+                                    }}>
+                                    <img src={data.imgUrl} alt="Lights" style={imgStyle}/>
+                                </Link>
 
                                 {/* <img
                                     // onClick={() => {history.push("/ProductDetailPage")}}
-                                    src={data.imgUrl} class="d-block w-100" alt="..." style={imgStyle}/> */}
+                                    src={data.imgUrl} class="d-block w-100" alt="..." style={imgStyle}/> */
+                                }
                                 <div class="mt-2">
                                     <div>{data.productName}</div>
                                     <div>{data.productPrice}</div>
@@ -137,7 +156,8 @@ function ProductList({match}) {
                         New project
                     </a>
                 </li>
-            </ul> */}
+            </ul> */
+            }
             {/* <span class="inline-grid grid-cols-3 gap-4">
                 <span>01</span>
                 <span>02</span>
