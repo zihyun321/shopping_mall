@@ -9,7 +9,7 @@ DB: MySQL <br>
 ## 1. 설치
 
 `DB 구축`
-MySQL 다운로드: https://www.mysql.com/ 
+<br> MySQL 다운로드: https://www.mysql.com/ 
 
 `React 설치`
 ```
@@ -45,7 +45,7 @@ npm install --save mysql2
 ```
 
 `CSS 설치`
-tailwind 설치 => 홈페이지
+<br> tailwind 설치 => 홈페이지
 ```
 yarn add antd
 npm install @mui/material @emotion/react @emotion/styled
