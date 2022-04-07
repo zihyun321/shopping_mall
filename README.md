@@ -87,8 +87,8 @@ npm i react-daum-postcode
 
 ### 남은 기능
 [홈화면]
-[ ] 자동 Carousel
-[ ] Carousel 밑에 어떤 식으로 꾸밀지 레이아웃 그리기 (css 최대한 활용)
+- [ ] 자동 Carousel
+- [ ] Carousel 밑에 어떤 식으로 꾸밀지 레이아웃 그리기 (css 최대한 활용)
 
 [제품디테일화면]
 [ ] 제품 상세 & 리뷰 페이지 레이아웃 고민
