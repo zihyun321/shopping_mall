@@ -36,6 +36,7 @@ function ProductList({match}) {
         };
         console.log('productCategory: ', productCategory);
 
+        
         fetch("http://localhost:3001/getProduct", {
             method: "POST", //통신방법
             headers: {
