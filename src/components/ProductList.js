@@ -11,15 +11,15 @@ const imgStyle = {
     height: "20rem"
 }
 
-function ProductList({match}) {
+function ProductList(props) {
 
-    console.log('=== match: ', match);
+    console.log('=== props: ', props);
     // console.log('=== match: ', match);
 
     const [testData, setTestData] = useState([]);
     const [showProduct, setShowProduct] = useState(false);
     // let category = 'Outer';
-    let category = match.params.category;
+    let category = props.category;
 
     const clickProduct = () => {
         console.log('버튼 클릭');
@@ -57,7 +57,7 @@ function ProductList({match}) {
                 console.log('testData: ', testData);
                 // console.log('testData: ', testData);
             })
-    }, [match.params.category]);
+    }, [props.category]);
 
     async function getProductList() {
         console.log('=== getProductList ===');

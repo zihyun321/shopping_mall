@@ -18,7 +18,7 @@ const data = {
 
 export default function HomePage() {
     return(
-        <div>
+        <div> 
             <Carousel dataSlider={data.slider}/>
         </div>
     )

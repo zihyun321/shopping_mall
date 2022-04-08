@@ -2,9 +2,9 @@ import React from 'react';
 import ShoppingCart from '../components/ShoppingCart';
 // import ShoppingCartData from '../components/ShoppingCartData';
 
-export default function JoinPage() {
+export default function ShoppingCartPage() {
     return(
-        <div>
+        <div className='mt-10'>
             <ShoppingCart/>
             {/* <ShoppingCartData/> */}
         </div>

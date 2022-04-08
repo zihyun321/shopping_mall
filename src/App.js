@@ -5,13 +5,6 @@ import './App.css';
 import {BrowserRouter, Switch, Link, Route} from 'react-router-dom';
 
 import Header from './layouts/Header';
-import Home from './components/Home';
-import Login from './components/Login';
-import Join from './components/Join';
-import ProductList from './components/ProductList';
-import ProductDetail from './components/ProductDetail';
-import ShoppingCart from './components/ShoppingCart';
-
 import HomePage from './pages/HomePage';
 import JoinPage from './pages/JoinPage';
 import LoginPage from './pages/LoginPage';
@@ -35,25 +28,15 @@ class App extends React.Component {
                         exact="exact"
                         path='/ProductDetail/:id'
                         render={({location}) => {
-                            return (<ProductDetail/>)
+                            return (<ProductDetailPage/>)
                         }}/>
                     <Switch>
-                        <Route exact="exact" path="/" component={props => <HomePage {...props}/>}/> {/* <Route path="/">
-                            <HomePage/>
-                        </Route> */
-                        }
+                        <Route exact="exact" path="/" component={props => <HomePage {...props}/>}/> 
                         <Route path="/login" component={props => <LoginPage {...props}/>}/>
-                        <Route path="/join">
-                            <JoinPage/>
-                        </Route>
-
-                        <Route path="/ProductList/:category" component={ProductList} />
-                        <Route exact="exact" path='/ShoppingCart'>
-                            <ShoppingCartPage/>
-                        </Route>
-                        <Route exact="exact" path='/Order'>
-                            <OrderPage/>
-                        </Route>
+                        <Route path="/join" component={JoinPage}/>
+                        <Route path="/ProductList/:category" component={ProductListPage} />
+                        <Route exact="exact" path='/ShoppingCart' component={ShoppingCartPage}/>
+                        <Route exact="exact" path='/Order' component={OrderPage}/>
                     </Switch>
                 </div>
             </div>
