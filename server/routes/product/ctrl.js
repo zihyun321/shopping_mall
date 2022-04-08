@@ -21,7 +21,8 @@
 
 
 exports.getProductList = (req, res) => {
-    console.log('=== getProductList ===');
+    console.log('=== server getProductList ===');
+    console.log('req.body.category: ', req.body.category);
     var category = req.body.category;
     var sql = 'SELECT * FROM product WHERE category = ? ';
 
@@ -29,6 +30,7 @@ exports.getProductList = (req, res) => {
         if (error) 
             throw error;
         else {
+            console.log('rows: ', rows);
             return res.send(rows);
         }
     });

@@ -30,14 +30,19 @@ function ProductList({match}) {
 
     // useEffect 뒤에 ,[] 붙이면 한번만 실행된다.
     useEffect(() => {
-
+        // getProductList().then(
+        //     (data) => {
+        //         console.log('data: ', data);
+        //         // console.log('json: ', json);
+        //         // json.map(data => setTestData(json))
+        //         // // , tempData.push(data));
+        //         // console.log('testData: ', testData);
+        //         // console.log('testData: ', testData);
+        //     }
+        // );
         const productCategory = {
             category
-        };
-        console.log('productCategory: ', productCategory);
-
-        
-        fetch("http://localhost:3001/getProduct", {
+        };        fetch("http://localhost:3001/getProductList", {
             method: "POST", //통신방법
             headers: {
                 "content-type": "application/json"
@@ -52,29 +57,25 @@ function ProductList({match}) {
                 console.log('testData: ', testData);
                 // console.log('testData: ', testData);
             })
-
-        // fetch("http://localhost:3001/getProduct", {
-        //     method: "POST", //통신방법
-        //     headers: {
-        //         "content-type": "application/json"
-        //     },
-        //     body: JSON.stringify(productCategory)
-        // })
-        //     .then((res) => res.json())
-        //     .then((json) => {
-        //         console.log('json: ', json);
-        //         json.map(data => setTestData(json))
-        //         // , tempData.push(data));
-        //         console.log('testData: ', testData);
-        //         // console.log('testData: ', testData);
-        //     })
     }, [match.params.category]);
-    // useEffect(() => fetch("http://localhost:3001/getProduct", {     method:
-    // "POST", 통신방법     headers: {         "content-type": "application/json"     },
-    // body: JSON.stringify(category) }).then((res) => res.json()).then((json) => {
-    // console.log('json: ', json);     json.map(data => setTestData(json))      ,
-    // tempData.push(data));     console.log('testData: ', testData);
-    // console.log('testData: ', testData); }), []);
+
+    async function getProductList() {
+        console.log('=== getProductList ===');
+        const requestOptions = {
+            method: "post", //통신방법
+            headers: {
+                "content-type": "application/json"
+            },
+            body: JSON.stringify(category)
+        };
+
+        const response = await fetch('http://localhost:3001/getProductList', requestOptions);
+        const data = await response.json();
+        console.log('data: ', data);
+        return data
+    }
+
+
 
     return (
         <div>
