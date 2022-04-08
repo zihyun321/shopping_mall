@@ -4,8 +4,8 @@ import {Divider} from 'antd';
 
 export default function JoinPage() {
     return(
-        <div>
-            <div>Check Out</div>
+        <div className='mt-10'>
+            <div className='text-3xl'>Check Out</div>
             <Divider/>
             <Order/>
         </div>

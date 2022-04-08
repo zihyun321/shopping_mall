@@ -179,12 +179,11 @@ function ShoppingCart() {
      * @description cart list에 있는 Product의 총 합계
      */
     function calcTotalAmount(cartList) {
-        var total = 0;
+        let total = 0;
         if (cartList) {
             cartList.map((data) => {
-                total += data.productPrice;
+                total += (data.productPrice * data.quantity);
             })
-            console.log('total: ', total);
             setTotalAmount(total);
         }
     }
@@ -247,7 +246,7 @@ function ShoppingCart() {
             setSelectedRowKeys(selectedRowKeys);
             var selected = 0;
             selectedRows.map((data) => {
-                selected += data.productPrice;
+                selected += (data.productPrice * data.quantity);
             })
             setSelectedRows(selectedRows);
             setSelectedAmount(selected);
@@ -279,11 +278,13 @@ function ShoppingCart() {
 
         if (type === 'part') {
             console.log('selectedRows.length: ', selectedRows.length);
+            console.log('selectedAmount: ', selectedAmount);
             if (selectedRows.length === 0) alert('제품을 선택해주세요.');
-            else history.push({pathname: '/Order', state: {productList: selectedRows}});
+            else history.push({pathname: '/Order', state: {productList: selectedRows, paymentAmount: selectedAmount}});
         }
         else {
-            history.push({pathname: '/Order', state: {productList: cartList}});
+            console.log('totalAmount: ', totalAmount);
+            history.push({pathname: '/Order', state: {productList: cartList, paymentAmount: totalAmount}});
         }
     }
     

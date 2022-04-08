@@ -11,13 +11,14 @@ const Order = props => {
     const location = useLocation();
 
     const productList = location.state.productList;
+    const paymentAmount = location.state.paymentAmount;
     console.log('productList: ', productList);
+    console.log('paymentAmount: ', paymentAmount);
 
     const loginStatus = useSelector((state) => state);
     const [selectFirstPN, setSelectFirstPN] = useState('1');
     const [deliveryAddress, setDeliveryAddress] = useState('');
     const [isSearchAddressModalOpen, setSearchAddressModalOpen] = useState(false);
-    const [loginInfo, setLoginInfo] = useState({});
     const [userInfo, setUserInfo] = useState({});
     const [loading, setLoading] = useState(true);
 
@@ -34,90 +35,61 @@ const Order = props => {
     }
 
     useEffect(() => {
-        setLoginInfo(loginStatus.currentUser.user);
-
         console.log('=== useEffect ===');
         console.log('loginStatus.currentUser.user: ', loginStatus.currentUser.user);
-        console.log('loginInfo: ', loginInfo);
-        if (loginStatus.currentUser.user) {
-            getUserInfo(loginStatus.currentUser.user).then((data) => {
-                if (data) {
-                    console.log('성공!!!!! ');
-                    console.log('data: ', data);
-                    setUserInfo(data);
-                } else {
-                    console.log('실패!!');
-                }
-            })
-        }
+        setUserInfo(loginStatus.currentUser.user);
     }, []);
 
-    async function getUserInfo(loginInfo) {
-        console.log('=== getUserInfo ===');
-        console.log('loginInfo: ', loginInfo);
-        const requestOptions = {
-            method: "post",
-            headers: {
-                "content-type": "application/json"
-            },
-            body: JSON.stringify(loginInfo)
-        }
-
-        const response = await fetch (
-            'http://localhost:3001/getUserInfo',
-            requestOptions
-        );
-        const data = await response.json();
-        return data
-    }
+    
 
     return (
-        <div>
+        <div className='container'>
             <div>
 
                 <div className='cart-info'>
-                    <div>배송지 정보</div>
+                    <div className='table-name'>배송지 정보</div>
                     <table className='shipping-info'>
                         <tbody>
                             <tr>
                                 <th>받으시는 분</th>
-                                <td class=''>
-                                    user: {userInfo.id}
-
-                                    <input class=' focus:bg-white focus:outline-black outline-1'></input>
+                                <td>
+                                    <input 
+                                    className='focus:bg-white focus:outline-black outline-1'
+                                    value={userInfo.name}
+                                    ></input>
                                 </td>
                             </tr>
                             <tr>
                                 <th>휴대폰 번호</th>
-                                <td class=''>
+                                <td className=''>
                                     <select className="ml-1" onChange={handleSelectFirstPN} value={selectFirstPN}>
                                         <option value="1">010</option>
                                         <option value="2">011</option>
                                         <option value="4">017</option>
                                         <option value="5">018</option>
                                     </select>
-                                    <input class=' focus:bg-white focus:outline-black outline-1 w-124 ml-1'></input>
-                                    <input class=' focus:bg-white focus:outline-black outline-1'></input>
+                                    <input className='mr-2 focus:bg-white focus:outline-black outline-1 w-124 ml-1'></input>
+                                    <input className=' focus:bg-white focus:outline-black outline-1'></input>
                                 </td>
                             </tr>
                             <tr>
                                 <th>배송 주소</th>
-                                <td class=''>
+                                <td className=''>
                                     <button
-                                        class="font-semibold border-r border-gray-300 h-full w-20 flex rounded-l focus:outline-none cursor-pointer"
+                                        className="font-semibold border-r border-gray-300 h-full w-20 flex rounded-l focus:outline-none cursor-pointer"
                                         type="button"
                                         onClick={() => {
                                             handleOpenSearchModal()
                                         }}>주소찾기</button>
-                                    <input class=' focus:bg-white focus:outline-black outline-1'></input>
+                                    <input className=' focus:bg-white focus:outline-black outline-1'></input>
 
                                     <input type="text" id="sample4_postcode" placeholder="우편번호"></input>
                                 </td>
                             </tr>
                             <tr>
                                 <th>배송 메세지</th>
-                                <td class=''>
-                                    <input class='focus:bg-white focus:outline-black outline-1'></input>
+                                <td className=''>
+                                    <input className='focus:bg-white focus:outline-black outline-1'></input>
                                 </td>
                             </tr>
                         </tbody>
@@ -175,7 +147,7 @@ const Order = props => {
                         <tbody>
                             <tr>
                                 <th>결제 예정금액</th>
-                                <td></td>
+                                <td>{paymentAmount}</td>
                             </tr>
                             <tr>
                                 <th>포인트</th>

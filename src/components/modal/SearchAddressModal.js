@@ -45,6 +45,7 @@ const SearchAddressModal = (props) => {
                         class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"
                         aria-hidden="true"></div>
                     <span
+                    
                         class="hidden sm:inline-block sm:align-middle sm:h-screen"
                         aria-hidden="true">&#8203;</span>
                     <div
