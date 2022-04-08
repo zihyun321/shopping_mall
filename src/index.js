@@ -9,34 +9,19 @@ import { Provider } from 'react-redux';
 // import store from "./redux/store";
 import { createStore } from 'redux';
 import rootReducer from "./redux/reducers";
+import { persistStore, persistReducer } from "redux-persist";
+import { PersistGate } from 'redux-persist/integration/react';
 
-const user = {};
-
-const initialState = {
-
-}
-// reducer: store에 저장할 state와 state를 바꿀 함수를 정의하는 것
-function reducer(state = user, action) {
-  console.log('=== reducer 함수 실행');
-  console.log('user: ', user);
-  switch (action.type) {
-    case 'LOG_IN':
-      console.log('test');
-      return {
-        ...state, 
-      }  
-    default:
-      return state;
-  }
-}
-
-let store = createStore(rootReducer);
+const store = createStore(rootReducer);
+const persistor = persistStore(store);
 
 ReactDOM.render(
   <React.StrictMode>
       <BrowserRouter>
         <Provider store={store}>
-          <App />
+          <PersistGate loading={null} persistor={persistor}>
+            <App />
+          </PersistGate>
         </Provider>
       </BrowserRouter>
   </React.StrictMode>,

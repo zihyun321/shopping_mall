@@ -24,9 +24,11 @@ yarn add redux
 react-redux 
 redux-devtools-extension 
 redux-logger 
+yarn add redux-persist
 ```
 * redux-devtools-extension: 크롬 확장 프로그램에서 redux dev tools를 통해 설치 할 수 있고, redux의 데이터 흐름을 알아보기 쉽게 하기 위해 사용
 * redux-logger: redux를 통해 바뀔 이전 state, dispatch 실행으로 인해 바뀐 state가 콘솔에 찍혀 디버깅 쉽게 해주는 라이브러리
+* redux-persist: 새로고침 시, 데이터 날라가는 것 방지
 
 `Node 설치`
 ```
@@ -103,6 +105,7 @@ npm i react-daum-postcode
 - [ ] 스피너
 - [ ] 회원가입시, 비밀번호 hash 알고리즘 사용하여 저장
 - [ ] 로그아웃 한 후, 장바구니 주소 들어가면 캐시가 남아있어 이전 로그인했던 기록이 남아있음. 이같은 상황 수정
+- [ ] 새로고침시에도 user 정보 저장 (redux-persist 사용)
 - [ ] 사용하지 않는 버튼 제거
 - [ ] 코드 정리 및 리팩토링
 - [ ] 주소 검색 api를 활용한 주소 입력
