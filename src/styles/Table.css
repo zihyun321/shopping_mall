@@ -21,7 +21,7 @@ table {
 
 .table-name {
     font-size: 20px;
-    font-weight: bold;
+
 }
 
 .shipping-info > tbody > tr {
@@ -73,5 +73,5 @@ input {
 }
 
 .payment-info {
-    left: 980px;
+    margin-left: 980px;
 }

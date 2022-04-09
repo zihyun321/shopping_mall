@@ -165,7 +165,7 @@ function ShoppingCart() {
                 if (data) {
                     console.log('성공!!!!! ');
                     setCartList(data);
-                    calcTotalAmount(cartList);
+                    calcTotalAmount(data);
                 } else {
                     console.log('실패!!');
                 }

@@ -12,6 +12,7 @@ function ProductDetailPage() {
     // const { productInfo } = location.state; console.log('location.state: ',
     // location.state); const productImg = props.productImg;
     const productInfo = location.state.productInfo;
+    const productList = [productInfo];       // Order Component에서 활용하기 위한 list. 하지만 필요할지가 의문
     console.log('productInfo: ', productInfo);
 
     const [quantity, setQuantity] = useState(1);
@@ -92,8 +93,10 @@ function ProductDetailPage() {
         );
 
         handleOpenCartModal();
+    }
 
-
+    const clickOrderBtn = () => {
+        history.push('/Order');
     }
 
     async function addProductToCart() {
@@ -217,6 +220,10 @@ function ProductDetailPage() {
                     <div class="flex space-x-4 mb-6 text-sm font-medium">
                         <div class="flex-auto flex space-x-4">
                             <button
+                             onClick={() => {history.push({
+                                pathname: "/Order",
+                                state: {productList: productList}
+                              })}} 
                                 class="h-10 px-6 font-semibold bg-black text-white"
                                 type="submit">
                                 Buy now

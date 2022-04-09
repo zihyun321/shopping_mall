@@ -44,9 +44,8 @@ const Order = props => {
 
     return (
         <div className='container'>
-            <div>
-
-                <div className='cart-info'>
+            <div className='cart-info'>
+                <div>
                     <div className='table-name'>배송지 정보</div>
                     <table className='shipping-info'>
                         <tbody>
