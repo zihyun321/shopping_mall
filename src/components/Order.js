@@ -12,15 +12,23 @@ const Order = props => {
 
     const productList = location.state.productList;
     const paymentAmount = location.state.paymentAmount;
+    const earnedAmount = paymentAmount * 0.01;
     console.log('productList: ', productList);
     console.log('paymentAmount: ', paymentAmount);
+    console.log('earnedAmount: ', earnedAmount);
 
     const loginStatus = useSelector((state) => state);
     const [selectFirstPN, setSelectFirstPN] = useState('1');
-    const [deliveryAddress, setDeliveryAddress] = useState('');
     const [isSearchAddressModalOpen, setSearchAddressModalOpen] = useState(false);
     const [userInfo, setUserInfo] = useState({});
     const [loading, setLoading] = useState(true);
+
+    // 주문자정보
+    const [ordererName, setOrdererName] = useState('');
+    const [ordererPhone, setOrdererPhone] = useState('');
+    const [shippingAddress, setShippingAddress] = useState('');
+    const [totalSalesVolume, setTotalSalesVolume] = useState();
+    const [userPoints, setUserPoints] = useState(0);
 
     const handleSelectFirstPN = (e) => {
         setSelectFirstPN(e.target.value);
@@ -34,10 +42,25 @@ const Order = props => {
         console.log(data);
     }
 
+    /**
+     * 주문시
+     * 1) order 레코드 생성 (고객id, 제품id, 주문자정보)
+     * 2) 고객 레코드 업데이트 (고객 보유 포인트)
+     * 3) 제품 재고 및 판매수 업데이트 (제품 재고 차감)
+     */
+    const handleOrder = () => {
+        console.log('order 클릭');  
+        
+    }
+
     useEffect(() => {
         console.log('=== useEffect ===');
         console.log('loginStatus.currentUser.user: ', loginStatus.currentUser.user);
         setUserInfo(loginStatus.currentUser.user);
+        setOrdererName(loginStatus.currentUser.user.name);
+        setOrdererPhone(loginStatus.currentUser.user.phone);
+        setShippingAddress(loginStatus.currentUser.user.address);
+        loginStatus.currentUser.user.points !== null ? setUserPoints(loginStatus.currentUser.user.points) : setUserPoints(0);
     }, []);
 
     
@@ -54,21 +77,26 @@ const Order = props => {
                                 <td>
                                     <input 
                                     className='focus:bg-white focus:outline-black outline-1'
-                                    value={userInfo.name}
+                                    value={ordererName}
+                                    onChange = {(e) => setOrdererName(e.target.value)}
                                     ></input>
                                 </td>
                             </tr>
                             <tr>
                                 <th>휴대폰 번호</th>
-                                <td className=''>
-                                    <select className="ml-1" onChange={handleSelectFirstPN} value={selectFirstPN}>
+                                <td>
+                                    {/* <select className="ml-1" onChange={handleSelectFirstPN} value={selectFirstPN}>
                                         <option value="1">010</option>
                                         <option value="2">011</option>
                                         <option value="4">017</option>
                                         <option value="5">018</option>
                                     </select>
-                                    <input className='mr-2 focus:bg-white focus:outline-black outline-1 w-124 ml-1'></input>
-                                    <input className=' focus:bg-white focus:outline-black outline-1'></input>
+                                    <input className='mr-2 focus:bg-white focus:outline-black outline-1 w-124 ml-1'></input> */}
+                                    <input 
+                                    className=' focus:bg-white focus:outline-black outline-1'
+                                    value={ordererPhone}
+                                    onChange={(e) => setOrdererPhone(e.target.value)}
+                                    ></input>
                                 </td>
                             </tr>
                             <tr>
@@ -80,15 +108,12 @@ const Order = props => {
                                         onClick={() => {
                                             handleOpenSearchModal()
                                         }}>주소찾기</button>
-                                    <input className=' focus:bg-white focus:outline-black outline-1'></input>
-
-                                    <input type="text" id="sample4_postcode" placeholder="우편번호"></input>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>배송 메세지</th>
-                                <td className=''>
-                                    <input className='focus:bg-white focus:outline-black outline-1'></input>
+                                    <input 
+                                    className='focus:bg-white focus:outline-black outline-1'
+                                    value={shippingAddress}
+                                    onClick={(e) => setShippingAddress(e.target.value)}
+                                    ></input>
+                                    {/* <input type="text" id="sample4_postcode" placeholder="우편번호"></input> */}
                                 </td>
                             </tr>
                         </tbody>
@@ -96,14 +121,14 @@ const Order = props => {
                 </div>
 
                 <div>
-                    <div>주문상품</div>
+                    <div className='table-name'>주문상품</div>
                     <table className='order-info'>
                         <thead>
                             <th>상품정보</th>
                             <th>수량</th>
                             <th>가격</th>
                             <th>총 상품금액</th>
-                            <th>배송비</th>
+                            {/* <th>배송비</th> */}
                         </thead>
                         <tbody>
                             {
@@ -129,9 +154,9 @@ const Order = props => {
                                             <td>
                                                 {data.productPrice}
                                             </td>
-                                            <td>
+                                            {/* <td>
                                                 3000원
-                                            </td>
+                                            </td> */}
                                         </tr>
                                     )
                                 })
@@ -141,7 +166,7 @@ const Order = props => {
                 </div>
 
                 <div>
-                    <div>할인받기</div>
+                    <div className='table-name'>할인받기</div>
                     <table className='point-info'>
                         <tbody>
                             <tr>
@@ -150,7 +175,7 @@ const Order = props => {
                             </tr>
                             <tr>
                                 <th>포인트</th>
-                                <td></td>
+                                <td>{userPoints}</td>
                             </tr>
                         </tbody>
                     </table>
@@ -159,6 +184,12 @@ const Order = props => {
 
             <div className="payment-info">
                 <h3>최종 결제금액</h3>
+                <button
+                    onClick={handleOrder}
+                    class="shadow ml-3 bg-black hover:bg-gray-700 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4"
+                    type="submit">
+                    주문하기
+                </button>                
             </div>
 
             {

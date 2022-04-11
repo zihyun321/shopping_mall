@@ -20,8 +20,8 @@ table {
 }
 
 .table-name {
-    font-size: 20px;
-
+    font-size: 23px;
+    float: left;
 }
 
 .shipping-info > tbody > tr {
