@@ -35,4 +35,43 @@ exports.getProductList = (req, res) => {
         }
     });
 }
+
+exports.updateProduct = (req, res) => {
+    console.log('=== server updateProduct ===');
+    console.log('req.body: ', req.body);
+    let sql = 'UPDATE product SET quantity=? WHERE id=? ';
+    // connection.query(sql, )
+}
  
+exports.getProductStock = (req, res) => {
+    let sql;
+    let productIds = req.body;
+    console.log('req.body: ', req.body);
+    console.log('productIds: ', productIds);
+    console.log('productIds.length: ', productIds.length);
+    if (productIds.length === 1) {
+        sql = 'SELECT id, quantity FROM product WHERE id=? ';
+        connection.query(sql, [productIds], (error, rows, fields) => {
+            if (error) throw error;
+            else {
+                return res.json({
+                    success: true,
+                    result: rows
+                });
+            }
+        })    
+    } 
+    else {
+        sql = 'SELECT id, stockNum FROM product WHERE id IN (?) ';
+        connection.query(sql, [productIds], (error, rows, fields) => {
+            if (error) throw error;
+            else {
+                return res.json({
+                    success: true,
+                    result: rows
+                });
+            }
+        })
+    }
+    
+}

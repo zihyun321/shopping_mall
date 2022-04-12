@@ -20,6 +20,18 @@ const connection = mysql.createPool({
 
 exports.createOrderItem = (req, res) => {
     const insertSql = 'INSERT INTO orderItem SET ? ';
-    const orderItem = req.body;
-    
+    const orderItems = req.body;
+    console.log('req.body: ', req.body);
+
+    connection.query(insertSql, [orderItems], (error, rows, fields) => {
+        if (error) {
+            throw error
+        }
+        else {
+            return res.json({
+                success: true
+            })
+        }
+    })
+
 }

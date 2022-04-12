@@ -14,7 +14,12 @@ const Order = props => {
     const paymentAmount = location.state.paymentAmount;
     const earnedAmount = paymentAmount * 0.01;
 
-    console.log('productList: ', productList);
+    let productIdList = [];
+    productList.map((data) => {
+        productIdList.push(data.id);
+    })
+
+
     console.log('paymentAmount: ', paymentAmount);
     console.log('earnedAmount: ', earnedAmount);
 
@@ -43,6 +48,22 @@ const Order = props => {
         console.log(data);
     }
 
+    const getCurrentDate = (todayDateTime) => {
+        let year = todayDateTime.getFullYear();
+        let month = ('0' + (todayDateTime.getMonth() + 1)).slice(-2);
+        let day = ('0' + todayDateTime.getDate()).slice(-2);
+        let dateString = year + '-' + month  + '-' + day;
+        return dateString
+    }
+
+    const getCurrentTime = (todayDateTime) => {
+        let hours = ('0' + todayDateTime.getHours()).slice(-2); 
+        let minutes = ('0' + todayDateTime.getMinutes()).slice(-2);
+        let seconds = ('0' + todayDateTime.getSeconds()).slice(-2); 
+        let timeString = hours + ':' + minutes  + ':' + seconds;
+        return timeString
+    }
+
     /**
      * 주문시
      * 1) order 레코드 생성 (고객id, 제품id, 주문자정보)
@@ -58,26 +79,26 @@ const Order = props => {
         const orderId = currentDate + '_' + currentTime + '_' + loginStatus.currentUser.user.name;
         console.log('orderId: ', orderId);
 
-        createOrder(orderId, currentDate);
-        createOrderItem(orderId);
-        updateProduct();
-        updateUser();
+        // handleCreateOrder(orderId, currentDate);
+        handleUpdateProduct();
+        // updateUser();
+        // deleteCart();
     }
 
-    const getCurrentDate = (todayDateTime) => {
-        let year = todayDateTime.getFullYear();
-        let month = ('0' + (todayDateTime.getMonth() + 1)).slice(-2);
-        let day = ('0' + todayDateTime.getDate()).slice(-2);
-        let dateString = year + '-' + month  + '-' + day;
-        return dateString
-    }
+    // 여기다가 async를 또 써도 되는가?
+    // handleCreateOrder 실행 성공시, handleCreateOrderItem 처리되도록 해놨는데... 다른 것들도 처리안될시엔 롤백처리 어케하지?
+    async function handleCreateOrder(orderId, currentDate) {
+        createOrder(orderId, currentDate).then(
+            (data) => {
+                if (data.success) {
+                    console.log('create order 성공');
+                    handleCreateOrderItem(orderId);
+                } else {
+                    console.log('에러');
+                }
 
-    const getCurrentTime = (todayDateTime) => {
-        let hours = ('0' + todayDateTime.getHours()).slice(-2); 
-        let minutes = ('0' + todayDateTime.getMinutes()).slice(-2);
-        let seconds = ('0' + todayDateTime.getSeconds()).slice(-2); 
-        let timeString = hours + ':' + minutes  + ':' + seconds;
-        return timeString
+            }
+        )
     }
 
     async function createOrder(orderId, currentDate) {
@@ -107,12 +128,91 @@ const Order = props => {
         return data
     }
 
-    async function createOrderItem(orderId) {
+    async function handleCreateOrderItem(orderId) {
+        createOrderItem(orderId).then(
+            (data) => {
+                if (data.success) {
+                    console.log('create order 성공');
 
+                } else {
+                    console.log('에러');
+                }
+
+            }
+        )
+    }
+
+    async function createOrderItem(orderId) {
+        let orderItems = [];
+        let orderItem;
+        productList.map(data => {
+            orderItem = {
+                orderId: orderId,
+                productId: data.id,
+                orderQuantity: data.quantity,
+            }
+            orderItems.push(orderItem);
+        });
+        console.log('=== orderItems ===', orderItems);
+    
+        const requestOptions = {
+            method: "post",
+            headers: {
+                "content-type": "application/json"
+            },
+            body: JSON.stringify(orderItems)
+        };
+
+        const response = await fetch(
+            'http://localhost:3001/createOrderItem',
+            requestOptions
+        );
+        const data = await response.json();
+        return data
+
+    }
+
+    async function handleUpdateProduct() {
+        updateProduct().then(
+            (data) => {
+                if (data.success) {
+                    console.log('update product 성공');
+
+                } else {
+                    console.log('에러');
+                }
+
+            }
+        )
     }
     
     async function updateProduct() {
+        let updateProducts = [];
+        let updateProduct;
+        // productList.map(data => {
+        //     product = {
+        //         id: data.id,
+        //         quantity: data.id,
+        //         orderQuantity: data.quantity,
+        //     }
+        //     orderItems.push(orderItem);
+        // });
+        // console.log('=== orderItems ===', orderItems);
+    
+        const requestOptions = {
+            method: "post",
+            headers: {
+                "content-type": "application/json"
+            },
+            body: JSON.stringify(updateProducts)
+        };
 
+        const response = await fetch(
+            'http://localhost:3001/createOrderItem',
+            requestOptions
+        );
+        const data = await response.json();
+        return data
     }
 
     async function updateUser() {
@@ -127,7 +227,40 @@ const Order = props => {
         setOrdererPhone(loginStatus.currentUser.user.phone);
         setShippingAddress(loginStatus.currentUser.user.address);
         loginStatus.currentUser.user.points !== null ? setUserPoints(loginStatus.currentUser.user.points) : setUserPoints(0);
+        handleGetProductStock();    // 기존 product 재고 - 주문한 product 갯수를 뺴주기 위해 해당 화면 렌더링할때 product 불러왔는데 해당 과정이 맞나?..
     }, []);
+
+    let originProductList = [];
+    async function handleGetProductStock() {
+        getProductStock().then((data) => {
+            if (data.success) {
+                console.log('update product 성공');
+                originProductList = data.result;
+                console.log('originProductList: ', originProductList);
+            } else {
+                console.log('에러');
+            }
+        }) 
+    }
+
+
+    async function getProductStock() {
+        console.log('productIdList: ', productIdList);
+        const requestOptions = {
+            method: "post",
+            headers: {
+                "content-type": "application/json"
+            },
+            body: JSON.stringify(productIdList)
+        };
+
+        const response = await fetch(
+            'http://localhost:3001/getProductStock',
+            requestOptions
+        );
+        const data = await response.json();
+        return data
+    }
 
     
 
