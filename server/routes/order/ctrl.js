@@ -21,15 +21,16 @@
 exports.createOrder = (req, res) => {
     console.log('==== createOrder in server ====');
     const insertSql = 'INSERT INTO `order` SET ? ';
+    const orderInfo = req.body;
     console.log('req: ', req.body);
-    // connection.query(insertSql, [cartInfo['customerId'], cartInfo['productId']], (error, rows, fields) => {
-    //     if (error) {
-    //         console.log('error: ', error);
-    //     }
-    //     else {
-
-    //     }
-    // })
+    connection.query(insertSql, orderInfo, (error, rows, fields) => {
+        if (error) {
+            console.log('error: ', error);
+        }
+        else {
+            console.log('rows: ', rows);
+        }
+    })
 }
 
 exports.checkAndCreateCart = (req, res) => {

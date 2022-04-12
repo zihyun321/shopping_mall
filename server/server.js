@@ -54,3 +54,6 @@ app.post("/updateCart", cartRouter);       // cart 업데이트
 
 /** Order */
 app.post("/createOrder", orderRouter);        // order 생성
+
+/** Order Item */
+app.post("/createOrderItem", orderRouter);   // orderItem 생성
