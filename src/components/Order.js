@@ -13,6 +13,7 @@ const Order = props => {
     const productList = location.state.productList;
     const paymentAmount = location.state.paymentAmount;
     const earnedAmount = paymentAmount * 0.01;
+
     console.log('productList: ', productList);
     console.log('paymentAmount: ', paymentAmount);
     console.log('earnedAmount: ', earnedAmount);
@@ -49,8 +50,73 @@ const Order = props => {
      * 3) 제품 재고 및 판매수 업데이트 (제품 재고 차감)
      */
     const handleOrder = () => {
-        console.log('order 클릭');  
-        
+        console.log('order 클릭');
+        let todayDateTime = new Date();
+        let currentDate = getCurrentDate(todayDateTime);
+        let currentTime = getCurrentTime(todayDateTime);
+
+        const orderId = currentDate + '_' + currentTime + '_' + loginStatus.currentUser.user.name;
+        console.log('orderId: ', orderId);
+
+        createOrder(orderId, currentDate);
+        createOrderItem(orderId);
+        updateProduct();
+        updateUser();
+    }
+
+    const getCurrentDate = (todayDateTime) => {
+        let year = todayDateTime.getFullYear();
+        let month = ('0' + (todayDateTime.getMonth() + 1)).slice(-2);
+        let day = ('0' + todayDateTime.getDate()).slice(-2);
+        let dateString = year + '-' + month  + '-' + day;
+        return dateString
+    }
+
+    const getCurrentTime = (todayDateTime) => {
+        let hours = ('0' + todayDateTime.getHours()).slice(-2); 
+        let minutes = ('0' + todayDateTime.getMinutes()).slice(-2);
+        let seconds = ('0' + todayDateTime.getSeconds()).slice(-2); 
+        let timeString = hours + ':' + minutes  + ':' + seconds;
+        return timeString
+    }
+
+    async function createOrder(orderId, currentDate) {
+        console.log('=== createOrder ===');
+        const orderInfo = {
+            id: orderId,
+            customerId: userInfo.id,
+            orderDate: currentDate,
+            ordererName: ordererName,
+            ordererPhone: ordererPhone,
+            shippingAddress: shippingAddress
+        }
+
+        const requestOptions = {
+            method: "post",
+            headers: {
+                "content-type": "application/json"
+            },
+            body: JSON.stringify(orderInfo)
+        };
+
+        const response = await fetch(
+            'http://localhost:3001/createOrder',
+            requestOptions
+        );
+        const data = await response.json();
+        return data
+    }
+
+    async function createOrderItem(orderId) {
+
+    }
+    
+    async function updateProduct() {
+
+    }
+
+    async function updateUser() {
+
     }
 
     useEffect(() => {

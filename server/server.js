@@ -34,6 +34,7 @@ app.listen(port, () => {
 const userRouter = require('./routes/user/index');
 const productRouter = require('./routes/Product/index');
 const cartRouter = require('./routes/Cart/index');
+const orderRouter = require('./routes/Order/index');
 
 
 console.log('서버탐');
@@ -51,4 +52,5 @@ app.post("/getCartList", cartRouter);       // cart 조회
 app.post("/deleteCart", cartRouter);       // cart 삭제
 app.post("/updateCart", cartRouter);       // cart 업데이트
 
-
+/** Order */
+app.post("/createOrder", orderRouter);        // order 생성
