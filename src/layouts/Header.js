@@ -9,7 +9,7 @@ import {
     ShoppingFilled
 } from '@ant-design/icons';
 import 'antd/dist/antd.css';
-import {useSelector} from 'react-redux';
+import {useSelector, useDispatch} from 'react-redux';
 import {useHistory, withRouter} from 'react-router-dom';
 
 const headerMenu = styled.div `
@@ -33,8 +33,11 @@ function LoggedinHeader() {
     const [isProfileModalOpen, setProfileModalOpen] = useState(false);
 
     const history = useHistory();
+    const dispatch = useDispatch();
 
     const handleClickLogout = () => {
+        console.log('dispatch!!');
+        dispatch({type: 'LOG_OUT', user: ''});        
         window.location.href = '/';
     }
     
