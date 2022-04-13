@@ -81,9 +81,9 @@ const Order = props => {
         const orderId = currentDate + '_' + currentTime + '_' + loginStatus.currentUser.user.name;
         console.log('orderId: ', orderId);
 
-        // handleCreateOrder(orderId, currentDate);
+        handleCreateOrder(orderId, currentDate);
         // handleUpdateProduct();
-        handleUpdateUserPoints();
+        // handleUpdateUserPoints();
         // deleteCart();
     }
 

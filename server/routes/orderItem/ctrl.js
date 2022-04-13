@@ -16,13 +16,19 @@ const connection = mysql.createPool({
     waitForConnections: true,
     connectionLimit: 10,
     queueLimit: 0,
+    multipleStatements: true
 });
 
 exports.createOrderItem = (req, res) => {
-    const insertSql = 'INSERT INTO orderItem SET ? ';
-    const orderItems = req.body;
+    const insertSql = 'INSERT INTO orderItem (orderId, productId, orderQuantity) VALUES ? ';
+    const orderItems = [];
     console.log('req.body: ', req.body);
 
+    req.body.forEach(item => {
+        let orderItem = [item.orderId, item.productId, item.orderQuantity];
+        orderItems.push(orderItem);
+    });
+    console.log('orderItems: ', orderItems);
     connection.query(insertSql, [orderItems], (error, rows, fields) => {
         if (error) {
             throw error
