@@ -39,7 +39,34 @@ exports.getProductList = (req, res) => {
 exports.updateProduct = (req, res) => {
     console.log('=== server updateProduct ===');
     console.log('req.body: ', req.body);
-    let sql = 'UPDATE product SET quantity=? WHERE id=? ';
+    let productInfo = req.body;
+    let sql = 'UPDATE product SET quantity=? WHERE id=? ;';
+    let updateInfos = [[]];
+    let updateInfo = [];
+    
+    if (productInfo.length > 1) {
+        for (let i=0; i<productInfo.length; i++) {
+            connection.query(sql, [productInfo[i].quantity, productInfo[i].id], (error, rows, fields) => {
+                if (error) throw error;
+                else {
+                    return res.json({
+                        success: true
+                    })
+                }
+            })
+        }
+    } 
+    else {
+        connection.query(sql, [productInfo.quantity, productInfo['id']], (error, rows, fields) => {
+            if (error) throw error;
+            else {
+                return res.json({
+                    success: true
+                })
+            }
+        })
+    }
+
     // connection.query(sql, )
 }
  
@@ -62,7 +89,7 @@ exports.getProductStock = (req, res) => {
         })    
     } 
     else {
-        sql = 'SELECT id, stockNum FROM product WHERE id IN (?) ';
+        sql = 'SELECT id, quantity FROM product WHERE id IN (?) ';
         connection.query(sql, [productIds], (error, rows, fields) => {
             if (error) throw error;
             else {

@@ -28,6 +28,8 @@ const Order = props => {
     const [isSearchAddressModalOpen, setSearchAddressModalOpen] = useState(false);
     const [userInfo, setUserInfo] = useState({});
     const [loading, setLoading] = useState(true);
+    const [originProductList, setOriginProductList] = useState([]);
+
 
     // 주문자정보
     const [ordererName, setOrdererName] = useState('');
@@ -173,7 +175,24 @@ const Order = props => {
     }
 
     async function handleUpdateProduct() {
-        updateProduct().then(
+
+        // originProductList => [{id: 6, quantity: 1}, ] (재고정보)
+        // productList 비교 =>  [{id: 6, quantity: 1}, ] (주문정보)
+        
+        console.log('originProductList: ', originProductList);
+        console.log('productList: ', productList);
+        // 배열 크기가 똑같다는 가정하에 
+        let remainQuantity;
+        let updateProductsInfo = [];
+        let updateProductInfo = {};
+        for (let i=0; i<productList.length; i++) {
+            remainQuantity = originProductList[i].quantity - productList[i].quantity;
+            updateProductInfo = {id: productList[i].id, quantity: remainQuantity};
+            updateProductsInfo.push(updateProductInfo);
+        }
+        console.log('updateProductsInfo: ', updateProductsInfo);
+
+        updateProduct(updateProductsInfo).then(
             (data) => {
                 if (data.success) {
                     console.log('update product 성공');
@@ -186,29 +205,17 @@ const Order = props => {
         )
     }
     
-    async function updateProduct() {
-        let updateProducts = [];
-        let updateProduct;
-        // productList.map(data => {
-        //     product = {
-        //         id: data.id,
-        //         quantity: data.id,
-        //         orderQuantity: data.quantity,
-        //     }
-        //     orderItems.push(orderItem);
-        // });
-        // console.log('=== orderItems ===', orderItems);
-    
+    async function updateProduct(updateProductsInfo) {    
         const requestOptions = {
             method: "post",
             headers: {
                 "content-type": "application/json"
             },
-            body: JSON.stringify(updateProducts)
+            body: JSON.stringify(updateProductsInfo)
         };
 
         const response = await fetch(
-            'http://localhost:3001/createOrderItem',
+            'http://localhost:3001/updateProduct',
             requestOptions
         );
         const data = await response.json();
@@ -230,13 +237,19 @@ const Order = props => {
         handleGetProductStock();    // 기존 product 재고 - 주문한 product 갯수를 뺴주기 위해 해당 화면 렌더링할때 product 불러왔는데 해당 과정이 맞나?..
     }, []);
 
-    let originProductList = [];
+    
     async function handleGetProductStock() {
         getProductStock().then((data) => {
             if (data.success) {
                 console.log('update product 성공');
-                originProductList = data.result;
-                console.log('originProductList: ', originProductList);
+                // data.result.map((data) => {
+                //     originProductList[data.id] = data.quantity
+                // });
+                // console.log('originProductList: ', originProductList);
+
+                setOriginProductList(data.result);
+                // originProductList = data.result;
+                console.log('data.result: ', data.result);
             } else {
                 console.log('에러');
             }
