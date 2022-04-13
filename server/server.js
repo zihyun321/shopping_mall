@@ -42,6 +42,7 @@ console.log('서버탐');
 app.post("/createUser", userRouter);        // 회원가입
 app.post("/checkUserInfo", userRouter);     // logi한 user 정보 확인
 app.post("/getUserInfo", userRouter);       // user 정보 조회
+app.post("/updateUserPoints", userRouter);  // user point 업데이트
 
 /** Product */
 app.post("/getProductList", productRouter);     // 제품 정보 조회

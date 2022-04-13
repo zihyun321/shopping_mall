@@ -128,6 +128,16 @@ exports.checkUserInfo = (req, res) => {
     );
 }
 
+exports.updateUserPoints = (req, res) => {
+    let userInfo = req.body;
+    let query = ' UPDATE customer SET points = ? WHERE id = ? ';
+
+    connection.query(query, [userInfo.points, userInfo.id], (error, rows, fields) => {
+        if (error) throw error;
+        else return res.json({ success: true });
+    });
+}
+
 // exports.getUserInfo = (req, res) => {
 //     const userInfo = req.body;
 

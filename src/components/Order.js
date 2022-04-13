@@ -82,8 +82,8 @@ const Order = props => {
         console.log('orderId: ', orderId);
 
         // handleCreateOrder(orderId, currentDate);
-        handleUpdateProduct();
-        // updateUser();
+        // handleUpdateProduct();
+        handleUpdateUserPoints();
         // deleteCart();
     }
 
@@ -222,9 +222,44 @@ const Order = props => {
         return data
     }
 
-    async function updateUser() {
+    async function handleUpdateUserPoints() {
+        console.log('=== handleUpdateUserPoints ===');
+        let updatePoints = userPoints + earnedAmount;
+        let updateUserInfo = {
+            id: userInfo.id,
+            points: updatePoints
+        }
+        console.log('updateUserInfo: ', updateUserInfo);
+        updateUserPoints(updateUserInfo).then(
+            (data) => {
+                if (data.success) {
+                    console.log('update product 성공');
 
+                } else {
+                    console.log('에러');
+                }
+
+            }
+        )
     }
+    
+    async function updateUserPoints(updateUserInfo) {    
+        const requestOptions = {
+            method: "post",
+            headers: {
+                "content-type": "application/json"
+            },
+            body: JSON.stringify(updateUserInfo)
+        };
+
+        const response = await fetch(
+            'http://localhost:3001/updateUserPoints',
+            requestOptions
+        );
+        const data = await response.json();
+        return data
+    }
+
 
     useEffect(() => {
         console.log('=== useEffect ===');

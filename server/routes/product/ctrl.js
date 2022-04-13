@@ -16,6 +16,7 @@
      waitForConnections: true,
      connectionLimit: 10,
      queueLimit: 0,
+     multipleStatements: true
  });
 
 
@@ -48,7 +49,7 @@ exports.updateProduct = (req, res) => {
     productInfo.forEach(function(item) {
         console.log('item: ', item);
         // query += mysql.format("UPDATE product SET quantity=? WHERE id=? ;", [item.quantity, item.id]);
-        query += `UPDATE product SET quantity='${item.quantity}' WHERE id='${item.id}';`;
+        query += `UPDATE product SET quantity=${item.quantity} WHERE id='${item.id}';`;
         console.log('query: ', query);
     })
 
