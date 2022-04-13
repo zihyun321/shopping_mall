@@ -40,32 +40,50 @@ exports.updateProduct = (req, res) => {
     console.log('=== server updateProduct ===');
     console.log('req.body: ', req.body);
     let productInfo = req.body;
-    let sql = 'UPDATE product SET quantity=? WHERE id=? ;';
+    let query = '';
+    // let sql = 'UPDATE product SET quantity=? WHERE id=? ;';
     let updateInfos = [[]];
     let updateInfo = [];
     
-    if (productInfo.length > 1) {
-        for (let i=0; i<productInfo.length; i++) {
-            connection.query(sql, [productInfo[i].quantity, productInfo[i].id], (error, rows, fields) => {
-                if (error) throw error;
-                else {
-                    return res.json({
-                        success: true
-                    })
-                }
+    productInfo.forEach(function(item) {
+        console.log('item: ', item);
+        // query += mysql.format("UPDATE product SET quantity=? WHERE id=? ;", [item.quantity, item.id]);
+        query += `UPDATE product SET quantity='${item.quantity}' WHERE id='${item.id}';`;
+        console.log('query: ', query);
+    })
+
+    connection.query(query, (error, rows, fields) => {
+        if (error) throw error;
+        else {
+            return res.json({
+                success: true
             })
         }
-    } 
-    else {
-        connection.query(sql, [productInfo.quantity, productInfo['id']], (error, rows, fields) => {
-            if (error) throw error;
-            else {
-                return res.json({
-                    success: true
-                })
-            }
-        })
-    }
+    })
+
+    // if (productInfo.length > 1) {
+    //     console.log('product 많다. ');
+    //     for (let i=0; i<productInfo.length; i++) {
+    //         connection.query(sql, [productInfo[i].quantity, productInfo[i].id], (error, rows, fields) => {
+    //             if (error) throw error;
+    //             else {
+    //                 return res.json({
+    //                     success: true
+    //                 })
+    //             }
+    //         })
+    //     }
+    // } 
+    // else {
+    //     connection.query(sql, [productInfo.quantity, productInfo['id']], (error, rows, fields) => {
+    //         if (error) throw error;
+    //         else {
+    //             return res.json({
+    //                 success: true
+    //             })
+    //         }
+    //     })
+    // }
 
     // connection.query(sql, )
 }
