@@ -54,7 +54,7 @@ const Order = props => {
         let year = todayDateTime.getFullYear();
         let month = ('0' + (todayDateTime.getMonth() + 1)).slice(-2);
         let day = ('0' + todayDateTime.getDate()).slice(-2);
-        let dateString = year + '-' + month  + '-' + day;
+        let dateString = year + month + day;
         return dateString
     }
 
@@ -62,7 +62,7 @@ const Order = props => {
         let hours = ('0' + todayDateTime.getHours()).slice(-2); 
         let minutes = ('0' + todayDateTime.getMinutes()).slice(-2);
         let seconds = ('0' + todayDateTime.getSeconds()).slice(-2); 
-        let timeString = hours + ':' + minutes  + ':' + seconds;
+        let timeString = hours + minutes + seconds;
         return timeString
     }
 
@@ -78,7 +78,7 @@ const Order = props => {
         let currentDate = getCurrentDate(todayDateTime);
         let currentTime = getCurrentTime(todayDateTime);
 
-        const orderId = currentDate + '_' + currentTime + '_' + loginStatus.currentUser.user.name;
+        const orderId = currentDate + '_' + currentTime;
         console.log('orderId: ', orderId);
 
         handleCreateOrder(orderId, currentDate);
@@ -149,6 +149,7 @@ const Order = props => {
         let orderItem;
         productList.map(data => {
             orderItem = {
+                customerId: userInfo.id,
                 orderId: orderId,
                 productId: data.id,
                 orderQuantity: data.quantity,

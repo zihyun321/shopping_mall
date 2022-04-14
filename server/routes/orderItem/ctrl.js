@@ -20,12 +20,12 @@ const connection = mysql.createPool({
 });
 
 exports.createOrderItem = (req, res) => {
-    const insertSql = 'INSERT INTO orderItem (orderId, productId, orderQuantity) VALUES ? ';
+    const insertSql = 'INSERT INTO orderItem (orderId, productId, orderQuantity, customerId) VALUES ? ';
     const orderItems = [];
     console.log('req.body: ', req.body);
 
     req.body.forEach(item => {
-        let orderItem = [item.orderId, item.productId, item.orderQuantity];
+        let orderItem = [item.orderId, item.productId, item.orderQuantity, item.customerId];
         orderItems.push(orderItem);
     });
     console.log('orderItems: ', orderItems);
@@ -40,4 +40,8 @@ exports.createOrderItem = (req, res) => {
         }
     })
 
+}
+
+exports.getOrderItem = (res, req) => {
+    const sql = ' SELECT ';
 }
