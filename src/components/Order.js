@@ -111,7 +111,8 @@ const Order = props => {
             orderDate: currentDate,
             ordererName: ordererName,
             ordererPhone: ordererPhone,
-            shippingAddress: shippingAddress
+            shippingAddress: shippingAddress,
+            totalPrice: paymentAmount
         }
 
         const requestOptions = {

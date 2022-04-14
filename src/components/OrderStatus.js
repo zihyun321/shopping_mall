@@ -1,6 +1,5 @@
 import React, {useState, useEffect} from 'react';
 import {useSelector} from 'react-redux';
-
 import '../styles/Table.css'
 
 const OrderStatus = () => {
@@ -9,7 +8,7 @@ const OrderStatus = () => {
     const loginStatus = useSelector((state) => state);
     console.log('loginStatus: ', loginStatus);
     const [userInfo, setUserInfo] = useState({});
-    const [orderList, setOrderList] = useState([]);
+    const [orderItemList, setOrderItemList] = useState([]);
 
     useEffect(() => {
         setUserInfo(loginStatus.currentUser.user);
@@ -22,7 +21,7 @@ const OrderStatus = () => {
             (data) => {
                 if (data.success) {
                     console.log('order 정보 가져오기');
-                    setOrderList(data.result);
+                    setOrderItemList(data.result);
                     console.log('data.result: ', data.result);
                 }
                 else {
@@ -57,15 +56,26 @@ const OrderStatus = () => {
                 <table className='order-info'>
                     <thead>
                         <th>주문일</th>
+                        <th>주문내역</th>
                         <th>주문번호</th>
-                        <th>상품정보</th>
-                        <th>수량</th>
-                        <th>상품금액</th>
-                        <th>진행상황</th>
-                        <th>상품평</th>
+                        <th>결제금액</th>
                     </thead>
                     <tbody>
+                        {
+                            orderItemList.map((data) => {
+                                return (
+                                    <tr key={data.id}>
+                                        <td>{data.orderdate}</td>
+                                        <td>
+                                            <img class="w-20 h-30" alt={data.imgUrl} src={data.imgUrl}/>
 
+                                        </td>
+                                        <td>{data.orderdate}</td>
+                                        <td>{data.orderdate}</td>
+                                    </tr>
+                                )
+                            })
+                        }
                     </tbody>
                 </table>
             </div>
