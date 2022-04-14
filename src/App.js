@@ -37,7 +37,7 @@ class App extends React.Component {
                         <Route path="/ProductList/:category" component={ProductListPage} />
                         <Route exact="exact" path='/ShoppingCart' component={ShoppingCartPage}/>
                         <Route exact="exact" path='/Order' component={OrderPage}/>
-                        <Route exact="exact" path='/OrderStatus' component={OrderStatusPage}/>
+                        <Route path='/OrderStatus' component={OrderStatusPage}/>
                     </Switch>
                 </div>
             </div>

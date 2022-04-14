@@ -20,12 +20,12 @@ const connection = mysql.createPool({
 });
 
 exports.createOrderItem = (req, res) => {
-    const insertSql = 'INSERT INTO orderItem (orderId, productId, orderQuantity, customerId) VALUES ? ';
+    const insertSql = 'INSERT INTO orderItem (orderId, productId, orderQuantity, customerId, totalPrice, deliveryStatus, orderStatus) VALUES ? ';
     const orderItems = [];
     console.log('req.body: ', req.body);
 
     req.body.forEach(item => {
-        let orderItem = [item.orderId, item.productId, item.orderQuantity, item.customerId];
+        let orderItem = [item.orderId, item.productId, item.orderQuantity, item.customerId, item.totalPrice, item.deliveryStatus, item.orderStatus];
         orderItems.push(orderItem);
     });
     console.log('orderItems: ', orderItems);
@@ -42,6 +42,26 @@ exports.createOrderItem = (req, res) => {
 
 }
 
-exports.getOrderItem = (res, req) => {
-    const sql = ' SELECT ';
+exports.getOrderItem = (req, res) => {
+    console.log('==== orderItem ctrl.js getOrderItem');
+    let userId = req.body.id;
+    console.log('userId: ', userId);
+
+    let sql = ' SELECT item.id, item.orderQuantity, item.orderStatus, item.deliveryStatus, item.totalPrice ';
+    sql += ' ,order.orderDate, order.id, p.productName, p.productPrice, p.imgUrl ';
+    sql += ' FROM orderItem as item                         ';
+    sql += ' Join product as p on p.id = item.productId     ';
+    sql += ' Join `order` on order.id = item.orderId        ';
+    sql += ' Where item.customerId = ? ;                    ';
+
+    connection.query(sql, [userId], (error, rows, fields) => {
+        if (error) {
+            throw error
+        } else {
+            return res.json({
+                success: true,
+                result: rows
+            })
+        }
+    })
 }
