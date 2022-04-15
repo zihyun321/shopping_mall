@@ -12,16 +12,17 @@ const OrderStatus = () => {
 
     useEffect(() => {
         setUserInfo(loginStatus.currentUser.user);
-        handleGetOrderInfo();
+        handleGetOrderItemInfo();
     }, []);
     
-    async function handleGetOrderInfo() {
+    async function handleGetOrderItemInfo() {
         console.log('=== handleGetOrderInfo ===');
-        getOrderInfo().then(
+        getOrderItemInfo().then(
             (data) => {
                 if (data.success) {
                     console.log('order 정보 가져오기');
                     setOrderItemList(data.result);
+                    getOrderInfo();
                     console.log('data.result: ', data.result);
                 }
                 else {
@@ -31,8 +32,8 @@ const OrderStatus = () => {
         )
     }
 
-    async function getOrderInfo() {
-        console.log('=== getOrderInfo ===');
+    async function getOrderItemInfo() {
+        console.log('=== getOrderItemInfo ===');
         const requestOptions = {
             method: "post",
             headers: {
@@ -43,11 +44,15 @@ const OrderStatus = () => {
         console.log('requestOptions: ', requestOptions);
 
         const response = await fetch(
-            'http://localhost:3001/getOrderItem',
+            'http://localhost:3001/getOrder',
             requestOptions
         );
         const data = await response.json();
         return data
+    }
+
+    const getOrderInfo = () => {
+
     }
 
     return (

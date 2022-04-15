@@ -104,6 +104,7 @@ npm i react-daum-postcode
 - [ ] 주문 취소 기능 구현
 
 ## 7. 주문 상태 확인 페이지
+- [ ] 주문 데이터 불러오기 (이때, group by 사용시 에러가 나는데 이때 SET SESSION sql_mode = 'NO_ENGINE_SUBSTITUTION,STRICT_TRANS_TABLES'; 설정)
 
 ## 기타 기능
 
