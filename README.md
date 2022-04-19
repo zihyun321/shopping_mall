@@ -9,7 +9,18 @@ DB: MySQL <br>
 ## 1. 설치
 
 `DB 구축`
-<br> MySQL 다운로드: https://www.mysql.com/ 
+방법1: MySQL 다운로드: https://www.mysql.com/ <br> 
+방법2: homebrew mysql 설치 (해당 방법 이용)<br> 
+```
+brew install mysql
+```
+
+`MySQL 실행/중지 명령어`
+```
+mysql.server start  // 실행
+mysql_secure_installation   // 초기 설정
+mysql.server stop   // 종료
+```
 
 `React 설치`
 ```
@@ -58,6 +69,11 @@ yarn add @mui/icons-material
 ```
 npm install --save react-router
 npm install react-router-dom --save
+```
+
+`dotenv 설치`
+```
+npm install --save dotenv
 ```
 
 `주소 검색 api`
