@@ -77,7 +77,7 @@ exports.getCartList = (req, res) => {
     var customerId = req.body.id;
 
 
-    var sql = ' SELECT cart.id, cart.customerId, customer.name, cart.productId, product.productName, product.productPrice, product.size, product.color, product.imgUrl, cart.quantity ';
+    var sql = ' SELECT cart.id, cart.customerId, customer.name, cart.productId, product.name, product.price, product.size, product.color, product.imgUrl, cart.quantity ';
     sql += ' FROM shoppingcart as cart ';
     sql += ' join customer on customer.id = cart.customerId  ';
     sql += ' join product on product.id = cart.productId ';

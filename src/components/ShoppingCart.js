@@ -27,9 +27,9 @@ function ShoppingCart() {
             title: 'product',
             children: [
                 {
-                    title: 'productName',
-                    dataIndex: 'productName',
-                    key: 'productName'
+                    title: 'name',
+                    dataIndex: 'name',
+                    key: 'name'
                 }, {
                     title: 'imgUrl',
                     dataIndex: 'imgUrl',
@@ -50,9 +50,9 @@ function ShoppingCart() {
             key: 'color'
         }, 
         {
-            title: 'productPrice',
-            dataIndex: 'productPrice',
-            key: 'productPrice'
+            title: 'price',
+            dataIndex: 'price',
+            key: 'price'
         }, {
             title: 'quantity',
             dataIndex: 'quantity',
