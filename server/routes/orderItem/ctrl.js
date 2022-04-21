@@ -20,12 +20,12 @@ const connection = mysql.createPool({
 });
 
 exports.createOrderItem = (req, res) => {
-    const insertSql = 'INSERT INTO orderItem (orderId, productId, orderQuantity, customerId, totalPrice, deliveryStatus, orderStatus) VALUES ? ';
+    const insertSql = 'INSERT INTO orderItem (orderId, productId, orderQuantity, customerId, orderPrice, deliveryStatus, orderStatus) VALUES ? ';
     const orderItems = [];
     console.log('req.body: ', req.body);
 
     req.body.forEach(item => {
-        let orderItem = [item.orderId, item.productId, item.orderQuantity, item.customerId, item.totalPrice, item.deliveryStatus, item.orderStatus];
+        let orderItem = [item.orderId, item.productId, item.orderQuantity, item.customerId, item.orderPrice, item.deliveryStatus, item.orderStatus];
         orderItems.push(orderItem);
     });
     console.log('orderItems: ', orderItems);
@@ -47,13 +47,13 @@ exports.getOrder = (req, res) => {
     let userId = req.body.id;
     console.log('userId: ', userId);
 
-    let sql = ' SELECT item.id, item.orderQuantity, item.orderStatus, item.deliveryStatus, item.totalPrice ';
-    sql += ' ,order.orderDate, order.id, p.productName, p.productPrice, p.imgUrl ';
+    let sql = ' SELECT item.id, item.orderQuantity, item.orderStatus, item.deliveryStatus, item.orderPrice ';
+    sql += ' ,order.orderDate, order.id, p.name, p.price, p.imgUrl ';
     sql += ' FROM orderItem as item                         ';
     sql += ' Join product as p on p.id = item.productId     ';
     sql += ' Join `order` on order.id = item.orderId        ';
     sql += ' Where item.customerId = ?                      ';
-    sql += ' GROUP BY order.id                              ';
+    // sql += ' GROUP BY order.id                              ';
  
     connection.query(sql, [userId], (error, rows, fields) => {
         if (error) {
@@ -72,8 +72,8 @@ exports.getOrderItem = (req, res) => {
     let userId = req.body.id;
     console.log('userId: ', userId);
 
-    let sql = ' SELECT item.id, item.orderQuantity, item.orderStatus, item.deliveryStatus, item.totalPrice ';
-    sql += ' ,order.orderDate, order.id, p.productName, p.productPrice, p.imgUrl ';
+    let sql = ' SELECT item.id, item.orderQuantity, item.orderStatus, item.deliveryStatus, item.orderPrice ';
+    sql += ' ,order.orderDate, order.id, p.name, p.price, p.imgUrl ';
     sql += ' FROM orderItem as item                         ';
     sql += ' Join product as p on p.id = item.productId     ';
     sql += ' Join `order` on order.id = item.orderId        ';

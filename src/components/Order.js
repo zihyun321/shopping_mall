@@ -32,7 +32,7 @@ const Order = props => {
 
 
     // 주문자정보
-    const [ordererName, setOrdererName] = useState('');
+    const [orderer, setOrderer] = useState('');
     const [ordererPhone, setOrdererPhone] = useState('');
     const [shippingAddress, setShippingAddress] = useState('');
     const [totalSalesVolume, setTotalSalesVolume] = useState();
@@ -109,10 +109,10 @@ const Order = props => {
             id: orderId,
             customerId: userInfo.id,
             orderDate: currentDate,
-            ordererName: ordererName,
+            orderer: orderer,
             ordererPhone: ordererPhone,
             shippingAddress: shippingAddress,
-            totalPrice: paymentAmount
+            totalSalePrice: paymentAmount
         }
 
         const requestOptions = {
@@ -154,7 +154,7 @@ const Order = props => {
                 orderId: orderId,
                 productId: data.id,
                 orderQuantity: data.quantity,
-                totalPrice: data.quantity * data.productPrice,
+                orderPrice: data.quantity * data.productPrice,
                 deliveryStatus: '배송 준비중',
                 orderStatus: '주문완료'
             }
@@ -270,7 +270,7 @@ const Order = props => {
         console.log('=== useEffect ===');
         console.log('loginStatus.currentUser.user: ', loginStatus.currentUser.user);
         setUserInfo(loginStatus.currentUser.user);
-        setOrdererName(loginStatus.currentUser.user.name);
+        setOrderer(loginStatus.currentUser.user.name);
         setOrdererPhone(loginStatus.currentUser.user.phone);
         setShippingAddress(loginStatus.currentUser.user.address);
         loginStatus.currentUser.user.points !== null ? setUserPoints(loginStatus.currentUser.user.points) : setUserPoints(0);
@@ -329,8 +329,8 @@ const Order = props => {
                                 <td>
                                     <input 
                                     className='focus:bg-white focus:outline-black outline-1'
-                                    value={ordererName}
-                                    onChange = {(e) => setOrdererName(e.target.value)}
+                                    value={orderer}
+                                    onChange = {(e) => setOrderer(e.target.value)}
                                     ></input>
                                 </td>
                             </tr>

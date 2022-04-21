@@ -71,10 +71,11 @@ function ShoppingCart() {
         console.log('text: ', text);
         var prodId = record.id;
         return (
-            <div class='grid '>
+            <div class="flex">
                 <div class="box-border h-4 w-4 p-4 border">
                     {record.quantity}
                 </div>
+                
                 <button 
                 class="shadow text-black font-bold w-3"
                 type='submit' onClick={()=> clickTochangeQuantity(record, 'plus')}>
@@ -86,7 +87,7 @@ function ShoppingCart() {
                 -
                 </button>
                 <button 
-                    class="shadow text-black font-bold w-3"
+                    class="shadow text-black font-bold w-6"
                     onClick={() => submitChangedQuantity(record)}                    
                 >
                     변경
