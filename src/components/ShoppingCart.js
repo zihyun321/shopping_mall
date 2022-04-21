@@ -182,7 +182,7 @@ function ShoppingCart() {
         let total = 0;
         if (cartList) {
             cartList.map((data) => {
-                total += (data.productPrice * data.quantity);
+                total += (data.price * data.quantity);
             })
             setTotalAmount(total);
         }
@@ -246,7 +246,7 @@ function ShoppingCart() {
             setSelectedRowKeys(selectedRowKeys);
             var selected = 0;
             selectedRows.map((data) => {
-                selected += (data.productPrice * data.quantity);
+                selected += (data.price * data.quantity);
             })
             setSelectedRows(selectedRows);
             setSelectedAmount(selected);
