@@ -14,6 +14,7 @@ function ProductDetailPage() {
     const productInfo = location.state.productInfo;
     const productList = [productInfo];       // Order Component에서 활용하기 위한 list. 하지만 필요할지가 의문
     console.log('productInfo: ', productInfo);
+    console.log('productInfo: ', productInfo.price);
 
     const [quantity, setQuantity] = useState(1);
     const [isCartModalOpen, setCartModalOpen] = useState(false);
@@ -222,7 +223,7 @@ function ProductDetailPage() {
                             <button
                              onClick={() => {history.push({
                                 pathname: "/Order",
-                                state: {productList: productList}
+                                state: {productList: productList, paymentAmount: productInfo.price}
                               })}} 
                                 class="h-10 px-6 font-semibold bg-black text-white"
                                 type="submit">

@@ -9,10 +9,13 @@ const Order = props => {
 
     console.log('=== Order ===');
     const location = useLocation();
-
+    console.log('location.state: ', location.state);
     const productList = location.state.productList;
     const paymentAmount = location.state.paymentAmount;
     const earnedAmount = paymentAmount * 0.01;
+
+    console.log('productList: ', productList.length);
+    console.log('productList: ', productList[0]);
 
     let productIdList = [];
     productList.map((data) => {
@@ -112,7 +115,10 @@ const Order = props => {
             orderer: orderer,
             ordererPhone: ordererPhone,
             shippingAddress: shippingAddress,
-            totalSalePrice: paymentAmount
+            totalSalePrice: paymentAmount,
+            totalSaleQty: productList.length,
+            repProdName: productList[0].name,
+            repProdImg: productList[0].imgUrl
         }
 
         const requestOptions = {
@@ -186,6 +192,7 @@ const Order = props => {
         
         console.log('originProductList: ', originProductList);
         console.log('productList: ', productList);
+
         // 배열 크기가 똑같다는 가정하에 
         let remainQuantity;
         let updateProductsInfo = [];
