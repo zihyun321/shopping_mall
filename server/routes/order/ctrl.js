@@ -35,5 +35,25 @@ exports.createOrder = (req, res) => {
     })
 }
 
+exports.getOrder = (req, res) => {
+    console.log('==== order ctrl.js getOrder');
+    let userId = req.body.id;
+    console.log('req.body.id: ', req.body.id);
 
+    let sql = ' SELECT * FROM `order`  WHERE customerId = ? ORDER BY orderDate, id DESC ';
+    // let sql = ' SELECT id, DATE_FORMAT(orderDate, "%Y-%m-&d"), totalSalePrice, totalSaleQty, repProdName, repProdImg';
+    // sql += ' FROM order             ';
+    // sql += ' WHERE customerId = ?   ';
+    // console.log('sql : ',sql );
+    connection.query(sql, userId, (error, rows, fields) => {
+        if (error) {
+            throw error
+        } else {
+            return res.json({
+                success: true,
+                result: rows
+            })
+        }
+    })
+}
  

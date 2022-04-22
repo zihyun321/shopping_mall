@@ -42,30 +42,30 @@ exports.createOrderItem = (req, res) => {
 
 }
 
-exports.getOrder = (req, res) => {
-    console.log('==== orderItem ctrl.js getOrderItem');
-    let userId = req.body.id;
-    console.log('userId: ', userId);
+// exports.getOrder = (req, res) => {
+//     console.log('==== orderItem ctrl.js getOrderItem');
+//     let userId = req.body.id;
+//     console.log('userId: ', userId);
 
-    let sql = ' SELECT item.id, item.orderQuantity, item.orderStatus, item.deliveryStatus, item.orderPrice ';
-    sql += ' ,order.orderDate, order.id, p.name, p.price, p.imgUrl ';
-    sql += ' FROM orderItem as item                         ';
-    sql += ' Join product as p on p.id = item.productId     ';
-    sql += ' Join `order` on order.id = item.orderId        ';
-    sql += ' Where item.customerId = ?                      ';
-    // sql += ' GROUP BY order.id                              ';
+//     let sql = ' SELECT item.id, item.orderQuantity, item.orderStatus, item.deliveryStatus, item.orderPrice ';
+//     sql += ' ,order.orderDate, order.id, p.name, p.price, p.imgUrl ';
+//     sql += ' FROM orderItem as item                         ';
+//     sql += ' Join product as p on p.id = item.productId     ';
+//     sql += ' Join `order` on order.id = item.orderId        ';
+//     sql += ' Where item.customerId = ?                      ';
+//     // sql += ' GROUP BY order.id                              ';
  
-    connection.query(sql, [userId], (error, rows, fields) => {
-        if (error) {
-            throw error
-        } else {
-            return res.json({
-                success: true,
-                result: rows
-            })
-        }
-    })
-}
+//     connection.query(sql, [userId], (error, rows, fields) => {
+//         if (error) {
+//             throw error
+//         } else {
+//             return res.json({
+//                 success: true,
+//                 result: rows
+//             })
+//         }
+//     })
+// }
 
 exports.getOrderItem = (req, res) => {
     console.log('==== orderItem ctrl.js getOrderItem');

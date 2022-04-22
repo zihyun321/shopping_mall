@@ -9,31 +9,28 @@ const OrderStatus = () => {
     console.log('loginStatus: ', loginStatus);
     const [userInfo, setUserInfo] = useState({});
     const [orderItemList, setOrderItemList] = useState([]);
+    const [orderList, setOrderList] = useState([]);
 
+    console.log('orderList: ', orderList);
     useEffect(() => {
         setUserInfo(loginStatus.currentUser.user);
-        handleGetOrderItemInfo();
+        handleGetOrderInfo();
     }, []);
-    
-    async function handleGetOrderItemInfo() {
+
+    async function handleGetOrderInfo() {
         console.log('=== handleGetOrderInfo ===');
-        getOrderItemInfo().then(
+        getOrderInfo().then(
             (data) => {
                 if (data.success) {
                     console.log('order 정보 가져오기');
-                    setOrderItemList(data.result);
-                    getOrderInfo();
                     console.log('data.result: ', data.result);
-                }
-                else {
-                    console.log('에러');
+                    setOrderList(data.result);
                 }
             }
         )
     }
 
-    async function getOrderItemInfo() {
-        console.log('=== getOrderItemInfo ===');
+    async function getOrderInfo() {
         const requestOptions = {
             method: "post",
             headers: {
@@ -50,10 +47,42 @@ const OrderStatus = () => {
         const data = await response.json();
         return data
     }
+    
+    // async function handleGetOrderItemInfo() {
+    //     console.log('=== handleGetOrderInfo ===');
+    //     getOrderItemInfo().then(
+    //         (data) => {
+    //             if (data.success) {
+    //                 console.log('order 정보 가져오기');
+    //                 setOrderItemList(data.result);
+    //                 console.log('data.result: ', data.result);
+    //             }
+    //             else {
+    //                 console.log('에러');
+    //             }
+    //         }
+    //     )
+    // }
 
-    const getOrderInfo = () => {
+    // async function getOrderItemInfo() {
+    //     console.log('=== getOrderItemInfo ===');
+    //     const requestOptions = {
+    //         method: "post",
+    //         headers: {
+    //             "content-type": "application/json"
+    //         },
+    //         body: JSON.stringify(loginStatus.currentUser.user)
+    //     }
+    //     console.log('requestOptions: ', requestOptions);
 
-    }
+    //     const response = await fetch(
+    //         'http://localhost:3001/getOrder',
+    //         requestOptions
+    //     );
+    //     const data = await response.json();
+    //     return data
+    // }
+
 
     return (
         <div>
@@ -61,22 +90,24 @@ const OrderStatus = () => {
                 <table className='order-info'>
                     <thead>
                         <th>주문일</th>
-                        <th>주문내역</th>
                         <th>주문번호</th>
+                        <th>주문내역</th>
                         <th>결제금액</th>
                     </thead>
                     <tbody>
                         {
-                            orderItemList.map((data) => {
+                            orderList.map((data) => {
                                 return (
                                     <tr key={data.id}>
-                                        <td>{data.orderdate}</td>
+                                        <td>{data.orderDate.split('T')[0]}</td>
+                                        <td>{data.id}</td>
                                         <td>
-                                            <img class="w-20 h-30" alt={data.imgUrl} src={data.imgUrl}/>
-
+                                            <img class="w-20 h-30" alt={data.repProdImg} src={data.repProdImg}/>
+                                            {
+                                                data.totalSaleQty === 1 ? data.repProdName : data.repProdName + " 외 " + (data.totalSaleQty - 1) + "건"
+                                            }
                                         </td>
-                                        <td>{data.orderdate}</td>
-                                        <td>{data.orderdate}</td>
+                                        <td>{data.totalSalePrice}</td>
                                     </tr>
                                 )
                             })

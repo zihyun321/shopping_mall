@@ -57,8 +57,9 @@ app.post("/updateCart", cartRouter);       // cart 업데이트
 
 /** Order */
 app.post("/createOrder", orderRouter);        // order 생성
+app.post("/getOrder", orderRouter);   // order 내역 가져오기
 
 /** Order Item */
 app.post("/createOrderItem", orderItemRouter);   // orderItem 생성
 app.post("/getOrderItem", orderItemRouter);   // orderItem 생성
-app.post("/getOrder", orderItemRouter);   // orderItem 생성
+// app.post("/getOrder", orderItemRouter);   // orderItem 생성
