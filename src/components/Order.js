@@ -160,8 +160,8 @@ const Order = props => {
                 orderId: orderId,
                 productId: data.id,
                 orderQuantity: data.quantity,
-                orderPrice: data.quantity * data.productPrice,
-                deliveryStatus: '배송 준비중',
+                orderPrice: data.quantity * data.price,
+                // deliveryStatus: '배송 준비중',
                 orderStatus: '주문완료'
             }
             orderItems.push(orderItem);

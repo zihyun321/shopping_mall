@@ -1,9 +1,11 @@
 import React, {useState, useEffect} from 'react';
 import {useSelector} from 'react-redux';
 import '../styles/Table.css'
+import {useHistory, useLocation, withRouter} from 'react-router-dom';
 
 const OrderStatus = () => {
     
+    const history = useHistory();
 
     const loginStatus = useSelector((state) => state);
     console.log('loginStatus: ', loginStatus);
@@ -100,7 +102,7 @@ const OrderStatus = () => {
                                 return (
                                     <tr key={data.id}>
                                         <td>{data.orderDate.split('T')[0]}</td>
-                                        <td>{data.id}</td>
+                                        <td onClick={() => {history.push({pathname: '/OrderStatusDetailPage', state: {orderId: data.id}})}}>{data.id}</td>
                                         <td>
                                             <img class="w-20 h-30" alt={data.repProdImg} src={data.repProdImg}/>
                                             {

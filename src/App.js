@@ -13,6 +13,8 @@ import ProductDetailPage from './pages/ProductDetailPage';
 import ProductListPage from './pages/ProductListPage';
 import ShoppingCartPage from './pages/ShoppingCartPage';
 import OrderStatusPage from './pages/OrderStatusPage';
+import OrderStatusDetailPage from './pages/OrderStatusDetailPage';
+
 
 // TODO 나중에 이런 형식으로 고치기 import { ProductList } from './components/ProductList'
 
@@ -38,6 +40,7 @@ class App extends React.Component {
                         <Route exact="exact" path='/ShoppingCart' component={ShoppingCartPage}/>
                         <Route exact="exact" path='/Order' component={OrderPage}/>
                         <Route path='/OrderStatus' component={OrderStatusPage}/>
+                        <Route path='/OrderStatusDetailPage' component={OrderStatusDetailPage}/>
                     </Switch>
                 </div>
             </div>
