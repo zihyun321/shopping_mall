@@ -3,6 +3,7 @@ import {useSelector} from 'react-redux';
 import {useLocation} from "react-router";
 import '../styles/Table.css'
 import Spinner from "./Spinner";
+import CreateReviewModal from './modal/CreateReviewModal';
 
 const OrderStatusDetail = (props) => {
 
@@ -11,11 +12,24 @@ const OrderStatusDetail = (props) => {
     console.log('location.state: ', location.state);
     const [orderItemList, setOrderItemList] = useState(['']);
     const [loading, setLoading] = useState(false);
+    const [showReviewModal, setShowReviewModal] = useState(false);
+    const [selectedProd, setSelectedProd] = useState({});
 
     useEffect(() => {
         setLoading(true);
         handleGetOrderItemInfo();
     }, []);
+
+    const clickCreateReviewBtn = (prod) => {
+      console.log('=== clickCreateReviewBtn ===');
+      console.log('prod: ', prod);
+      setShowReviewModal(!showReviewModal);
+      setSelectedProd(prod);
+    }
+
+    const handleShowModal = () => {
+      setShowReviewModal(!showReviewModal);
+    }
 
     async function handleGetOrderItemInfo() {
         getOrderItemInfo()
@@ -81,6 +95,7 @@ const OrderStatusDetail = (props) => {
                                                 <td>
                                                     {data.orderStatus}
                                                     <button
+                                                    onClick={() => clickCreateReviewBtn(data)}
                                                     class="shadow ml-3 bg-black hover:bg-gray-700 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4"
                                                     >리뷰쓰기</button>
                                                 </td>
@@ -92,6 +107,13 @@ const OrderStatusDetail = (props) => {
                                     }
                                 </tbody>
                             </table>
+                            {
+                              showReviewModal && (
+                                <div>
+                                  <CreateReviewModal close={handleShowModal} product={selectedProd}/>
+                                </div>
+                              )
+                            }
                         </div>
                     )
             }
