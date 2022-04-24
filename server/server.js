@@ -36,6 +36,7 @@ const productRouter = require('./routes/product/index');
 const cartRouter = require('./routes/cart/index');
 const orderRouter = require('./routes/order/index');
 const orderItemRouter = require('./routes/orderItem/index');
+const reviewRouter = require('./routes/review/index');
 
 console.log('서버탐');
 /** User */
@@ -63,3 +64,6 @@ app.post("/getOrder", orderRouter);   // order 내역 가져오기
 app.post("/createOrderItem", orderItemRouter);   // orderItem 생성
 app.post("/getOrderItem", orderItemRouter);   // orderItem 생성
 // app.post("/getOrder", orderItemRouter);   // orderItem 생성
+
+/** Review */
+app.post("/createReview", reviewRouter);   // review 생성
