@@ -1,13 +1,39 @@
 import React, {useState, useEffect} from 'react';
 import {StarFilled} from '@ant-design/icons';
+import styled from 'styled-components';
 
 const CreateReviewModal = (props) => {
     const {close, product} = props;
-    console.log('product: ', product);
-    const [clickedStar, setClickedStart] = useState([false, false, false, false, false]);
-    const clickStar = (index) => {
-        console.log('data: ', index);
+    const [clickedStar, setClickedStar] = useState([false, false, false, false, false]);
+    const [rating, setRating] = useState(0);
+    const [title, setTitle] = useState('');
+    const [content, setContent] = useState('');
+
+    const handleClickStar = (index) => {
+        console.log('index: ', index);
+        let tempClickedStar = [false, false, false, false, false];
+        for (let i=0; i<=index; i++) {
+            tempClickedStar[i] = true;
+        }
+        setClickedStar(tempClickedStar);
+        setRating(index+1);
+        console.log('tempClickedStar: ', tempClickedStar);
+
+        // let clickStates = [...clickedStar];
+        // for (let i = 0; i < 5; i++) {
+        //   clickStates[i] = i <= index ? true : false;
+        // }
+        // setClickedStar(clickStates);
     }
+
+    let isActive = false;
+    let inputStyle = {
+        border: '1px solid black'
+      };
+
+      useEffect(() => {
+    }, []);
+
 
     return (
         <div>
@@ -46,7 +72,10 @@ const CreateReviewModal = (props) => {
                                         {
                                             [0, 1, 2, 3, 4].map((index) => {
                                                 return (
-                                                    <StarFilled onClick={() => {clickStar(index)}}/>
+                                                    <StarFilled 
+                                                        style={clickedStar[index] ? {color: '#fcc419'} : {color: 'gray'}}
+                                                        // className={clickedStar[index] && 'yellowStar'}
+                                                        onClick={() => handleClickStar(index)}/>
                                                 )    
                                             })
                                         }
@@ -55,7 +84,10 @@ const CreateReviewModal = (props) => {
                                         </button> */}
                                     </div>
                                     <div>
-                                        <textarea>내용을 적어주세요</textarea>   
+                                        <input type='text' value={title} onChange={(e)=>setTitle(e.currentTarget.value)}></input>
+                                    </div>
+                                    <div>
+                                        <textarea value={content} onChange={(e)=>setContent(e.currentTarget.value)} className='inputStyle'></textarea>   
                                     </div>
                                 </div>
                                 {/* <p class="text-sm text-black">선택하신 제품이 쇼핑카트에 추가되었습니다.</p> */}
@@ -76,3 +108,23 @@ const CreateReviewModal = (props) => {
 }
 
 export default CreateReviewModal
+
+const Stars = styled.span`
+
+//   & svg {
+//     color: gray;
+//     cursor: pointer;
+//   }
+
+//   :hover svg {
+//     color: #fcc419;
+//   }
+
+//   & svg:hover ~ svg {
+//     color: gray;
+//   }
+
+//   .yellowStar {
+//     color: #fcc419;
+//   }
+`;
