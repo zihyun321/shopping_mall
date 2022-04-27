@@ -102,7 +102,7 @@ const OrderStatus = () => {
                                 return (
                                     <tr key={data.id}>
                                         <td>{data.orderDate.split('T')[0]}</td>
-                                        <td onClick={() => {history.push({pathname: '/OrderStatusDetailPage', state: {orderId: data.id}})}}>{data.id}</td>
+                                        <td onClick={() => {history.push({pathname: '/ProfileMgmtPage/OrderStatusDetailPage', state: {orderId: data.id}})}}>{data.id}</td>
                                         <td>
                                             <img class="w-20 h-30" alt={data.repProdImg} src={data.repProdImg}/>
                                             {

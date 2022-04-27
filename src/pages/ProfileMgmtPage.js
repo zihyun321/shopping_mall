@@ -4,6 +4,7 @@ import ProfileSidebar from '../components/ProfileSidebar';
 import OrderStatus from '../components/OrderStatus';
 import OrderPage from './OrderPage';
 import {Divider} from 'antd';
+import OrderStatusDetail from '../components/OrderStatusDetail';
 
 
 const ProfileMgmtPage = () => {
@@ -21,6 +22,8 @@ const ProfileMgmtPage = () => {
                     <div className='float-right'>
                         <Switch>
                             <Route exact="exact" path="/ProfileMgmtPage/OrderStatus" component={props => <OrderStatus {...props}/>}/>
+                            <Route path='/ProfileMgmtPage/OrderStatusDetailPage' component={OrderStatusDetail}/>
+
                             {/* <Route path="/login" component={props => <LoginPage {...props}/>}/>
                             <Route path="/join" component={JoinPage}/>
                             <Route path="/ProductList/:category" component={ProductListPage} />
