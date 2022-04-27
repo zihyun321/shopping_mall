@@ -14,8 +14,7 @@ import ProductListPage from './pages/ProductListPage';
 import ShoppingCartPage from './pages/ShoppingCartPage';
 import OrderStatusPage from './pages/OrderStatusPage';
 import OrderStatusDetailPage from './pages/OrderStatusDetailPage';
-
-
+import ProfileMgmtPage from './pages/ProfileMgmtPage';
 // TODO 나중에 이런 형식으로 고치기 import { ProductList } from './components/ProductList'
 
 class App extends React.Component {
@@ -41,6 +40,7 @@ class App extends React.Component {
                         <Route exact="exact" path='/Order' component={OrderPage}/>
                         <Route path='/OrderStatus' component={OrderStatusPage}/>
                         <Route path='/OrderStatusDetailPage' component={OrderStatusDetailPage}/>
+                        <Route path='/ProfileMgmtPage' component={ProfileMgmtPage}/>
                     </Switch>
                 </div>
             </div>

@@ -87,7 +87,7 @@ const OrderStatus = () => {
 
 
     return (
-        <div>
+        <div className='flex'>
             <div className='container'>
                 <table className='order-info'>
                     <thead>
