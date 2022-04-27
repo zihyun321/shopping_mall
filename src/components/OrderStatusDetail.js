@@ -27,6 +27,18 @@ const OrderStatusDetail = (props) => {
       setSelectedProd(prod);
     }
 
+    const clickCancelOrderItemBtn = () => {
+      cancelOrderItem().then((data) => {
+        if (data.success) {
+            
+        }
+      })
+    }
+
+    async function cancelOrderItem() {
+
+    }
+
     const handleShowModal = () => {
       setShowReviewModal(!showReviewModal);
     }
@@ -98,6 +110,10 @@ const OrderStatusDetail = (props) => {
                                                     onClick={() => clickCreateReviewBtn(data)}
                                                     class="shadow ml-3 bg-black hover:bg-gray-700 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4"
                                                     >리뷰쓰기</button>
+                                                    <button
+                                                    onClick={() => clickCancelOrderItemBtn()}
+                                                    class="shadow ml-3 bg-black hover:bg-gray-700 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4"
+                                                    >취소하기</button>                                                    
                                                 </td>
 
                                             </tr>

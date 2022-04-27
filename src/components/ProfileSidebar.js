@@ -1,5 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import '../styles/ProfileSidebar.css'
 
 const ProfileSidebar = (props) => {
 
@@ -15,7 +16,7 @@ const ProfileSidebar = (props) => {
         </div>
         <ul>
             <li className='mt-1 font-bold text-base'>
-                <Link to={'/ProfileMgmtPage/OrderStatus'}>주문배송조회</Link>
+                <Link className='no-underline' to={'/ProfileMgmtPage/OrderStatus'}>주문배송조회</Link>
             </li>
             <li className='mt-1'>취소 내역</li>
             <li className='mt-1'>상품 리뷰</li>
