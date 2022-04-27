@@ -1,4 +1,5 @@
 import React, {useState, useEffect} from 'react';
+import {useSelector} from 'react-redux';
 import {StarFilled} from '@ant-design/icons';
 import styled from 'styled-components';
 
@@ -8,6 +9,7 @@ const CreateReviewModal = (props) => {
     const [rating, setRating] = useState(0);
     const [title, setTitle] = useState('');
     const [content, setContent] = useState('');
+    const loginStatus = useSelector((state) => state);
 
     const handleClickStar = (index) => {
         console.log('index: ', index);
@@ -33,6 +35,39 @@ const CreateReviewModal = (props) => {
 
       useEffect(() => {
     }, []);
+
+    const handleSubmitReview = () => {
+        createReview().then(
+            (data) => {
+                if (data.success) {
+
+                } else {
+
+                }
+            }
+        )
+    }
+
+    async function createReview() {
+        let reviewInfo = {
+            customerId: loginStatus.currentUser.user.id,
+            orderItemId: '',
+            title: title,
+            content: content,
+            createdDate: ''
+        }
+        const requestOptions = {
+            method: "post",
+            headers: {
+                "content-type": "application/json"
+            },
+            body: JSON.stringify(reviewInfo)
+        }
+
+        const response = await fetch('http://localhost:3001/createReview', requestOptions);
+        const data = await response.json();
+        return data
+    }
 
 
     return (
@@ -98,6 +133,7 @@ const CreateReviewModal = (props) => {
                 <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
                     <button
                         type="button"
+                        onClick={() => handleSubmitReview()}
                         class="w-full inline-flex justify-center border border-transparent shadow-sm px-4 py-2 bg-black text-base font-medium text-white hover:bg-slate-700 focus:outline-none sm:ml-3 sm:w-auto sm:text-sm">작성하기</button>
                 </div> 
                     </div>

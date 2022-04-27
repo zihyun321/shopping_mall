@@ -12,6 +12,7 @@ a > div > p {
 
 .cart-info {
     width: 960px;
+    float: left;
 }
 table {
     width: 960px;
@@ -73,5 +74,9 @@ input {
 }
 
 .payment-info {
-    margin-left: 980px;
+    /* margin-left: 980px; */
+    position: sticky;
+    left: 130px;
+    /* top: 138px; */
+    /* float: right; */
 }

@@ -35,20 +35,26 @@ function LoggedinHeader() {
     const history = useHistory();
     const dispatch = useDispatch();
 
-    const handleClickLogout = () => {
-        console.log('dispatch!!');
-        dispatch({type: 'LOG_OUT', user: ''});        
-        window.location.href = '/';
-    }
     
     const handleClickProfile = () => {
-        console.log('click Profile');
         setProfileModalOpen(!isProfileModalOpen);
     }
 
     const useHandleClickCart = () => {
         history.push('/ShoppingCart');
     }
+
+    const handleClickOrderStatus = () => {
+        history.push('/OrderStatus');
+        handleClickProfile();
+    }
+
+    const handleClickLogout = () => {
+        dispatch({type: 'LOG_OUT', user: ''});        
+        window.location.href = '/';
+        handleClickProfile();        
+    }
+
 
     return (
         <div>
@@ -103,15 +109,16 @@ function LoggedinHeader() {
                                     class="block px-4 py-2 text-sm text-gray-700"
                                     role="menuitem"
                                     tabindex="-1"
-                                    id="user-menu-item-0">Your Profile</a>
+                                    id="user-menu-item-0">My page</a>
                                 <a
-                                    onClick={() => {history.push('/OrderStatus')}}
+                                    onClick={() => handleClickOrderStatus()}
                                     href="#"
                                     class="block px-4 py-2 text-sm text-gray-700"
                                     role="menuitem"
                                     tabindex="-1"
                                     id="user-menu-item-1">Order Status</a>
                                 <a
+                                    onClick={() => handleClickLogout()}
                                     href="#"
                                     class="block px-4 py-2 text-sm text-gray-700"
                                     role="menuitem"
@@ -179,10 +186,7 @@ function Header() {
     const [userInfo, setUserInfo] = useState({});
     const [isUserLogin, setIsUserLogin] = useState(false);
     const [isProfileModalOpen, setProfileModalOpen] = useState(false);
-    const clickProfile = () => {
-        console.log('click Profile');
-        setProfileModalOpen(!isProfileModalOpen);
-    }
+    
     const loginStatus = useSelector((state) => state);
 
     useEffect(() => {
@@ -200,6 +204,14 @@ function Header() {
     const useHandleClickHome = () => {
         const history = useHistory();
         history.push('/');
+    }
+
+    const handleClickOrderStatus = () => {
+        handleClickProfile();
+    }
+
+    const handleClickProfile = () => {
+        setProfileModalOpen(!isProfileModalOpen);
     }
 
     return (
