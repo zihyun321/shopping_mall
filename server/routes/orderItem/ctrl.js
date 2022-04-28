@@ -78,7 +78,8 @@ exports.getOrderItem = (req, res) => {
     sql += ' FROM orderItem as item                         ';
     sql += ' Join product as p on p.id = item.productId     ';
     sql += ' Join `order` on order.id = item.orderId        ';
-    sql += ' Where order.id = ? ;                    ';
+    sql += ' Where order.id = ?                              ';
+    sql += ' AND item.orderStatus != "주문취소" ;              ';
 
     connection.query(sql, [orderId], (error, rows, fields) => {
         if (error) {
@@ -90,4 +91,8 @@ exports.getOrderItem = (req, res) => {
             })
         }
     })
+}
+
+exports.deleteOrderItem = (req, res) => {
+
 }

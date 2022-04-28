@@ -155,6 +155,11 @@ npm i react-daum-postcode
 - orderItem 구현시, 한 아이템을 여러개 살경우에도 쪼개서 보여줘야 하나?...
 - app.js 말고 다른 component 안에서 (여기선 ProfileMgmtPage) route를 사용해도 되나
 - page 나눈 것이 다음과 나눈 것이 맞나
+- 주문취소시 제품 삭제 어떻게 할지.. 
+
+### 기타수정사항
+- class => className으로 수정
+- 최대한 style 사용하지 않기. react style은 좋지 않다에 대한 글 찾아보기 (https://ko.reactjs.org/docs/dom-elements.html)
 
 ### 아쉬운점
 1. 초반 쇼핑몰 설계를 너무 간단하게 하고 시작했더니 중간에 DB 구조를 바꾸는 일이 많았다. 아무리 간단한 프로세스라도 자세하게 생각해보고 짜는 것이 필요할 것 같다.
