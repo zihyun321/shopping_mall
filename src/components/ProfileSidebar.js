@@ -17,11 +17,7 @@ const ProfileSidebar = (props) => {
         // e.preventDefault();
         setSelectedTitle(e.target.id);
 
-
-        // let allTag = document.querySelectorAll('Link');
-        // console.log('allTag: ', allTag);
-        // allTag.className = '';
-
+        // getElementById로 css 지정하는법 알기
         // let selectedTag =  document.getElementById(e.target.id);
         // selectedTag.className = 'active'
         
@@ -32,7 +28,7 @@ const ProfileSidebar = (props) => {
             나의 쇼핑정보
         </div>
         <ul>
-            <li className='mt-1 font-bold text-base'>
+            <li className='mt-1'>
                 <Link onClick={(e) => handleClickLink(e)} id='주문조회'
                 className={selectedTitle === '주문조회' ? 'active' : 'text-black'} 
                 to={'/ProfileMgmtPage/OrderStatus'}>주문배송조회</Link>
