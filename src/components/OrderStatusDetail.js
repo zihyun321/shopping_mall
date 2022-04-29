@@ -27,6 +27,13 @@ const OrderStatusDetail = (props) => {
       setSelectedProd(prod);
     }
 
+    /**
+     * 주문취소시
+     * 1) order 필드 변경 (totalSaleQty, repProdName, repProdImg)
+     * 2) orderItem 필드 변경 (orderStatus)
+     * 3) product 재고 변경 (quantity)
+     * 4) 고객 보유 포인트 변경 (points)
+     */
     const clickCancelOrderItemBtn = (item) => {
       console.log('item: ', item);
       // cancelOrderItem().then((data) => {

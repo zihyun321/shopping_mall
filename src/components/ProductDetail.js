@@ -15,6 +15,7 @@ function ProductDetailPage() {
     const productList = [productInfo];       // Order Component에서 활용하기 위한 list. 하지만 필요할지가 의문
     console.log('productInfo: ', productInfo);
     console.log('productInfo: ', productInfo.price);
+   
 
     const [quantity, setQuantity] = useState(1);
     const [isCartModalOpen, setCartModalOpen] = useState(false);
@@ -39,6 +40,22 @@ function ProductDetailPage() {
             count++;
         }
         setQuantity(count);
+    }
+
+
+    /**
+     * 이거 왜 안되는지 확인!!!
+     * 상품 디테일 페이지에서 입력한 수량이 왜 안넘어가는지 체크 !!!
+     */
+    const handleBuynowBtn = () => {
+        let orderProductInfo = [...productList];
+        orderProductInfo.quantity = quantity;
+        console.log('orderProductInfo: ', orderProductInfo);
+
+        history.push({
+        pathname: "/Order",
+        state: {productList: orderProductInfo, paymentAmount: productInfo.price}
+          })
     }
 
     const decrement = () => {
@@ -221,10 +238,14 @@ function ProductDetailPage() {
                     <div class="flex space-x-4 mb-6 text-sm font-medium">
                         <div class="flex-auto flex space-x-4">
                             <button
-                             onClick={() => {history.push({
-                                pathname: "/Order",
-                                state: {productList: productList, paymentAmount: productInfo.price}
-                              })}} 
+                             onClick={() => {
+                                handleBuynowBtn()
+                            //      history.push({
+                            //     pathname: "/Order",
+                            //     state: {productList: productList, paymentAmount: productInfo.price}
+                            //   })
+                            }
+                            } 
                                 class="h-10 px-6 font-semibold bg-black text-white"
                                 type="submit">
                                 Buy now

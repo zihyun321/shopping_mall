@@ -71,9 +71,10 @@ const Order = props => {
 
     /**
      * 주문시
-     * 1) order 레코드 생성 (고객id, 제품id, 주문자정보)
-     * 2) 고객 레코드 업데이트 (고객 보유 포인트)
-     * 3) 제품 재고 및 판매수 업데이트 (제품 재고 차감)
+     * 1) order 레코드 생성 (고객id)
+     * 2) orderItem 레코드 생성 (order id, product id)
+     * 3) 고객 레코드 업데이트 (고객 보유 포인트)
+     * 4) 제품 재고 및 판매수 업데이트 (제품 재고 차감)
      */
     const handleOrder = () => {
         console.log('order 클릭');
@@ -85,8 +86,8 @@ const Order = props => {
         console.log('orderId: ', orderId);
 
         handleCreateOrder(orderId, currentDate);
-        // handleUpdateProduct();
-        // handleUpdateUserPoints();
+        handleUpdateProduct();
+        handleUpdateUserPoints();
         // deleteCart();
     }
 
@@ -398,7 +399,7 @@ const Order = props => {
                                                 <a href={'http://localhost:3000/ProductDetail/' + data.id}>
                                                     <img class="w-20 h-30" alt={data.imgUrl} src={data.imgUrl}/>
                                                     <div>
-                                                        <p>{data.productName}</p>
+                                                        <p>{data.name}</p>
                                                         <p>{data.color}</p>
                                                         <p>{data.size}</p>
                                                     </div>
@@ -408,10 +409,10 @@ const Order = props => {
                                                 {data.quantity}
                                             </td>
                                             <td>
-                                                {data.productPrice}
+                                                {data.price}
                                             </td>
                                             <td>
-                                                {data.productPrice}
+                                                {data.price}
                                             </td>
                                             {/* <td>
                                                 3000원
