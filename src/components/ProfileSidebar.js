@@ -13,15 +13,17 @@ const ProfileSidebar = (props) => {
     const [selectedTitle, setSelectedTitle] = useState('');
     const handleClickLink = (e) => {
         console.log('e.target.id: ', e.target.id);
-        // console.log('=== handleClickLink ===');
-        // event.preventDefault();
-        // setSelectedTitle(e.target.id);
-        let allTag = document.getElementsByTagName('Link');
-        console.log('allTag: ', allTag);
-        allTag.className = '';
+        console.log('=== handleClickLink ===');
+        // e.preventDefault();
+        setSelectedTitle(e.target.id);
 
-        let selectedTag =  document.getElementById(e.target.id);
-        selectedTag.className = 'active'
+
+        // let allTag = document.querySelectorAll('Link');
+        // console.log('allTag: ', allTag);
+        // allTag.className = '';
+
+        // let selectedTag =  document.getElementById(e.target.id);
+        // selectedTag.className = 'active'
         
     }
   return (
@@ -32,12 +34,12 @@ const ProfileSidebar = (props) => {
         <ul>
             <li className='mt-1 font-bold text-base'>
                 <Link onClick={(e) => handleClickLink(e)} id='주문조회'
-                // className={selectedTitle === '주문조회' ? 'text-black' : 'active'} 
+                className={selectedTitle === '주문조회' ? 'active' : 'text-black'} 
                 to={'/ProfileMgmtPage/OrderStatus'}>주문배송조회</Link>
             </li>
             <li className='mt-1'>
                 <Link onClick={(e) => handleClickLink(e)} id='취소내역'
-                // className={selectedTitle === '취소내역' ? 'text-black' : 'active'} 
+                className={selectedTitle === '취소내역' ? 'active' : 'text-black'} 
                 to={'/ProfileMgmtPage/OrderCancel'}>주문취소내역</Link>
             </li>
             <li className='mt-1'>상품 리뷰</li>
