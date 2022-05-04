@@ -4,6 +4,7 @@ import {useLocation} from "react-router";
 import '../styles/Table.css'
 import DaumPostcode from 'react-daum-postcode';
 import SearchAddressModal from './modal/SearchAddressModal';
+import { Divider } from 'antd';
 
 const Order = props => {
 
@@ -333,7 +334,7 @@ const Order = props => {
                                 <th>받으시는 분</th>
                                 <td>
                                     <input 
-                                    className='focus:bg-white focus:outline-black outline-1'
+                                    className='focus:bg-white focus:outline-black w-96'
                                     value={orderer}
                                     onChange = {(e) => setOrderer(e.target.value)}
                                     ></input>
@@ -350,7 +351,7 @@ const Order = props => {
                                     </select>
                                     <input className='mr-2 focus:bg-white focus:outline-black outline-1 w-124 ml-1'></input> */}
                                     <input 
-                                    className=' focus:bg-white focus:outline-black outline-1'
+                                    className=' focus:bg-white focus:outline-black w-96'
                                     value={ordererPhone}
                                     onChange={(e) => setOrdererPhone(e.target.value)}
                                     ></input>
@@ -359,17 +360,18 @@ const Order = props => {
                             <tr>
                                 <th>배송 주소</th>
                                 <td className=''>
-                                    <button
-                                        className="font-semibold border-r border-gray-300 h-full w-20 flex rounded-l focus:outline-none cursor-pointer"
-                                        type="button"
-                                        onClick={() => {
-                                            handleOpenSearchModal()
-                                        }}>주소찾기</button>
                                     <input 
-                                    className='focus:bg-white focus:outline-black outline-1'
-                                    value={shippingAddress}
-                                    onClick={(e) => setShippingAddress(e.target.value)}
+                                        className='focus:bg-white focus:outline-black w-96'
+                                        value={shippingAddress}
+                                        onClick={(e) => setShippingAddress(e.target.value)}
                                     ></input>
+                                    {/* <button
+                                    className="border-gray-300 w-20 flex focus:outline-none cursor-pointer bg-slate-200 hover:bg-slate-300 "
+                                    type="button"
+                                    onClick={() => {
+                                        handleOpenSearchModal()
+                                    }}>주소찾기</button> */}
+
                                     {/* <input type="text" id="sample4_postcode" placeholder="우편번호"></input> */}
                                 </td>
                             </tr>
@@ -378,7 +380,7 @@ const Order = props => {
                 </div>
 
                 <div>
-                    <div className='table-name'>주문상품</div>
+                    <div className='table-name mt-10'>주문상품</div>
                     <table className='order-info'>
                         <thead>
                             <th>상품정보</th>
@@ -396,9 +398,8 @@ const Order = props => {
                                                 <a href={'http://localhost:3000/ProductDetail/' + data.id}>
                                                     <img class="w-20 h-30" alt={data.imgUrl} src={data.imgUrl}/>
                                                     <div>
-                                                        <p>{data.name}</p>
-                                                        <p>{data.color}</p>
-                                                        <p>{data.size}</p>
+                                                        <p style={{fontSize: '13px'}} className="mt-3">{data.name}</p>
+                                                        <p style={{fontSize: '10px', color: 'gray'}}>옵션: {data.color} {data.size}</p>
                                                     </div>
                                                 </a>
                                             </td>
@@ -406,10 +407,10 @@ const Order = props => {
                                                 {data.quantity}
                                             </td>
                                             <td>
-                                                {data.price}
+                                                {data.price} 원
                                             </td>
                                             <td>
-                                                {data.price}
+                                                {data.price} 원
                                             </td>
                                             {/* <td>
                                                 3000원
@@ -422,16 +423,16 @@ const Order = props => {
                     </table>
                 </div>
 
-                <div>
-                    <div className='table-name'>할인받기</div>
+                <div className='mb-10'>
+                    <div className='table-name mt-10'>할인받기</div>
                     <table className='point-info'>
                         <tbody>
                             <tr>
                                 <th>결제 예정금액</th>
-                                <td>{paymentAmount}</td>
+                                <td>{paymentAmount} 원</td>
                             </tr>
                             <tr>
-                                <th>포인트</th>
+                                <th>사용가능 포인트</th>
                                 <td>{userPoints}</td>
                             </tr>
                         </tbody>
@@ -439,15 +440,90 @@ const Order = props => {
                 </div>
             </div>
 
-            <div className="payment-info">
-                <h3>최종 결제금액</h3>
-                <button
-                    onClick={handleOrder}
-                    class="shadow ml-3 bg-black hover:bg-gray-700 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4"
-                    type="submit">
-                    주문하기
-                </button>                
+            <div className="payment-info sticky">
+                <div className='sticky top-0 bg-slate-100'>     
+                    
+                    <h3 className='pt-10 mt-8 text-base'>최종 결제금액</h3>
+                    <div className="decoration-slate-500">
+                        <Divider/>
+                    </div>
+                    <div>
+                        {/* <div className='mx-5'>
+                            <div>
+                                <div className=''>총 상품금액</div>
+                                <div className=''>{paymentAmount}</div>
+                            </div>
+                            <div>
+                                <div className='float-left'>총 상품금액</div>
+                                <div className='float-right'>{paymentAmount}</div>
+                            </div>
+                        </div> */}
+
+                        <ul className='mx-5 mt-2'>
+                            {/* <li>
+                                <span className='mr-10 text-left'>총 상품금액</span>
+                                <span className='ml-10 text-base text-right'>{paymentAmount}</span>
+                            </li>
+                            <li>
+                                <span className='mr-10 text-left'>배송비</span>
+                                <span className='ml-16 text-base text-right'>3000</span>
+                            </li>
+                            <Divider style={{width: '8px'}}/> */}
+
+                            <div style={{marginBottom: '-10px'}}>
+                                <div className='inline-block w-44'>
+                                    <div className='float-left mr-7'>총 상품금액</div>
+                                    <div className='text-base float-right text-right'>
+                                        {paymentAmount}
+                                        <span className='text-sm ml-1'>원</span>
+                                    </div>
+                                </div>
+                                <div className='inline-block w-44'>
+                                    <div className='float-left mr-8'>배송비</div>
+                                    <div className='text-base float-right text-right'>
+                                        0
+                                        <span className='text-sm ml-1'>원</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div>
+                                <Divider style={{width: '10px'}}/>
+                                <div className='inline-block w-44'>
+                                    <div className='float-left mr-8'>총 결재금액</div>
+                                    <div className='text-base float-right text-right text-amber-500 font-semibold'>
+                                        {paymentAmount}
+                                        <span className='text-sm ml-1 font-thin text-black'>원</span>
+                                    </div>
+                                </div>
+                                <div className='inline-block w-44'>
+                                    <div className='float-left mr-8 text-xs decoration-slate-200'>적립예정 포인트</div>
+                                    <div className='float-right text-right text-xs '>
+                                        {earnedAmount} 원
+                                        {/* <span className='ml-1'>원</span> */}
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            {/* <li className='inline-block'>
+                                <span className='float-left'>배송비</span>
+                                <span className='mr-7 text-base float-right'>3000</span>
+                            </li> */}
+                        </ul>
+                        <div>
+                            
+                        </div>
+                    </div>
+                    <button
+                        onClick={handleOrder}
+                        className="order-btn shadow bg-black hover:bg-gray-700 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4"
+                        type="submit">
+                        주문하기
+                    </button>         
+                </div>      
             </div>
+            
 
             {
                 isSearchAddressModalOpen && (

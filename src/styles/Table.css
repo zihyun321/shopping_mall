@@ -16,8 +16,8 @@ a > div > p {
 }
 table {
     width: 960px;
-    border-top: 1.5px solid;
-    border-bottom: 1px solid;
+    border-top: 1.7px solid !important;
+    border-bottom: 1.2px solid !important;
 }
 
 .table-name {
@@ -27,6 +27,7 @@ table {
 
 .shipping-info > tbody > tr {
     height: 68px;
+    border-bottom: 1px solid gainsboro;
 }
 
 .shipping-info > tbody > tr > th {
@@ -37,14 +38,19 @@ table {
 
 .shipping-info > tbody > tr > td {
     width: 730px;
+    
 }
 
 .order-info > thead {
     height: 68px;
+    border-bottom: 1px solid gainsboro;
+
 }
 
 .order-info > tbody > tr > td {
     padding: 20px;
+    border-bottom: 1px solid gainsboro;
+
 }
 .order-info > tbody > tr > td > a > img {
     display: block;    
@@ -58,6 +64,7 @@ table {
 
 .point-info > tbody > tr {
     height: 68px;
+    border-bottom: 1px solid gainsboro;
 }
 
 .point-info > tbody > tr > th {
@@ -75,8 +82,14 @@ input {
 
 .payment-info {
     /* margin-left: 980px; */
-    position: sticky;
+    width: 300px;
     left: 130px;
     /* top: 138px; */
-    /* float: right; */
+    float: right;
+    height: 1000px;
+}
+
+.order-btn {
+    display: inline;
+    width: 300px;
 }

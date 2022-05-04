@@ -5,9 +5,11 @@ import {Divider} from 'antd';
 export default function OrderPage() {
     return(
         <div className='mt-10'>
-            <div className='text-3xl'>Check Out</div>
+            <div className='text-3xl'>CHECK OUT</div>
             <Divider/>
-            <Order/>
+            <div className='ml-20'>
+                <Order/>
+            </div>
         </div>
     )
 }
