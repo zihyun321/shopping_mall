@@ -10,21 +10,18 @@ const Order = props => {
     console.log('=== Order ===');
     const location = useLocation();
     console.log('location.state: ', location.state);
+    console.log('location.state.productList: ', location.state.productList);
+    console.log('location.state.paymentAmount: ', location.state.paymentAmount);
+
     const productList = location.state.productList;
     const paymentAmount = location.state.paymentAmount;
     const earnedAmount = paymentAmount * 0.01;
 
-    console.log('productList: ', productList.length);
-    console.log('productList: ', productList[0]);
-
     let productIdList = [];
     productList.map((data) => {
         productIdList.push(data.id);
-    })
+    })    
 
-
-    console.log('paymentAmount: ', paymentAmount);
-    console.log('earnedAmount: ', earnedAmount);
 
     const loginStatus = useSelector((state) => state);
     const [selectFirstPN, setSelectFirstPN] = useState('1');

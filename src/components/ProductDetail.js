@@ -52,13 +52,16 @@ function ProductDetailPage() {
      * 하지만 이 같은 경우 단일건이기 때문에 해당 사항을 수정해야한다.
      */
     const handleBuynowBtn = () => {
-        let orderProductInfo = productList[0];
-        orderProductInfo.quantity = quantity;
-        let paymentAmount = orderProductInfo.quantity * orderProductInfo.price;
+        let orderProductInfo = productList;
+        orderProductInfo[0].quantity = quantity;    // product 재고가 아닌, 고객이 선택한 수량 넣어줌
+        let paymentAmount = orderProductInfo[0].quantity * orderProductInfo[0].price;
         history.push({
         pathname: "/Order",
         state: {productList: orderProductInfo, paymentAmount: paymentAmount}
           })
+
+
+  
     }
 
     const decrement = () => {
