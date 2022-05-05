@@ -12,7 +12,7 @@ const OrderStatusPage = () => {
         <Divider/>
         <div className='flex mx-auto'>
           <div className='float-left'>
-            <ProfileSidebar/>
+            <ProfileSidebar selectedTitle='주문조회'/>
           </div>
           <div className='float-right'>
             <OrderStatus/>

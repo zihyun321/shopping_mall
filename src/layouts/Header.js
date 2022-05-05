@@ -45,7 +45,12 @@ function LoggedinHeader() {
     }
 
     const handleClickOrderStatus = () => {
-        history.push('/OrderStatus');
+        // history.push('/OrderStatus');
+        history.push({
+            pathname: '/OrderStatus',
+            state: {selectedTitle: '주문조회'}
+        });
+
         handleClickProfile();
     }
 

@@ -1,6 +1,7 @@
 /* eslint-disable */
 
 import React, {useState} from 'react';
+import SearchAddressModal from './modal/SearchAddressModal';
 
 function Join() {
     const [name, setName] = useState("")
@@ -13,6 +14,7 @@ function Join() {
     const [gender, setGender] = useState("F");
     
     const [errorMsgPassword, setErrorMsgPassword] = useState("");
+    const [isSearchAddressModalOpen, setSearchAddressModalOpen] = useState(false);
 
     const onIdHandler = (event) => {
         setId(event.currentTarget.value)
@@ -47,6 +49,11 @@ function Join() {
     const onGenderHandler = (event) => {
         setGender(event.currentTarget.value)
     }
+
+    const handleOpenSearchModal = () => {
+        setSearchAddressModalOpen(!isSearchAddressModalOpen);
+    }
+
 
     // 원래꺼
     const onSubmit = (event) => {
@@ -141,14 +148,13 @@ function Join() {
      * - 비밀번호 해시값 처리해서 저장하기
      */
     return (
-        <div class="w-full max-w-lg mx-auto text-black">
-            <p class="pb-4 text-2xl">
-                Sign UP
-            </p>
+        // <div class="w-full max-w-lg mx-auto text-black">
+
+        <div class="max-w-lg mx-auto text-black">
             <form>
                 <div class="md:flex md:items-center mb-6">
                     <div class="md:w-1/3">
-                        <label class="block md:text-right mb-1 md:mb-0 pr-4" htmlFor="id">
+                        <label class="block mr-4 md:text-right mb-1 md:mb-0 pr-4" htmlFor="id">
                             아이디
                         </label>
                     </div>
@@ -165,7 +171,7 @@ function Join() {
                 </div>
                 <div class="md:flex md:items-center mb-6">
                     <div class="md:w-1/3">
-                        <label class="block md:text-right mb-1 md:mb-0 pr-4" htmlFor="password">
+                        <label class="block mr-4 md:text-right mb-1 md:mb-0 pr-4" htmlFor="password">
                             비밀번호
                         </label>
                     </div>
@@ -182,7 +188,7 @@ function Join() {
                 </div>
                 <div class="md:flex md:items-center mb-6">
                     <div class="md:w-1/3">
-                        <label class="block md:text-right mb-1 md:mb-0 pr-4" htmlFor="confirm-password">
+                        <label class="block mr-4 md:text-right mb-1 md:mb-0 pr-4" htmlFor="confirm-password">
                             비밀번호확인
                         </label>
                     </div>
@@ -205,7 +211,7 @@ function Join() {
                 </div>
                 <div class="md:flex md:items-center mb-6">
                     <div class="md:w-1/3">
-                        <label class="block md:text-right mb-1 md:mb-0 pr-4" htmlFor="name">
+                        <label class="block mr-4 md:text-right mb-1 md:mb-0 pr-4" htmlFor="name">
                             이름
                         </label>
                     </div>
@@ -222,7 +228,7 @@ function Join() {
                 </div>
                 <div class="md:flex md:items-center mb-6">
                     <div class="md:w-1/3">
-                        <label class="block md:text-right mb-1 md:mb-0 pr-4" htmlFor="phone">
+                        <label class="block mr-4 md:text-right mb-1 md:mb-0 pr-4" htmlFor="phone">
                             핸드폰
                         </label>
                     </div>
@@ -240,7 +246,7 @@ function Join() {
                 </div>
                 <div class="md:flex md:items-center mb-6">
                     <div class="md:w-1/3">
-                        <label class="block md:text-right mb-1 md:mb-0 pr-4" htmlFor="address">
+                        <label class="block mr-4 md:text-right mb-1 md:mb-0 pr-4" htmlFor="address">
                             주소
                         </label>
                     </div>
@@ -251,13 +257,20 @@ function Join() {
                             type="text"
                             value={address}
                             onChange={onAddressHandler}/>
+                        <button
+                        className="border-gray-300 w-20 flex focus:outline-none cursor-pointer bg-slate-200 hover:bg-slate-300 "
+                        type="button"
+                        onClick={() => {
+                            handleOpenSearchModal()
+                        }}>주소찾기</button>
+
                     </div>
                     <div class="md:w-1/3 break-all ml-3"></div>
 
                 </div>
                 <div class="md:flex md:items-center mb-6">
                     <div class="md:w-1/3">
-                        <label class="block md:text-right mb-1 md:mb-0 pr-4" htmlFor="inline-password">
+                        <label class="block mr-4 md:text-right mb-1 md:mb-0 pr-4" htmlFor="inline-password">
                             성별
                         </label>
                     </div>
@@ -322,7 +335,15 @@ function Join() {
                     </div>
                 </div>
             </form>
-        </div>
+            {
+                        isSearchAddressModalOpen && (
+                            <div>
+                                <SearchAddressModal/>
+                            </div>
+                        )
+                    }
+
+        </div>        
     );
 };
 

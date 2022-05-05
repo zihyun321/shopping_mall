@@ -3,7 +3,7 @@ import Login from '../components/Login';
 
 export default function LoginPage() {
     return(
-        <div>
+        <div className='mt-10'>
             <Login/>
         </div>
     )

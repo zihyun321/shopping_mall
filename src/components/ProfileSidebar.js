@@ -1,19 +1,26 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import { Link } from 'react-router-dom'
+import { useLocation } from "react-router";
 import '../styles/ProfileSidebar.css'
 
-const ProfileSidebar = (props) => {
+const ProfileSidebar = props => {
 
     // const active = {
     //     marginTop: '1px',
     //     fontWeight: 'bold',
     //     fontSize: '16px',
     // }
-
+    console.log('=== props: ', props);    
+    console.log('props.selectedTitle: ', props.selectedTitle);
+    console.log('!!props.selectedTitle: ', !!props.selectedTitle);
+    
     const [selectedTitle, setSelectedTitle] = useState('');
+
+    // if (!!props.selectedTitle) setSelectedTitle(props.selectedTitle);
+
     const handleClickLink = (e) => {
-        console.log('e.target.id: ', e.target.id);
         console.log('=== handleClickLink ===');
+        console.log('e.target.id: ', e.target.id);
         // e.preventDefault();
         setSelectedTitle(e.target.id);
 
@@ -22,6 +29,14 @@ const ProfileSidebar = (props) => {
         // selectedTag.className = 'active'
         
     }
+
+    useEffect(() => {
+        // title 
+        console.log('=== useEffect ===');
+        setSelectedTitle(props.selectedTitle);
+
+    }, []);
+
   return (
     <div className='w-60'>
         <div className='font-bold text-xl mb-2'>
