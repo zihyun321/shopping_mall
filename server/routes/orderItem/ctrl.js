@@ -70,24 +70,73 @@ exports.createOrderItem = (req, res) => {
 exports.getOrderItem = (req, res) => {
 
     console.log('==== orderItem ctrl.js getOrderItem');
-    let orderId = req.body.orderId;
-    console.log('orderId: ', orderId);
+    let orderInfo = req.body;
+    console.log('orderInfo: ', orderInfo);
+    console.log('orderInfo.orderId: ', orderInfo.orderId);
+    // let orderStatus = req.body.orderStatus;
+    // console.log('orderId: ', orderId);
+    // console.log('orderStatus: ', orderStatus);
 
     let sql = ' SELECT item.id, item.orderQuantity, item.orderStatus, item.orderPrice ';
     sql += ' ,order.orderDate, order.id, p.id, p.name, p.price, p.imgUrl ';
     sql += ' FROM orderItem as item                         ';
     sql += ' Join product as p on p.id = item.productId     ';
     sql += ' Join `order` on order.id = item.orderId        ';
-    sql += ' Where order.id = ?                              ';
-    sql += ' AND item.orderStatus != "주문취소" ;              ';
+    sql += ' Where order.id = ?                             ';
+    sql += ' AND item.orderStatus = ? ;                     ';
 
-    connection.query(sql, [orderId], (error, rows, fields) => {
+    connection.query(sql, [orderInfo.orderId, orderInfo.orderStatus], (error, rows, fields) => {
         if (error) {
             throw error
         } else {
             return res.json({
                 success: true,
                 result: rows
+            })
+        }
+    })
+}
+
+exports.getOrderItem22 = (req, res) => {
+
+    console.log('==== orderItem ctrl.js getOrderItem');
+    let orderInfo = req.body;
+    console.log('orderInfo: ', orderInfo);
+    // let orderStatus = req.body.orderStatus;
+    // console.log('orderId: ', orderId);
+    // console.log('orderStatus: ', orderStatus);
+
+    let sql = ' SELECT item.id, item.orderQuantity, item.orderStatus, item.orderPrice ';
+    sql += ' ,order.orderDate, order.id, p.id, p.name, p.price, p.imgUrl ';
+    sql += ' FROM orderItem as item                         ';
+    sql += ' Join product as p on p.id = item.productId     ';
+    sql += ' Join `order` on order.id = item.orderId        ';
+    sql += ' Where item.customerId = ?                      ';
+    sql += ' AND item.orderStatus = ? ;                     ';
+
+    connection.query(sql, [orderInfo.customerId, orderInfo.orderStatus], (error, rows, fields) => {
+        if (error) {
+            throw error
+        } else {
+            console.log('=== rows: ', rows);
+            return res.json({
+                success: true,
+                result: rows
+            })
+        }
+    })
+}
+
+// 추후에 productId, orderId가 아닌 orderItemId로 변경하기
+exports.updateOrderItem = (req, res) => {
+    let orderItemInfo = req.body;
+    let query = '';
+    query = `UPDATE orderItem SET orderStatus='주문취소' WHERE orderId='${orderItemInfo.orderId}' AND productId='${orderItemInfo.productId}'`;
+    connection.query(query, (error, rows, field) => {
+        if (error) throw error;
+        else {
+            return res.json({
+                success: true
             })
         }
     })

@@ -13,7 +13,7 @@ const ProfileMgmtPage = () => {
     return (
         <div className='mt-10'>
             <div>
-            <div className='text-3xl font-bold'>주문배송조회</div>
+            <div className='text-3xl font-bold'></div>
                 <Divider/>
                 <div className='flex mx-auto'>
                     <div className='float-left'>

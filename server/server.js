@@ -46,23 +46,25 @@ app.post("/getUserInfo", userRouter);       // user 정보 조회
 app.post("/updateUserPoints", userRouter);  // user point 업데이트
 
 /** Product */
-app.post("/getProductList", productRouter);     // 제품 정보 조회
-app.post("/getProductStock", productRouter);     // 제품 정보 조회
-app.post("/updateProduct", productRouter);     // 제품 정보 조회
+app.post("/getProductList", productRouter);    // 제품 정보 조회
+app.post("/getProductStock", productRouter);   // 제품 정보 조회
+app.post("/updateProduct", productRouter);     // 제품 정보 업데이트
 
 /** Cart */
 app.post("/createCart", cartRouter);        // cart 생성
 app.post("/getCartList", cartRouter);       // cart 조회
-app.post("/deleteCart", cartRouter);       // cart 삭제
-app.post("/updateCart", cartRouter);       // cart 업데이트
+app.post("/deleteCart", cartRouter);        // cart 삭제
+app.post("/updateCart", cartRouter);        // cart 업데이트
 
 /** Order */
 app.post("/createOrder", orderRouter);        // order 생성
-app.post("/getOrder", orderRouter);   // order 내역 가져오기
+app.post("/getOrder", orderRouter);             // order 내역 가져오기
 
 /** Order Item */
 app.post("/createOrderItem", orderItemRouter);   // orderItem 생성
-app.post("/getOrderItem", orderItemRouter);   // orderItem 생성
+app.post("/getOrderItem", orderItemRouter);   // orderItem 조회
+app.post("/getOrderItem22", orderItemRouter);   // orderItem 조회
+app.post("/updateOrderItem", orderItemRouter);   // orderItem 업데이트
 // app.post("/getOrder", orderItemRouter);   // orderItem 생성
 
 /** Review */

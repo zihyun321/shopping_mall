@@ -10,6 +10,7 @@ const OrderStatusDetail = (props) => {
     console.log('===== OrderStatusDetail =====');
     const location = useLocation();
     console.log('location.state: ', location.state);
+    const orderId = location.state.orderId;
     const [orderItemList, setOrderItemList] = useState(['']);
     const [loading, setLoading] = useState(false);
     const [showReviewModal, setShowReviewModal] = useState(false);
@@ -37,16 +38,60 @@ const OrderStatusDetail = (props) => {
 
     /**
      * 주문취소시
-     * 1) order 필드 변경 (totalSaleQty, repProdName, repProdImg)
+     * 1) order 필드 변경 (totalSaleQty, repProdName, repProdImg) 
+     *      => TODO 로직이 너무 이상한 것 같아서 삭제예정
      * 2) orderItem 필드 변경 (orderStatus)
      * 3) product 재고 변경 (quantity)
      * 4) 고객 보유 포인트 변경 (points)
+     * 
      */
     const clickCancelOrderItemBtn = (item) => {
       console.log('item: ', item);
       console.log('userInfo: ', userInfo);
-      handleGetProductStock(item.id, item.orderQuantity);
-    //   handleUpdateUserPoints(item.orderPrice * 0.01);
+      handleCancelOrder(item);
+    }
+
+    const handleCancelOrder = (item) => {
+        console.log('=== handleCancelOrder ===');
+        handleUpdateUserPoints(item.orderPrice * 0.01);
+        handleGetProductStock(item.id, item.orderQuantity);    
+        handleUpdateOrderItemInfo(orderId, item.id);
+
+        // ============ TODO ============
+        // ******** return 값 활용하여 한개라도 실행안되었을시, rollback 처리하기 어떻게 ??????
+
+    }
+    
+    async function handleUpdateOrderItemInfo(orderId, productId) {
+        const orderItemInfo = {
+            orderId: orderId,
+            productId: productId
+        };
+
+        updateOrderItemInfo(orderItemInfo).then((data) => {
+            if (data.success) {
+                console.log('성공');
+            } else {
+                console.log('에러');
+            }
+        })
+    }
+
+    async function updateOrderItemInfo(orderItemInfo) {
+        const requestOptions = {
+            method: "post",
+            headers: {
+                "content-type": "application/json"
+            },
+            body: JSON.stringify(orderItemInfo)
+        };
+
+        const response = await fetch(
+            'http://localhost:3001/updateOrderItem',
+            requestOptions
+        );
+        const data = await response.json();
+        return data
     }
 
     async function handleGetProductStock(productId, orderQuantity) {
@@ -163,7 +208,8 @@ const OrderStatusDetail = (props) => {
 
     async function getOrderItemInfo() {
         const orderInfo = {
-            orderId: location.state.orderId
+            orderId: location.state.orderId,
+            orderStatus: '주문완료'
         }
         const requestOptions = {
             method: "post",

@@ -89,6 +89,7 @@ const OrderStatus = () => {
     return (
         <div className='flex'>
             <div className='container'>
+                <div className='text-2xl font-bold mb-2 float-left'>주문내역</div>
                 <table className='order-info'>
                     <thead>
                         <th>주문일</th>
@@ -102,7 +103,9 @@ const OrderStatus = () => {
                                 return (
                                     <tr key={data.id}>
                                         <td>{data.orderDate.split('T')[0]}</td>
-                                        <td onClick={() => {history.push({pathname: '/ProfileMgmtPage/OrderStatusDetail', state: {orderId: data.id}})}}>{data.id}</td>
+                                        <td onClick={() => {
+                                            history.push({pathname: '/ProfileMgmtPage/OrderStatusDetail', 
+                                            state: {orderId: data.id}})}}>{data.id}</td>
                                         <td>
                                             <img class="w-20 h-30" alt={data.repProdImg} src={data.repProdImg}/>
                                             {
