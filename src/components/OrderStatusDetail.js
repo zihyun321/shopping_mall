@@ -14,10 +14,13 @@ const OrderStatusDetail = (props) => {
     const [loading, setLoading] = useState(false);
     const [showReviewModal, setShowReviewModal] = useState(false);
     const [selectedProd, setSelectedProd] = useState({});
+    const loginStatus = useSelector((state) => state);
+    const [userInfo, setUserInfo] = useState({});
 
     useEffect(() => {
         setLoading(true);
         handleGetOrderItemInfo();
+        setUserInfo(loginStatus.currentUser.user);
     }, []);
 
     const clickCreateReviewBtn = (prod) => {
@@ -26,6 +29,11 @@ const OrderStatusDetail = (props) => {
       setShowReviewModal(!showReviewModal);
       setSelectedProd(prod);
     }
+
+    const handleShowModal = () => {
+        setShowReviewModal(!showReviewModal);
+      }
+  
 
     /**
      * 주문취소시
@@ -36,6 +44,8 @@ const OrderStatusDetail = (props) => {
      */
     const clickCancelOrderItemBtn = (item) => {
       console.log('item: ', item);
+      console.log('userInfo: ', userInfo);
+      handleUpdateUserPoints(item.orderPrice * 0.01);
       // cancelOrderItem().then((data) => {
       //   if (data.success) {
 
@@ -43,14 +53,51 @@ const OrderStatusDetail = (props) => {
       // })
     }
 
+    async function handleUpdateOrder() {
+
+    }
+
     async function cancelOrderItem() {
 
     }
 
-    const handleShowModal = () => {
-      setShowReviewModal(!showReviewModal);
+    async function handleUpdateUserPoints(itemPoints) {
+        console.log('itemPoints: ', itemPoints);
+        updateUserPoints(itemPoints).then((data) => {
+            if (data.success) {
+                console.log('update product 성공');
+
+            } else {
+                console.log('에러');
+            }
+        })
     }
 
+    async function updateUserPoints(itemPoints) {
+        let updatePoints = userInfo.points - itemPoints < 0 ? 0 : userInfo.points - itemPoints;
+        const updateUserInfo = {
+            id: userInfo.id,
+            points: updatePoints
+        }
+
+        const requestOptions = {
+            method: "post",
+            headers: {
+                "content-type": "application/json"
+            },
+            body: JSON.stringify(updateUserInfo)
+        }
+
+        const response = await fetch(
+            'http://localhost:3001/updateUserPoints',
+            requestOptions
+        )
+        const data = await response.json();
+        return data
+    }
+
+
+    // 주문 정보 가져오기
     async function handleGetOrderItemInfo() {
         getOrderItemInfo()
             .then((data) => {
@@ -63,6 +110,7 @@ const OrderStatusDetail = (props) => {
             })
             .then(setLoading(false))
     }
+
     async function getOrderItemInfo() {
         const orderInfo = {
             orderId: location.state.orderId

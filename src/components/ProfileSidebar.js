@@ -31,7 +31,7 @@ const ProfileSidebar = props => {
     }
 
     useEffect(() => {
-        // title 
+        // 다른 카테고리 선택시 한번에 선택이 안됨
         console.log('=== useEffect ===');
         setSelectedTitle(props.selectedTitle);
 

@@ -138,6 +138,7 @@ exports.updateUserPoints = (req, res) => {
     });
 }
 
+
 // exports.getUserInfo = (req, res) => {
 //     const userInfo = req.body;
 
