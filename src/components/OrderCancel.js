@@ -74,6 +74,8 @@ const OrderCancel = () => {
                                 <tr key={data.id}>
                                   <td>{data.orderId}</td>
                                   <td>{data.orderCancelDate}</td>
+                                  <td>{data.orderStatus}</td>
+                                  <td>{data.orderQuantity * data.orderPrice}</td>
                                 </tr>
                               )
                             })

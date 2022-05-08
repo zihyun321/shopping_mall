@@ -106,8 +106,8 @@ exports.getOrderItem22 = (req, res) => {
     // console.log('orderId: ', orderId);
     // console.log('orderStatus: ', orderStatus);
 
-    let sql = ' SELECT item.id, item.orderQuantity, item.orderStatus, item.orderPrice ';
-    sql += ' ,order.orderDate, order.id, p.id, p.name, p.price, p.imgUrl ';
+    let sql = ' SELECT item.id, item.orderQuantity, item.orderStatus, item.orderPrice, item.orderId, item.orderCancelDate ';
+    sql += ' , order.orderDate, order.id, p.id, p.name, p.price, p.imgUrl ';
     sql += ' FROM orderItem as item                         ';
     sql += ' Join product as p on p.id = item.productId     ';
     sql += ' Join `order` on order.id = item.orderId        ';
