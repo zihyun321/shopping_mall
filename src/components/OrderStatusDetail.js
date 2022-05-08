@@ -45,20 +45,71 @@ const OrderStatusDetail = (props) => {
     const clickCancelOrderItemBtn = (item) => {
       console.log('item: ', item);
       console.log('userInfo: ', userInfo);
-      handleUpdateUserPoints(item.orderPrice * 0.01);
-      // cancelOrderItem().then((data) => {
-      //   if (data.success) {
-
-      //   }
-      // })
+      handleGetProductStock(item.id, item.orderQuantity);
+    //   handleUpdateUserPoints(item.orderPrice * 0.01);
     }
 
-    async function handleUpdateOrder() {
-
+    async function handleGetProductStock(productId, orderQuantity) {
+        getProductStock(productId).then((data) => {
+            if (data.success) {
+                console.log('update product 성공');
+                console.log('data.result: ', data.result);
+                handleUpdateProduct(data.result, orderQuantity);
+            } else {
+                console.log('에러');
+            }
+        })
     }
 
-    async function cancelOrderItem() {
+    async function getProductStock(productId) {
+        const productInfo = {
+            id: productId
+        }
+        const requestOptions = {
+            method: "post",
+            headers: {
+                "content-type": "application/json"
+            },
+            body: JSON.stringify(productInfo)
+        };
 
+        const response = await fetch(
+            'http://localhost:3001/getProductStock',
+            requestOptions
+        );
+        const data = await response.json();
+        return data
+    }
+
+    async function handleUpdateProduct(productInfo, orderQuantity) {
+        let updateProductInfo = {
+            id: productInfo[0].id,
+            quantity: productInfo[0].quantity - orderQuantity
+        }
+        updateProduct(updateProductInfo).then((data) => {
+            if (data.success) {
+                console.log('성공')
+            } else {
+                console.log('에러');
+            }
+        })
+    }
+
+    async function updateProduct(updateProductInfo) {
+        const requestOptions = {
+            method: "post",
+            headers: {
+                "content-type": "application/json"
+            },
+            body: JSON.stringify(updateProductInfo)
+        };
+
+        const response = await fetch(
+            'http://localhost:3001/updateProduct',
+            requestOptions
+        );
+        const data = await response.json();
+        return data
     }
 
     async function handleUpdateUserPoints(itemPoints) {
@@ -105,7 +156,6 @@ const OrderStatusDetail = (props) => {
                     console.log('order 정보 가져오기');
                     console.log('data.result: ', data.result);
                     setOrderItemList(data.result);
-                    console.log('orderItemList: ', orderItemList);
                 }
             })
             .then(setLoading(false))

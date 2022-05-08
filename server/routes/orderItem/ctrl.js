@@ -74,7 +74,7 @@ exports.getOrderItem = (req, res) => {
     console.log('orderId: ', orderId);
 
     let sql = ' SELECT item.id, item.orderQuantity, item.orderStatus, item.orderPrice ';
-    sql += ' ,order.orderDate, order.id, p.name, p.price, p.imgUrl ';
+    sql += ' ,order.orderDate, order.id, p.id, p.name, p.price, p.imgUrl ';
     sql += ' FROM orderItem as item                         ';
     sql += ' Join product as p on p.id = item.productId     ';
     sql += ' Join `order` on order.id = item.orderId        ';

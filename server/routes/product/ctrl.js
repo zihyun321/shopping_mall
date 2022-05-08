@@ -46,12 +46,17 @@ exports.updateProduct = (req, res) => {
     let updateInfos = [[]];
     let updateInfo = [];
     
-    productInfo.forEach(function(item) {
-        console.log('item: ', item);
-        // query += mysql.format("UPDATE product SET quantity=? WHERE id=? ;", [item.quantity, item.id]);
-        query += `UPDATE product SET quantity=${item.quantity} WHERE id='${item.id}';`;
-        console.log('query: ', query);
-    })
+    console.log('productInfo: ', productInfo);
+    if (productInfo.length > 1) {
+        productInfo.forEach(function(item) {
+            console.log('item: ', item);
+            // query += mysql.format("UPDATE product SET quantity=? WHERE id=? ;", [item.quantity, item.id]);
+            query += `UPDATE product SET quantity=${item.quantity} WHERE id='${item.id}';`;
+            console.log('query: ', query);
+        })    
+    } else {
+        query = `UPDATE product SET quantity=${productInfo.quantity} WHERE id='${productInfo.id}';`;
+    }
 
     connection.query(query, (error, rows, fields) => {
         if (error) throw error;
