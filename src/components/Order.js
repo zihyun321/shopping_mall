@@ -92,16 +92,16 @@ const Order = props => {
         setOrderId(currentDate + '_' + currentTime);
         console.log('***** 생성되는 orderId: ', currentDate + '_' + currentTime);
 
-        handleCreateOrder(orderId, currentDate);
+        handleCreateOrder();
         handleUpdateProduct();
         handleUpdateUserPoints();
-        // deleteCart();
+        // deleteCart(); TODO 장바구니에 있는 제품 지우기???
     }
 
     // 여기다가 async를 또 써도 되는가?
     // handleCreateOrder 실행 성공시, handleCreateOrderItem 처리되도록 해놨는데... 다른 것들도 처리안될시엔 롤백처리 어케하지?
-    async function handleCreateOrder(orderId, currentDate) {
-        createOrder(orderId, currentDate).then(
+    async function handleCreateOrder() {
+        createOrder().then(
             (data) => {
                 if (data.success) {
                     console.log('create order 성공');
@@ -118,12 +118,12 @@ const Order = props => {
     }
 
     // TODO orderItem의 orderCancelDate 추가하기
-    async function createOrder(orderId, currentDate) {
+    async function createOrder() {
         console.log('=== createOrder ===');
         const orderInfo = {
             id: orderId,
             customerId: userInfo.id,
-            orderDate: currentDate,
+            orderDate: orderId.split('_')[0],
             orderer: orderer,
             ordererPhone: ordererPhone,
             shippingAddress: shippingAddress,
@@ -149,8 +149,8 @@ const Order = props => {
         return data
     }
 
-    async function handleCreateOrderItem(orderId) {
-        createOrderItem(orderId).then(
+    async function handleCreateOrderItem() {
+        createOrderItem().then(
             (data) => {
                 if (data.success) {
                     console.log('create order 성공');
@@ -166,7 +166,7 @@ const Order = props => {
         )
     }
 
-    async function createOrderItem(orderId) {
+    async function createOrderItem() {
         let orderItems = [];
         let orderItem;
         productList.map(data => {

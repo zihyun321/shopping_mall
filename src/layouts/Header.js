@@ -47,12 +47,23 @@ function LoggedinHeader() {
     const handleClickOrderStatus = () => {
         // history.push('/OrderStatus');
         history.push({
-            pathname: '/OrderStatus',
+            pathname: '/ProfileMgmtPage/OrderStatus',
             state: {selectedTitle: '주문조회'}
         });
 
         handleClickProfile();
     }
+
+    const handleClickMyPage = () => {
+        history.push({
+            pathname: '/ProfileMgmtPage/MyInfo',
+            state: {selectedTitle: '회원정보'}
+        });
+
+        handleClickProfile();
+    }
+
+    
 
     const handleClickLogout = () => {
         dispatch({type: 'LOG_OUT', user: ''});        
@@ -110,6 +121,7 @@ function LoggedinHeader() {
                                 tabindex="-1">
                                 {/* <!-- Active: "bg-gray-100", Not Active: "" --> */}
                                 <a
+                                    onClick={() => handleClickMyPage()}
                                     href="#"
                                     class="block px-4 py-2 text-sm text-gray-700"
                                     role="menuitem"
@@ -213,6 +225,12 @@ function Header() {
 
     const handleClickOrderStatus = () => {
         handleClickProfile();
+        history.push('/ProfileMgmtPage/OrderStatus');
+    }
+
+    const handleClickMyPage = () => {
+        handleClickProfile();
+        history.push('/ProfileMgmtPage/MyPage');
     }
 
     const handleClickProfile = () => {
