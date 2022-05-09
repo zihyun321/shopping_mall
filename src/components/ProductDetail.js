@@ -149,8 +149,9 @@ function ProductDetailPage() {
     return (
         <div>
             <div class="flex font-sans">
-                <div class="flex-none w-48 relative">
+                <div class="flex-none relative">
                     <img
+                        className="w-80"
                         src={productInfo.imgUrl}
                         alt=""
                         class="absolute inset-0 w-full h-full object-cover"/>
@@ -158,11 +159,11 @@ function ProductDetailPage() {
 
                 <form class="flex-auto p-6">
                     <div class="flex flex-wrap">
-                        <h1 class="flex-auto text-lg font-semibold text-slate-900">
-                            {productInfo.productName}
+                        <h1 class="flex-auto text-xl font-bold text-slate-900">
+                            {productInfo.name.toUpperCase()}
                         </h1>
                         <div class="text-lg font-semibold text-slate-500">
-                            {productInfo.productPrice}
+                            {productInfo.price}원
                         </div>
                         {/* <div class="w-full flex-none text-sm font-medium text-slate-700 mt-2">
                             In stock
@@ -252,13 +253,13 @@ function ProductDetailPage() {
                             //   })
                             }
                             } 
-                                class="h-10 px-6 font-semibold bg-black text-white"
+                                class="h-10 px-6 font-semibold hover:text-teal-100 bg-black text-white"
                                 type="button">
                                 Buy now
                             </button>
                             <button
                                 onClick={clickCheckCartBtn}
-                                class="h-10 px-6 font-semibold border border-slate-200 text-slate-900"
+                                class="h-10 px-6 font-semibold border hover:text-teal-100 border-slate-200 text-slate-900"
                                 type="button">
                                 Add to cart
                             </button>
@@ -276,7 +277,6 @@ function ProductDetailPage() {
                         </button>
                     </div>
                     <p class="text-sm text-slate-700">
-                        Free shipping on all continental US orders.
                     </p>
                 </form>
             </div>

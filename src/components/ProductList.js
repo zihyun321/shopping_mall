@@ -106,8 +106,8 @@ function ProductList(props) {
                                         src={data.imgUrl} class="d-block w-100" alt="..." style={imgStyle}/> */
                                     }
                                     <div class="mt-2">
-                                        <div>{data.productName}</div>
-                                        <div>{data.productPrice}</div>
+                                        <div className="text-left underline font-bold">{data.name}</div>
+                                        <div className="text-left">{data.price}</div>
                                     </div>
                                     {
                                         showProduct
