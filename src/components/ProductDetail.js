@@ -149,9 +149,8 @@ function ProductDetailPage() {
     return (
         <div>
             <div class="flex font-sans">
-                <div class="flex-none relative">
+                <div class="flex-none w-64 relative">
                     <img
-                        className="w-80"
                         src={productInfo.imgUrl}
                         alt=""
                         class="absolute inset-0 w-full h-full object-cover"/>

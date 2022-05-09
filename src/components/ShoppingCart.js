@@ -28,16 +28,17 @@ function ShoppingCart() {
             children: [
                 {
                     title: '',
-                    dataIndex: 'name',
-                    key: 'name'
-                }, {
-                    title: '',
                     dataIndex: 'imgUrl',
                     key: 'imgUrl',
                     width: 60,
     
                     render: imgUrl => <img alt={imgUrl} src={imgUrl} />
-                }
+                },
+                {
+                    title: '',
+                    dataIndex: 'name',
+                    key: 'name'
+                }, 
             ]
         }, {
             title: '사이즈',
@@ -272,6 +273,7 @@ function ShoppingCart() {
         deleteCart().then((data) => {
             if (data) {
                 console.log('성공!!!!! ');
+                window.location.reload();
             } else {
                 console.log('실패!!');
             }
@@ -309,7 +311,7 @@ function ShoppingCart() {
                     />
 
             </div>
-            <div className='mb-3' style={{marginTop: '-12px'}}>
+            <div className='mb-3'>
                 <div>
                     선택 상품 금액: {selectedAmount}
                 </div>
