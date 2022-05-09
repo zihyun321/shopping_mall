@@ -5,6 +5,8 @@ import '../styles/Table.css'
 import DaumPostcode from 'react-daum-postcode';
 import SearchAddressModal from './modal/SearchAddressModal';
 import { Divider } from 'antd';
+import {useHistory, withRouter} from 'react-router-dom';
+import ConfirmOrderModal from "./modal/ConfirmOrderModal";
 
 const Order = props => {
 
@@ -30,7 +32,8 @@ const Order = props => {
     const [userInfo, setUserInfo] = useState({});
     const [loading, setLoading] = useState(true);
     const [originProductList, setOriginProductList] = useState([]);
-
+    const [orderId , setOrderId] = useState();
+    const history = useHistory();
 
     // 주문자정보
     const [orderer, setOrderer] = useState('');
@@ -38,6 +41,7 @@ const Order = props => {
     const [shippingAddress, setShippingAddress] = useState('');
     const [totalSalesVolume, setTotalSalesVolume] = useState();
     const [userPoints, setUserPoints] = useState(0);
+    const [isCreatedOrder, setIsCreatedOrder] = useState(false);
 
     const handleSelectFirstPN = (e) => {
         setSelectFirstPN(e.target.value);
@@ -49,6 +53,10 @@ const Order = props => {
 
     const onComplete = (data) => {
         console.log(data);
+    }
+
+    const handleCreatedOrder = () => {
+        setIsCreatedOrder(!isCreatedOrder);
     }
 
     const getCurrentDate = (todayDateTime) => {
@@ -80,8 +88,9 @@ const Order = props => {
         let currentDate = getCurrentDate(todayDateTime);
         let currentTime = getCurrentTime(todayDateTime);
 
-        const orderId = currentDate + '_' + currentTime;
-        console.log('orderId: ', orderId);
+        // const orderId = currentDate + '_' + currentTime;
+        setOrderId(currentDate + '_' + currentTime);
+        console.log('***** 생성되는 orderId: ', currentDate + '_' + currentTime);
 
         handleCreateOrder(orderId, currentDate);
         handleUpdateProduct();
@@ -97,6 +106,9 @@ const Order = props => {
                 if (data.success) {
                     console.log('create order 성공');
                     handleCreateOrderItem(orderId);
+                    console.log('orderId: ', orderId);
+                    console.log('data.result: ', data.result);
+                    
                 } else {
                     console.log('에러');
                 }
@@ -105,6 +117,7 @@ const Order = props => {
         )
     }
 
+    // TODO orderItem의 orderCancelDate 추가하기
     async function createOrder(orderId, currentDate) {
         console.log('=== createOrder ===');
         const orderInfo = {
@@ -141,7 +154,10 @@ const Order = props => {
             (data) => {
                 if (data.success) {
                     console.log('create order 성공');
-
+                    // alert('주문이 완료되었습니다.');
+                    // history.push("/ProfileMgmtPage/OrderStatusDetail/" + orderId);
+                    console.log('***** 보내주는 orderId: ', orderId);
+                    setIsCreatedOrder(true);
                 } else {
                     console.log('에러');
                 }
@@ -532,6 +548,15 @@ const Order = props => {
                     </div>
                 )
             }
+
+            {
+                isCreatedOrder && (
+                    <div>
+                        <ConfirmOrderModal orderId={orderId} close={handleCreatedOrder} />
+                    </div>
+                )
+            }
+
         </div>
     )
 }

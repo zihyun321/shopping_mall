@@ -22,7 +22,7 @@ const ProfileMgmtPage = () => {
                     <div className='float-right'>
                         <Switch>
                             <Route exact="exact" path="/ProfileMgmtPage/OrderStatus" component={props => <OrderStatus {...props}/>}/>
-                            <Route path='/ProfileMgmtPage/OrderStatusDetail' component={OrderStatusDetail}/>
+                            <Route path='/ProfileMgmtPage/OrderStatusDetail/:id' component={OrderStatusDetail}/>
                             <Route path='/ProfileMgmtPage/OrderCancel' component={OrderCancel}/>
 
                             {/* <Route path="/login" component={props => <LoginPage {...props}/>}/>

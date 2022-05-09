@@ -20,5 +20,17 @@
  });
 
  exports.createReview = (req, res) => {
-     
+     const reviewInfo = req.body;
+     const sql = ' INSERT INTO review SET ? ;';
+     console.log('reviewInfo: ', reviewInfo);
+
+     connection.query(sql, [reviewInfo], (error, rows, field) => {
+         if (error) {
+             throw error
+         } else {
+             return res.json({
+                 success: true
+             })
+         }
+     })
  }

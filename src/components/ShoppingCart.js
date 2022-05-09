@@ -24,14 +24,14 @@ function ShoppingCart() {
 
     const columns = [
         {
-            title: 'product',
+            title: '제품',
             children: [
                 {
-                    title: 'name',
+                    title: '',
                     dataIndex: 'name',
                     key: 'name'
                 }, {
-                    title: 'imgUrl',
+                    title: '',
                     dataIndex: 'imgUrl',
                     key: 'imgUrl',
                     width: 60,
@@ -40,26 +40,27 @@ function ShoppingCart() {
                 }
             ]
         }, {
-            title: 'size',
+            title: '사이즈',
             dataIndex: 'size',
             key: 'size'
         }, 
         {
-            title: 'color',
+            title: '색상',
             dataIndex: 'color',
             key: 'color'
         }, 
         {
-            title: 'price',
+            title: '가격',
             dataIndex: 'price',
             key: 'price'
-        }, {
-            title: 'quantity',
-            dataIndex: 'quantity',
-            key: 'quantity'
-        },
+        }, 
+        // {
+        //     title: '수량',
+        //     dataIndex: 'quantity',
+        //     key: 'quantity'
+        // },
         {
-            title: 'Button Test',
+            title: '수량',
             key: 'key',
             dataIndex: 'key',
             render: (text, record) => setProductCount(text, record) }
@@ -72,26 +73,30 @@ function ShoppingCart() {
         var prodId = record.id;
         return (
             <div class="flex">
-                <div class="box-border h-4 w-4 p-4 border">
-                    {record.quantity}
+                <div class="box-border h-4 w-4 p-4 border self-center">
+                    <div className='self-center text-center mb-3'>{record.quantity}</div>
                 </div>
-                
-                <button 
-                class="shadow text-black font-bold w-3"
-                type='submit' onClick={()=> clickTochangeQuantity(record, 'plus')}>
-                +
-                </button>
-                <button 
-                class="shadow text-black font-bold w-3"
-                type='submit' onClick={()=> clickTochangeQuantity(record, 'minus')}>
-                -
-                </button>
-                <button 
-                    class="shadow text-black font-bold w-6"
-                    onClick={() => submitChangedQuantity(record)}                    
-                >
-                    변경
-                </button>
+                <div className='grid '>
+                    <button 
+                    class="shadow text-black font-bold w-3 h-3 col-span-2"
+                    type='submit' onClick={()=> clickTochangeQuantity(record, 'plus')}>
+                    +
+                    </button>
+                    <button 
+                    class="shadow text-black font-bold w-3 h-3 col-span-2"
+                    type='submit' onClick={()=> clickTochangeQuantity(record, 'minus')}>
+                    -
+                    </button>
+                </div>
+                <div>
+                    <button 
+                        class="shadow text-black font-bold w-8 ml-3"
+                        style={{marginTop: '-10px'}}
+                        onClick={() => submitChangedQuantity(record)}                    
+                    >
+                        변경
+                    </button>
+                </div>
             </div>        
         )
     }
@@ -292,11 +297,7 @@ function ShoppingCart() {
 
     return (
         <div>
-            <div>
-                Shopping Cart
-            </div>
             <div class='mt-5'>
-                <Divider/>
                 <Table
                     rowSelection={{
                         type: 'checkbox',
@@ -308,7 +309,7 @@ function ShoppingCart() {
                     />
 
             </div>
-            <div>
+            <div className='mb-3' style={{marginTop: '-12px'}}>
                 <div>
                     선택 상품 금액: {selectedAmount}
                 </div>

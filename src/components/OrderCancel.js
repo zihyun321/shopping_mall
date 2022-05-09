@@ -60,6 +60,7 @@ const OrderCancel = () => {
                     : (
                     <div className='container'>
                       <div className='text-2xl font-bold mb-2 float-left'>취소내역</div>
+                      <br/>
                       <table>
                         <thead>
                           <th>주문번호</th>

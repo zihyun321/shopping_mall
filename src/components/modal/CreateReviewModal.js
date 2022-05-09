@@ -2,15 +2,17 @@ import React, {useState, useEffect} from 'react';
 import {useSelector} from 'react-redux';
 import {StarFilled} from '@ant-design/icons';
 import styled from 'styled-components';
+// import { updateUserPoints } from '../../../server/routes/user/ctrl';
 
 const CreateReviewModal = (props) => {
-    const {close, product} = props;
+    const {close, orderItem} = props;
     const [clickedStar, setClickedStar] = useState([false, false, false, false, false]);
-    const [rating, setRating] = useState(0);
+    const [rate, setRate] = useState(0);
     const [title, setTitle] = useState('');
     const [content, setContent] = useState('');
     const loginStatus = useSelector((state) => state);
 
+    console.log('orderItem: ', orderItem);
     const handleClickStar = (index) => {
         console.log('index: ', index);
         let tempClickedStar = [false, false, false, false, false];
@@ -18,7 +20,7 @@ const CreateReviewModal = (props) => {
             tempClickedStar[i] = true;
         }
         setClickedStar(tempClickedStar);
-        setRating(index+1);
+        setRate(index+1);
         console.log('tempClickedStar: ', tempClickedStar);
 
         // let clickStates = [...clickedStar];
@@ -36,7 +38,21 @@ const CreateReviewModal = (props) => {
       useEffect(() => {
     }, []);
 
+    // TODO 두가지중 하나라도 안되면 rollback
     const handleSubmitReview = () => {
+        handleCreateReview();
+        // TODO customer points 적립 (50점)
+    }
+
+    async function handleUpdateUserPoints() {
+    //    updateUserPoints().then((data) => {
+    //        if (data.success) {
+
+    //        } else {}
+    //    }) 
+    }
+
+    async function handleCreateReview() {
         createReview().then(
             (data) => {
                 if (data.success) {
@@ -49,13 +65,21 @@ const CreateReviewModal = (props) => {
     }
 
     async function createReview() {
+        let todayDateTime = new Date();
+        let currentDate = getCurrentDate(todayDateTime);
+        console.log('currentDate: ', currentDate);
+        console.log('new Date: ', new Date(currentDate));
+
         let reviewInfo = {
             customerId: loginStatus.currentUser.user.id,
-            orderItemId: '',
+            orderItemId: orderItem.id,
             title: title,
             content: content,
-            createdDate: ''
+            createdDate: currentDate,
+            rate: rate
         }
+        console.log('reviewInfo: ', reviewInfo);
+
         const requestOptions = {
             method: "post",
             headers: {
@@ -69,6 +93,13 @@ const CreateReviewModal = (props) => {
         return data
     }
 
+    const getCurrentDate = (todayDateTime) => {
+        let year = todayDateTime.getFullYear();
+        let month = ('0' + (todayDateTime.getMonth() + 1)).slice(-2);
+        let day = ('0' + todayDateTime.getDate()).slice(-2);
+        let dateString = year + month + day;
+        return dateString
+    }
 
     return (
         <div>
@@ -96,11 +127,11 @@ const CreateReviewModal = (props) => {
                                 <div>
                                     <div className='h3'>리뷰쓰기</div>
                                     <div>
-                                        <img class="w-20 h-30" alt={product.imgUrl} src={product.imgUrl}/>
+                                        <img class="w-20 h-30" alt={orderItem.imgUrl} src={orderItem.imgUrl}/>
                                         
                                     </div>
                                     <div>
-                                        적립 예상 마일리지: {product.price * 0.01}
+                                        적립 예상 마일리지: 50
                                     </div>
                                     <div>
                                         상품은 어떠셨나요? 

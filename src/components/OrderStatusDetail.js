@@ -15,6 +15,8 @@ const OrderStatusDetail = (props) => {
     const [loading, setLoading] = useState(false);
     const [showReviewModal, setShowReviewModal] = useState(false);
     const [selectedProd, setSelectedProd] = useState({});
+    const [selectedItem, setSelectedItem] = useState({});
+
     const loginStatus = useSelector((state) => state);
     const [userInfo, setUserInfo] = useState({});
 
@@ -24,44 +26,43 @@ const OrderStatusDetail = (props) => {
         setUserInfo(loginStatus.currentUser.user);
     }, []);
 
-    const clickCreateReviewBtn = (prod) => {
-      console.log('=== clickCreateReviewBtn ===');
-      console.log('prod: ', prod);
-      setShowReviewModal(!showReviewModal);
-      setSelectedProd(prod);
+    const clickCreateReviewBtn = (item) => {
+        console.log('=== clickCreateReviewBtn ===');
+        console.log('item: ', item);
+        setShowReviewModal(!showReviewModal);
+        setSelectedItem(item);
     }
 
     const handleShowModal = () => {
         setShowReviewModal(!showReviewModal);
-      }
-  
+    }
 
     /**
      * 주문취소시
-     * 1) order 필드 변경 (totalSaleQty, repProdName, repProdImg) 
+     * 1) order 필드 변경 (totalSaleQty, repProdName, repProdImg)
      *      => TODO 로직이 너무 이상한 것 같아서 삭제예정
      * 2) orderItem 필드 변경 (orderStatus)
      * 3) product 재고 변경 (quantity)
      * 4) 고객 보유 포인트 변경 (points)
-     * 
+     *
      */
     const clickCancelOrderItemBtn = (item) => {
-      console.log('item: ', item);
-      console.log('userInfo: ', userInfo);
-      handleCancelOrder(item);
+        console.log('item: ', item);
+        console.log('userInfo: ', userInfo);
+        handleCancelOrder(item);
     }
 
     const handleCancelOrder = (item) => {
         console.log('=== handleCancelOrder ===');
         handleUpdateUserPoints(item.orderPrice * 0.01);
-        handleGetProductStock(item.id, item.orderQuantity);    
+        handleGetProductStock(item.id, item.orderQuantity);
         handleUpdateOrderItemInfo(orderId, item.id);
 
-        // ============ TODO ============
-        // ******** return 값 활용하여 한개라도 실행안되었을시, rollback 처리하기 어떻게 ??????
+        // ============ TODO ============ ******** return 값 활용하여 한개라도 실행안되었을시, rollback
+        // 처리하기 어떻게 ??????
 
     }
-    
+
     async function handleUpdateOrderItemInfo(orderId, productId) {
         const orderItemInfo = {
             orderId: orderId,
@@ -170,7 +171,9 @@ const OrderStatusDetail = (props) => {
     }
 
     async function updateUserPoints(itemPoints) {
-        let updatePoints = userInfo.points - itemPoints < 0 ? 0 : userInfo.points - itemPoints;
+        let updatePoints = userInfo.points - itemPoints < 0
+            ? 0
+            : userInfo.points - itemPoints;
         const updateUserInfo = {
             id: userInfo.id,
             points: updatePoints
@@ -191,7 +194,6 @@ const OrderStatusDetail = (props) => {
         const data = await response.json();
         return data
     }
-
 
     // 주문 정보 가져오기
     async function handleGetOrderItemInfo() {
@@ -235,6 +237,8 @@ const OrderStatusDetail = (props) => {
                     ? <Spinner/>
                     : (
                         <div className='container'>
+                        <div className='text-2xl font-bold mb-2 float-left'>주문상세내역</div>
+                        <br/>
                             <table className='order-info'>
                                 <thead>
                                     <th>상품정보</th>
@@ -245,42 +249,40 @@ const OrderStatusDetail = (props) => {
                                 <tbody>
                                     {
                                         orderItemList.map((data) => {
-                                          return (
-                                            <tr>
-                                                <td>
-                                                    <img class="w-20 h-30" alt={data.imgUrl} src={data.imgUrl}/>
-                                                </td>
-                                                <td>
-                                                    {data.orderQuantity}
-                                                </td>
-                                                <td>
-                                                    {data.orderPrice}
-                                                </td>
-                                                <td>
-                                                    {data.orderStatus}
-                                                    <button
-                                                    onClick={() => clickCreateReviewBtn(data)}
-                                                    class="shadow ml-3 bg-black hover:bg-gray-700 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4"
-                                                    >리뷰쓰기</button>
-                                                    <button
-                                                    onClick={() => clickCancelOrderItemBtn(data)}
-                                                    class="shadow ml-3 bg-black hover:bg-gray-700 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4"
-                                                    >취소하기</button>                                                    
-                                                </td>
+                                            return (
+                                                <tr>
+                                                    <td>
+                                                        <img class="w-20 h-30" alt={data.imgUrl} src={data.imgUrl}/>
+                                                    </td>
+                                                    <td>
+                                                        {data.orderQuantity}
+                                                    </td>
+                                                    <td>
+                                                        {data.orderPrice}
+                                                    </td>
+                                                    <td>
+                                                        {data.orderStatus}
+                                                        <button
+                                                            onClick={() => clickCreateReviewBtn(data)}
+                                                            class="shadow ml-3 bg-black hover:bg-gray-700 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4">리뷰쓰기</button>
+                                                        <button
+                                                            onClick={() => clickCancelOrderItemBtn(data)}
+                                                            class="shadow ml-3 bg-black hover:bg-gray-700 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4">취소하기</button>
+                                                    </td>
 
-                                            </tr>
-                                          )
+                                                </tr>
+                                            )
 
                                         })
                                     }
                                 </tbody>
                             </table>
                             {
-                              showReviewModal && (
-                                <div>
-                                  <CreateReviewModal close={handleShowModal} product={selectedProd}/>
-                                </div>
-                              )
+                                showReviewModal && (
+                                    <div>
+                                        <CreateReviewModal close={handleShowModal} orderItem={selectedItem}/>
+                                    </div>
+                                )
                             }
                         </div>
                     )

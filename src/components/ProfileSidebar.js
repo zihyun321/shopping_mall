@@ -53,7 +53,11 @@ const ProfileSidebar = props => {
                 className={selectedTitle === '취소내역' ? 'active' : 'text-black'} 
                 to={'/ProfileMgmtPage/OrderCancel'}>주문취소내역</Link>
             </li>
-            <li className='mt-1'>상품 리뷰</li>
+            <li className='mt-1'>
+                <Link onClick={(e) => handleClickLink(e)} id='상품리뷰'
+                className={selectedTitle === '상품리뷰' ? 'active' : 'text-black'} 
+                to={'/ProfileMgmtPage/Review'}>상품리뷰내역</Link>
+            </li>
         </ul>
         <div className='font-bold text-xl mb-2'>
             내 정보 설정

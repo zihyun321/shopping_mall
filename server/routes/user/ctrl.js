@@ -130,12 +130,18 @@ exports.checkUserInfo = (req, res) => {
 
 exports.updateUserPoints = (req, res) => {
     let userInfo = req.body;
-    let query = ' UPDATE customer SET points = ? WHERE id = ? ';
-
-    connection.query(query, [userInfo.points, userInfo.id], (error, rows, fields) => {
+    console.log('userInfo: ', userInfo);
+    // let query = ' UPDATE customer SET points = ? WHERE id = ? ';
+    let query = `UPDATE customer SET points = ${userInfo.points} WHERE id = '${userInfo.id}' `;
+    // let query = `UPDATE product SET quantity=${userInfo.quantity} WHERE id='${item.id}';`;
+    connection.query(query, (error, rows, field) => {
         if (error) throw error;
         else return res.json({ success: true });
-    });
+    }) 
+    // connection.query(query, [userInfo.points, userInfo.id], (error, rows, fields) => {
+    //     if (error) throw error;
+    //     else return res.json({ success: true });
+    // });
 }
 
 

@@ -29,7 +29,8 @@ exports.createOrder = (req, res) => {
         }
         else {
             return res.json({
-                success: true
+                success: true,
+                result: rows
             })
         }
     })
@@ -56,4 +57,7 @@ exports.getOrder = (req, res) => {
         }
     })
 }
- 
+
+exports.updateOrder = (req, res) => {
+    let sql = ' SELECT * FROM `order`  WHERE customerId = ? ORDER BY orderDate DESC ';
+}
