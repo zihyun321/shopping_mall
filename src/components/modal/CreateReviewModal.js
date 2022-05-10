@@ -41,6 +41,8 @@ const CreateReviewModal = (props) => {
     // TODO 두가지중 하나라도 안되면 rollback
     const handleSubmitReview = () => {
         handleCreateReview();
+        close();
+        alert('작성이 완료되었습니다.');
         // TODO customer points 적립 (50점)
     }
 
@@ -121,34 +123,37 @@ const CreateReviewModal = (props) => {
                         class="relative inline-block align-bottom bg-white text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
                         <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
 
-                    <div class="sm:flex sm:items-start">
-                        <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
+                    <div class="">
+                        <div class="mt-3 sm:mt-0 sm:ml-4">
                             <div class="mt-2">
                                 <div>
-                                    <div className='h3'>리뷰쓰기</div>
-                                    <div>
-                                        <img class="w-20 h-30" alt={orderItem.imgUrl} src={orderItem.imgUrl}/>
-                                        
+                                    <div className='h3'></div>
+                                    <div className='float-left w-20'>
+                                        <img className="w-20 h-30" alt={orderItem.imgUrl} src={orderItem.imgUrl}/>
+                                        <div className=''>{orderItem.name}</div>
                                     </div>
-                                    <div>
-                                        적립 예상 마일리지: 50
+                                    <div className='ml-3'>
+                                        <div>
+                                            적립 예상 마일리지: 50
+                                        </div>
+                                        <div>
+                                            상품은 어떠셨나요? 
+                                            {
+                                                [0, 1, 2, 3, 4].map((index) => {
+                                                    return (
+                                                        <StarFilled 
+                                                            style={clickedStar[index] ? {color: '#fcc419'} : {color: 'gray'}}
+                                                            // className={clickedStar[index] && 'yellowStar'}
+                                                            onClick={() => handleClickStar(index)}/>
+                                                    )    
+                                                })
+                                            }
+                                            {/* <button type="button">
+                                                <StarFilled/>
+                                            </button> */}
+                                        </div>
                                     </div>
-                                    <div>
-                                        상품은 어떠셨나요? 
-                                        {
-                                            [0, 1, 2, 3, 4].map((index) => {
-                                                return (
-                                                    <StarFilled 
-                                                        style={clickedStar[index] ? {color: '#fcc419'} : {color: 'gray'}}
-                                                        // className={clickedStar[index] && 'yellowStar'}
-                                                        onClick={() => handleClickStar(index)}/>
-                                                )    
-                                            })
-                                        }
-                                        {/* <button type="button">
-                                            <StarFilled/>
-                                        </button> */}
-                                    </div>
+
                                     <div>
                                         <input type='text' value={title} onChange={(e)=>setTitle(e.currentTarget.value)}></input>
                                     </div>

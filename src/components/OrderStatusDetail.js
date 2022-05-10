@@ -54,6 +54,7 @@ const OrderStatusDetail = (props) => {
 
     const handleCancelOrder = (item) => {
         console.log('=== handleCancelOrder ===');
+        console.log('item: ', item);
         handleUpdateUserPoints(item.orderPrice * 0.01);
         handleGetProductStock(item.id, item.orderQuantity);
         handleUpdateOrderItemInfo(orderId, item.id);
@@ -96,21 +97,27 @@ const OrderStatusDetail = (props) => {
     }
 
     async function handleGetProductStock(productId, orderQuantity) {
+        console.log('=== handleGetProductStock ===');
+        console.log('productId: ', productId);
+        console.log('orderQuantity: ', orderQuantity);
+
         getProductStock(productId).then((data) => {
             if (data.success) {
-                console.log('update product 성공');
+                console.log('product 가져오기 성공');
                 console.log('data.result: ', data.result);
                 handleUpdateProduct(data.result, orderQuantity);
+                // handleUpdateProduct(productId, orderQuantity);
             } else {
                 console.log('에러');
             }
         })
     }
 
+    // 기존 제품 재고 알기
     async function getProductStock(productId) {
-        const productInfo = {
+        const productInfo = [{
             id: productId
-        }
+        }]
         const requestOptions = {
             method: "post",
             headers: {
@@ -128,10 +135,13 @@ const OrderStatusDetail = (props) => {
     }
 
     async function handleUpdateProduct(productInfo, orderQuantity) {
-        let updateProductInfo = {
+        console.log('==== handleUpdateProduct ===');
+        console.log('productInfo: ', productInfo);
+        console.log('orderQuantity: ', orderQuantity);
+        let updateProductInfo = [{
             id: productInfo[0].id,
             quantity: productInfo[0].quantity - orderQuantity
-        }
+        }]
         updateProduct(updateProductInfo).then((data) => {
             if (data.success) {
                 console.log('성공')

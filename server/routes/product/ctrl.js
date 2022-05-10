@@ -48,12 +48,12 @@ exports.updateProduct = (req, res) => {
     
     console.log('productInfo: ', productInfo);
     // if (productInfo.length > 1) {
-        productInfo.forEach(function(item) {
-            console.log('item: ', item);
-            // query += mysql.format("UPDATE product SET quantity=? WHERE id=? ;", [item.quantity, item.id]);
-            query += `UPDATE product SET quantity=${item.quantity} WHERE id='${item.id}';`;
-            console.log('query: ', query);
-        })    
+    productInfo.forEach(function(item) {
+        console.log('item: ', item);
+        // query += mysql.format("UPDATE product SET quantity=? WHERE id=? ;", [item.quantity, item.id]);
+        query += `UPDATE product SET quantity=${item.quantity} WHERE id='${item.id}';`;
+        console.log('query: ', query);
+    })    
     // } 
     // else {
     //     query = `UPDATE product SET quantity=${productInfo.quantity} WHERE id='${productInfo.id}';`;
@@ -101,11 +101,13 @@ exports.getProductStock = (req, res) => {
     console.log('req.body: ', req.body);
     console.log('productIds: ', productIds);
     console.log('productIds.length: ', productIds.length);
+    console.log('productIds.id: ', productIds[0].id);
     if (productIds.length === 1) {
         sql = 'SELECT id, quantity FROM product WHERE id=? ';
-        connection.query(sql, [productIds], (error, rows, fields) => {
+        connection.query(sql, [productIds[0].id], (error, rows, fields) => {
             if (error) throw error;
             else {
+                console.log('== 결과값: ', rows);
                 return res.json({
                     success: true,
                     result: rows
@@ -118,6 +120,7 @@ exports.getProductStock = (req, res) => {
         connection.query(sql, [productIds], (error, rows, fields) => {
             if (error) throw error;
             else {
+                console.log('== 결과값: ', rows);
                 return res.json({
                     success: true,
                     result: rows
