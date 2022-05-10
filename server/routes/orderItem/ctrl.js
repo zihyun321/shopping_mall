@@ -132,7 +132,8 @@ exports.getOrderItem22 = (req, res) => {
 exports.updateOrderItem = (req, res) => {
     let orderItemInfo = req.body;
     let query = '';
-    query = `UPDATE orderItem SET orderStatus='주문취소' WHERE orderId='${orderItemInfo.orderId}' AND productId='${orderItemInfo.productId}'`;
+    query += ` UPDATE orderItem SET orderStatus='주문취소', orderCancelDate='${orderItemInfo.orderCancelDate}' `;
+    query += ` WHERE orderId='${orderItemInfo.orderId}' AND productId='${orderItemInfo.productId}' `;
     connection.query(query, (error, rows, field) => {
         if (error) throw error;
         else {

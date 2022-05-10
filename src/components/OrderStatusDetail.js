@@ -64,10 +64,22 @@ const OrderStatusDetail = (props) => {
 
     }
 
+    const getCurrentDate = (todayDateTime) => {
+        let year = todayDateTime.getFullYear();
+        let month = ('0' + (todayDateTime.getMonth() + 1)).slice(-2);
+        let day = ('0' + todayDateTime.getDate()).slice(-2);
+        let dateString = year + month + day;
+        return dateString
+    }
+
     async function handleUpdateOrderItemInfo(orderId, productId) {
+        let todayDateTime = new Date();
+        let currentDate = getCurrentDate(todayDateTime);
+
         const orderItemInfo = {
             orderId: orderId,
-            productId: productId
+            productId: productId,
+            orderCancelDate: currentDate
         };
 
         updateOrderItemInfo(orderItemInfo).then((data) => {
@@ -272,12 +284,18 @@ const OrderStatusDetail = (props) => {
                                                     </td>
                                                     <td>
                                                         {data.orderStatus}
-                                                        <button
-                                                            onClick={() => clickCreateReviewBtn(data)}
-                                                            class="shadow ml-3 bg-black hover:bg-gray-700 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4">리뷰쓰기</button>
-                                                        <button
-                                                            onClick={() => clickCancelOrderItemBtn(data)}
-                                                            class="shadow ml-3 bg-black hover:bg-gray-700 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4">취소하기</button>
+                                                        {
+                                                            data.orderStatus === '주문완료' ? (
+                                                                <div>
+                                                                    <button
+                                                                        onClick={() => clickCreateReviewBtn(data)}
+                                                                        class="shadow ml-3 bg-black hover:bg-gray-700 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4">리뷰쓰기</button>
+                                                                    <button
+                                                                        onClick={() => clickCancelOrderItemBtn(data)}
+                                                                        class="shadow ml-3 bg-black hover:bg-gray-700 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4">취소하기</button>
+                                                                </div>
+                                                            ) : null                                                            
+                                                        }
                                                     </td>
 
                                                 </tr>
