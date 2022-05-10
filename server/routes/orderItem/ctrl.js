@@ -73,6 +73,7 @@ exports.getOrderItem = (req, res) => {
     let orderInfo = req.body;
     console.log('orderInfo: ', orderInfo);
     console.log('orderInfo.orderId: ', orderInfo.orderId);
+    console.log('orderInfo.orderStatus: ', orderInfo.orderStatus);
     // let orderStatus = req.body.orderStatus;
     // console.log('orderId: ', orderId);
     // console.log('orderStatus: ', orderStatus);
@@ -83,7 +84,7 @@ exports.getOrderItem = (req, res) => {
     sql += ' Join product as p on p.id = item.productId     ';
     sql += ' Join `order` on order.id = item.orderId        ';
     sql += ' Where order.id = ?                             ';
-    sql += ' AND item.orderStatus = ? ;                     ';
+    if (orderInfo.orderStatus !== 'All') sql += ' AND item.orderStatus = ? ;                     ';
 
     connection.query(sql, [orderInfo.orderId, orderInfo.orderStatus], (error, rows, fields) => {
         if (error) {

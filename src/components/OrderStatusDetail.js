@@ -221,7 +221,7 @@ const OrderStatusDetail = (props) => {
     async function getOrderItemInfo() {
         const orderInfo = {
             orderId: location.state.orderId,
-            orderStatus: '주문완료'
+            orderStatus: 'All'
         }
         const requestOptions = {
             method: "post",
