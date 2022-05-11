@@ -128,6 +128,7 @@ const Order = props => {
         let remainQuantity;
         let productsInfo = [];
         let productInfo = {};
+        console.log('productList: ', productList);
         for (let i=0; i<productList.length; i++) {
             remainQuantity = originProductList[i].quantity - productList[i].quantity;
             productInfo = {id: productList[i].id, quantity: remainQuantity};

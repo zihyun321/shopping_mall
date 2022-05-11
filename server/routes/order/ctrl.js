@@ -3,12 +3,12 @@
  * DB 연동
  */
  require('dotenv').config(); // DB 환경변수
- const mysql = require('mysql2');
+ const mysql = require('mysql2/promise');
  
 
  // DB 연결시작
  // createPool: 미리 정해진 갯수의 연결을 생성. Request가 발생하면 해당 Req에 연결을 할당하고 다시 반납
- const connection = mysql.createPool({
+ const pool = mysql.createPool({
      host: process.env.DB_HOST, 
      port: process.env.SERVER_PORT, 
      user: process.env.DB_USER, 
@@ -48,7 +48,7 @@ exports.getOrder = (req, res) => {
     // sql += ' FROM order             ';
     // sql += ' WHERE customerId = ?   ';
     // console.log('sql : ',sql );
-    connection.query(sql, userId, (error, rows, fields) => {
+    pool.query(sql, userId, (error, rows, fields) => {
         if (error) {
             throw error
         } else {
@@ -64,7 +64,8 @@ exports.updateOrder = (req, res) => {
     let sql = ' SELECT * FROM `order`  WHERE customerId = ? ORDER BY orderDate DESC ';
 }
 
-exports.createOrder = (req, res) => {
+// async function 안해도 되나?
+async function createOrder(req, res) {
     console.log('==== createOrder ====');
     console.log('req.body: ', req.body);
     const orderInfo = req.body.orderInfo;
@@ -76,8 +77,24 @@ exports.createOrder = (req, res) => {
 
     console.log('orderItemInfo: ', orderItemsInfo);
 
-    // Order 
-    const insertOrderSql = 'INSERT INTO `order` SET ' + orderInfo;
+    // Order [Object Object]로 나와서 변환함
+    // let insertOrderSql = 'INSERT INTO `order` SET ? ' + req.body.orderInfo;
+
+    let insertOrderSql = 'INSERT INTO `order` (id, customerId, orderDate, orderer, ordererPhone, shippingAddress, totalSalePrice, totalSaleQty, repProdName, repProdImg) VALUES ';
+    insertOrderSql += " ( '" + orderInfo.id + "'" + ', ';
+    insertOrderSql += "'" + orderInfo.customerId + "'" + ', ';
+    insertOrderSql += orderInfo.orderDate + ', ';
+    insertOrderSql += "'" + orderInfo.orderer + "'" + ', ';
+    insertOrderSql += "'" + orderInfo.ordererPhone + "'" + ', ';
+    insertOrderSql += "'" + orderInfo.shippingAddress + "'" + ', ';
+    insertOrderSql += orderInfo.totalSalePrice + ', ';
+    insertOrderSql += orderInfo.totalSaleQty + ', ';
+    insertOrderSql += "'" + orderInfo.repProdName + "'" + ', ';
+    // insertOrderSql += "'" + orderInfo.repProdImg + "'" + ' ) ';
+
+    console.log('req.body.orderInfo: ', req.body.orderInfo);
+    console.log('req.body.orderInfo.customerId: ', req.body.orderInfo.customerId);
+    console.log('orderInfo: ', orderInfo);
     console.log('insertOrderSql: ', insertOrderSql);
 
     // OrderItem
@@ -104,6 +121,8 @@ exports.createOrder = (req, res) => {
 
     // const transaction = new mysql.Transaction();
     
+    const connection = await pool.getConnection();
+
     try {
 
         // 에러남: SyntaxError: await is only valid in async functions and the top level bodies of modules
@@ -117,12 +136,15 @@ exports.createOrder = (req, res) => {
 
         // transaction.commit();
 
-        let insertOrderSqlResult = connection.query(insertOrderSql);        
-        let insertOrderItemSqlResult = connection.query(insertOrderItemSql);
-        let updateProductSqlResult = connection.query(updateProductSql);
-        let updateUserSqlResult = connection.query(updateUserSql);
+        // TODO 비동기 함수와 동기 함수가 똑같이 쓰면 ?... (orderItem은 꼭 order가 생성된 후에 생성되어야 한다.)
+        await connection.beginTransaction(); // START TRANSACTION
 
-        connection.commit();
+        let insertOrderSqlResult = await connection.query(insertOrderSql);        
+        let updateProductSqlResult = await connection.query(updateProductSql);
+        let updateUserSqlResult = await connection.query(updateUserSql);
+        let insertOrderItemSqlResult = connection.query(insertOrderItemSql);
+
+        await connection.commit(); // COMMIT
 
         console.log('insertOrderSqlResult: ', insertOrderSqlResult);
         console.log('insertOrderItemSqlResult: ', insertOrderItemSqlResult);
@@ -131,9 +153,14 @@ exports.createOrder = (req, res) => {
 
 
     } catch(err) {
+        console.log('에러! ', err);
+        await connection.rollback(); // ROLLBACK
+        console.log('Query Error');
 
-        console.log('err: ', err);
-        connection.rollback();
+    } finally {
+        connection.release();
 
     }
 }
+
+module.exports.createOrder = createOrder;
