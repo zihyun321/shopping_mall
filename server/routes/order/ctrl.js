@@ -18,23 +18,23 @@
      queueLimit: 0,
  });
 
-exports.createOrder = (req, res) => {
-    console.log('==== createOrder in server ====');
-    const insertSql = 'INSERT INTO `order` SET ? ';
-    const orderInfo = req.body;
-    console.log('req: ', req.body);
-    connection.query(insertSql, orderInfo, (error, rows, fields) => {
-        if (error) {
-            throw error
-        }
-        else {
-            return res.json({
-                success: true,
-                result: rows
-            })
-        }
-    })
-}
+// exports.createOrder = (req, res) => {
+//     console.log('==== createOrder in server ====');
+//     const insertSql = 'INSERT INTO `order` SET ? ';
+//     const orderInfo = req.body;
+//     console.log('req: ', req.body);
+//     connection.query(insertSql, orderInfo, (error, rows, fields) => {
+//         if (error) {
+//             throw error
+//         }
+//         else {
+//             return res.json({
+//                 success: true,
+//                 result: rows
+//             })
+//         }
+//     })
+// }
 
 exports.getOrder = (req, res) => {
     console.log('==== order ctrl.js getOrder');
@@ -60,4 +60,23 @@ exports.getOrder = (req, res) => {
 
 exports.updateOrder = (req, res) => {
     let sql = ' SELECT * FROM `order`  WHERE customerId = ? ORDER BY orderDate DESC ';
+}
+
+exports.createOrder = (req, res) => {
+    console.log('==== createOrder ====');
+    console.log('req.body: ', req.body);
+    const orderInfo = req.body.orderInfo;
+    const orderItemInfo = req.body.orderItemsInfo;
+    const productInfo = req.body.productsInfo;
+    const userInfo = req.body.userInfo;
+
+    console.log('')
+
+    console.log('orderItemInfo: ', orderItemInfo);
+    
+    // try {
+
+    // } catch(err) {
+    //     console.log('err: ', err);
+    // }
 }

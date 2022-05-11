@@ -29,10 +29,10 @@ const Order = props => {
     const loginStatus = useSelector((state) => state);
     const [selectFirstPN, setSelectFirstPN] = useState('1');
     const [isSearchAddressModalOpen, setSearchAddressModalOpen] = useState(false);
-    const [userInfo, setUserInfo] = useState({});
+    const [user, setUser] = useState({});
     const [loading, setLoading] = useState(true);
     const [originProductList, setOriginProductList] = useState([]);
-    const [orderId , setOrderId] = useState();
+    const [createdOrderId , setCreatedOrderId] = useState();
     const history = useHistory();
 
     // 주문자정보
@@ -82,47 +82,22 @@ const Order = props => {
      * 3) 고객 레코드 업데이트 (고객 보유 포인트)
      * 4) 제품 재고 및 판매수 업데이트 (제품 재고 차감)
      */
-    const handleOrder = () => {
-        console.log('order 클릭');
+
+    // 2022-05-11 transction 한꺼번에 합치기
+    const handleCreateOrder = () => {
+        console.log('=== handleCreateOrder ===');
         let todayDateTime = new Date();
         let currentDate = getCurrentDate(todayDateTime);
         let currentTime = getCurrentTime(todayDateTime);
 
-        // const orderId = currentDate + '_' + currentTime;
-        setOrderId(currentDate + '_' + currentTime);
-        console.log('***** 생성되는 orderId: ', currentDate + '_' + currentTime);
+        const orderId = currentDate + '_' + currentTime;
+        setCreatedOrderId(currentDate + '_' + currentTime);
 
-        handleCreateOrder();
-        handleUpdateProduct();
-        handleUpdateUserPoints();
-        // deleteCart(); TODO 장바구니에 있는 제품 지우기???
-    }
-
-    // 여기다가 async를 또 써도 되는가?
-    // handleCreateOrder 실행 성공시, handleCreateOrderItem 처리되도록 해놨는데... 다른 것들도 처리안될시엔 롤백처리 어케하지?
-    async function handleCreateOrder() {
-        createOrder().then(
-            (data) => {
-                if (data.success) {
-                    console.log('create order 성공');
-                    handleCreateOrderItem(orderId);
-                    console.log('orderId: ', orderId);
-                    console.log('data.result: ', data.result);
-                    
-                } else {
-                    console.log('에러');
-                }
-
-            }
-        )
-    }
-
-    // TODO orderItem의 orderCancelDate 추가하기
-    async function createOrder() {
-        console.log('=== createOrder ===');
+        // 데이터 생성
+        // 1. Order 정보 생성
         const orderInfo = {
             id: orderId,
-            customerId: userInfo.id,
+            customerId: user.id,
             orderDate: orderId.split('_')[0],
             orderer: orderer,
             ordererPhone: ordererPhone,
@@ -133,12 +108,68 @@ const Order = props => {
             repProdImg: productList[0].imgUrl
         }
 
+        // 2. Order Item 정보 생성
+        let orderItemsInfo = [];
+        let orderItem;
+        productList.map(data => {
+            orderItem = {
+                customerId: user.id,
+                orderId: orderId,
+                productId: data.id,
+                orderQuantity: data.quantity,
+                orderPrice: data.quantity * data.price,
+                // deliveryStatus: '배송 준비중',
+                orderStatus: '주문완료'
+            }
+            orderItemsInfo.push(orderItem);
+        });
+
+        // 3. Product 정보 생성
+        let remainQuantity;
+        let productsInfo = [];
+        let productInfo = {};
+        for (let i=0; i<productList.length; i++) {
+            remainQuantity = originProductList[i].quantity - productList[i].quantity;
+            productInfo = {id: productList[i].id, quantity: remainQuantity};
+            productsInfo.push(productInfo);
+        }
+        console.log('productsInfo: ', productsInfo);
+
+        // 4. User 정보 생성
+        let updatePoints = userPoints + earnedAmount;
+        let userInfo = {
+            id: user.id,
+            points: updatePoints
+        }
+
+        const createOrderInfo = {
+            orderInfo: orderInfo,
+            orderItemsInfo: orderItemsInfo,
+            productsInfo: productsInfo,
+            userInfo: userInfo
+        };
+
+        console.log('createOrderInfo: ', createOrderInfo);
+
+        createOrder(createOrderInfo).then(
+            (data) => {
+                if (data.success) {
+                    
+                } else {
+                    console.log('에러');
+                }
+
+            }
+        )        
+    }
+
+    async function createOrder(createOrderInfo) {
         const requestOptions = {
             method: "post",
             headers: {
                 "content-type": "application/json"
             },
-            body: JSON.stringify(orderInfo)
+            body: JSON.stringify(createOrderInfo)
         };
 
         const response = await fetch(
@@ -149,149 +180,216 @@ const Order = props => {
         return data
     }
 
-    async function handleCreateOrderItem() {
-        createOrderItem().then(
-            (data) => {
-                if (data.success) {
-                    console.log('create order 성공');
-                    // alert('주문이 완료되었습니다.');
-                    // history.push("/ProfileMgmtPage/OrderStatusDetail/" + orderId);
-                    console.log('***** 보내주는 orderId: ', orderId);
-                    setIsCreatedOrder(true);
-                } else {
-                    console.log('에러');
-                }
+    // const handleOrder = () => {
+    //     console.log('order 클릭');
+    //     let todayDateTime = new Date();
+    //     let currentDate = getCurrentDate(todayDateTime);
+    //     let currentTime = getCurrentTime(todayDateTime);
 
-            }
-        )
-    }
+    //     // const orderId = currentDate + '_' + currentTime;
+    //     setOrderId(currentDate + '_' + currentTime);
+    //     console.log('***** 생성되는 orderId: ', currentDate + '_' + currentTime);
 
-    async function createOrderItem() {
-        let orderItems = [];
-        let orderItem;
-        productList.map(data => {
-            orderItem = {
-                customerId: userInfo.id,
-                orderId: orderId,
-                productId: data.id,
-                orderQuantity: data.quantity,
-                orderPrice: data.quantity * data.price,
-                // deliveryStatus: '배송 준비중',
-                orderStatus: '주문완료'
-            }
-            orderItems.push(orderItem);
-        });
-        console.log('=== orderItems ===', orderItems);
+    //     handleCreateOrder();
+    //     handleUpdateProduct();
+    //     handleUpdateUserPoints();
+    //     // deleteCart(); TODO 장바구니에 있는 제품 지우기???
+    // }
+
+    // 여기다가 async를 또 써도 되는가?
+    // handleCreateOrder 실행 성공시, handleCreateOrderItem 처리되도록 해놨는데... 다른 것들도 처리안될시엔 롤백처리 어케하지?
+    // async function handleCreateOrder() {
+    //     createOrder().then(
+    //         (data) => {
+    //             if (data.success) {
+    //                 console.log('create order 성공');
+    //                 handleCreateOrderItem(orderId);
+    //                 console.log('orderId: ', orderId);
+    //                 console.log('data.result: ', data.result);
+                    
+    //             } else {
+    //                 console.log('에러');
+    //             }
+
+    //         }
+    //     )
+    // }
+
+    // TODO orderItem의 orderCancelDate 추가하기
+    // async function createOrder() {
+    //     console.log('=== createOrder ===');
+    //     const orderInfo = {
+    //         id: orderId,
+    //         customerId: userInfo.id,
+    //         orderDate: orderId.split('_')[0],
+    //         orderer: orderer,
+    //         ordererPhone: ordererPhone,
+    //         shippingAddress: shippingAddress,
+    //         totalSalePrice: paymentAmount,
+    //         totalSaleQty: productList.length,
+    //         repProdName: productList[0].name,
+    //         repProdImg: productList[0].imgUrl
+    //     }
+
+    //     const requestOptions = {
+    //         method: "post",
+    //         headers: {
+    //             "content-type": "application/json"
+    //         },
+    //         body: JSON.stringify(orderInfo)
+    //     };
+
+    //     const response = await fetch(
+    //         'http://localhost:3001/createOrder',
+    //         requestOptions
+    //     );
+    //     const data = await response.json();
+    //     return data
+    // }
+
+    // async function handleCreateOrderItem() {
+    //     createOrderItem().then(
+    //         (data) => {
+    //             if (data.success) {
+    //                 console.log('create order 성공');
+    //                 // alert('주문이 완료되었습니다.');
+    //                 // history.push("/ProfileMgmtPage/OrderStatusDetail/" + orderId);
+    //                 console.log('***** 보내주는 orderId: ', orderId);
+    //                 setIsCreatedOrder(true);
+    //             } else {
+    //                 console.log('에러');
+    //             }
+
+    //         }
+    //     )
+    // }
+
+    // async function createOrderItem() {
+    //     let orderItems = [];
+    //     let orderItem;
+    //     productList.map(data => {
+    //         orderItem = {
+    //             customerId: userInfo.id,
+    //             orderId: orderId,
+    //             productId: data.id,
+    //             orderQuantity: data.quantity,
+    //             orderPrice: data.quantity * data.price,
+    //             // deliveryStatus: '배송 준비중',
+    //             orderStatus: '주문완료'
+    //         }
+    //         orderItems.push(orderItem);
+    //     });
+    //     console.log('=== orderItems ===', orderItems);
     
-        const requestOptions = {
-            method: "post",
-            headers: {
-                "content-type": "application/json"
-            },
-            body: JSON.stringify(orderItems)
-        };
+    //     const requestOptions = {
+    //         method: "post",
+    //         headers: {
+    //             "content-type": "application/json"
+    //         },
+    //         body: JSON.stringify(orderItems)
+    //     };
 
-        const response = await fetch(
-            'http://localhost:3001/createOrderItem',
-            requestOptions
-        );
-        const data = await response.json();
-        return data
+    //     const response = await fetch(
+    //         'http://localhost:3001/createOrderItem',
+    //         requestOptions
+    //     );
+    //     const data = await response.json();
+    //     return data
 
-    }
+    // }
 
-    async function handleUpdateProduct() {
+    // async function handleUpdateProduct() {
 
-        // originProductList => [{id: 6, quantity: 1}, ] (재고정보)
-        // productList 비교 =>  [{id: 6, quantity: 1}, ] (주문정보)
+    //     // originProductList => [{id: 6, quantity: 1}, ] (재고정보)
+    //     // productList 비교 =>  [{id: 6, quantity: 1}, ] (주문정보)
         
-        console.log('originProductList: ', originProductList);
-        console.log('productList: ', productList);
+    //     console.log('originProductList: ', originProductList);
+    //     console.log('productList: ', productList);
 
-        // 배열 크기가 똑같다는 가정하에 
-        let remainQuantity;
-        let updateProductsInfo = [];
-        let updateProductInfo = {};
-        for (let i=0; i<productList.length; i++) {
-            remainQuantity = originProductList[i].quantity - productList[i].quantity;
-            updateProductInfo = {id: productList[i].id, quantity: remainQuantity};
-            updateProductsInfo.push(updateProductInfo);
-        }
-        console.log('updateProductsInfo: ', updateProductsInfo);
+    //     // 배열 크기가 똑같다는 가정하에 
+    //     let remainQuantity;
+    //     let updateProductsInfo = [];
+    //     let updateProductInfo = {};
+    //     for (let i=0; i<productList.length; i++) {
+    //         remainQuantity = originProductList[i].quantity - productList[i].quantity;
+    //         updateProductInfo = {id: productList[i].id, quantity: remainQuantity};
+    //         updateProductsInfo.push(updateProductInfo);
+    //     }
+    //     console.log('updateProductsInfo: ', updateProductsInfo);
 
-        updateProduct(updateProductsInfo).then(
-            (data) => {
-                if (data.success) {
-                    console.log('update product 성공');
+    //     updateProduct(updateProductsInfo).then(
+    //         (data) => {
+    //             if (data.success) {
+    //                 console.log('update product 성공');
 
-                } else {
-                    console.log('에러');
-                }
+    //             } else {
+    //                 console.log('에러');
+    //             }
 
-            }
-        )
-    }
+    //         }
+    //     )
+    // }
     
-    async function updateProduct(updateProductsInfo) {    
-        const requestOptions = {
-            method: "post",
-            headers: {
-                "content-type": "application/json"
-            },
-            body: JSON.stringify(updateProductsInfo)
-        };
+    // async function updateProduct(updateProductsInfo) {    
+    //     const requestOptions = {
+    //         method: "post",
+    //         headers: {
+    //             "content-type": "application/json"
+    //         },
+    //         body: JSON.stringify(updateProductsInfo)
+    //     };
 
-        const response = await fetch(
-            'http://localhost:3001/updateProduct',
-            requestOptions
-        );
-        const data = await response.json();
-        return data
-    }
+    //     const response = await fetch(
+    //         'http://localhost:3001/updateProduct',
+    //         requestOptions
+    //     );
+    //     const data = await response.json();
+    //     return data
+    // }
 
-    async function handleUpdateUserPoints() {
-        console.log('=== handleUpdateUserPoints ===');
-        let updatePoints = userPoints + earnedAmount;
-        let updateUserInfo = {
-            id: userInfo.id,
-            points: updatePoints
-        }
-        console.log('updateUserInfo: ', updateUserInfo);
-        updateUserPoints(updateUserInfo).then(
-            (data) => {
-                if (data.success) {
-                    console.log('update product 성공');
+    // async function handleUpdateUserPoints() {
+    //     console.log('=== handleUpdateUserPoints ===');
+    //     let updatePoints = userPoints + earnedAmount;
+    //     let updateUserInfo = {
+    //         id: userInfo.id,
+    //         points: updatePoints
+    //     }
+    //     console.log('updateUserInfo: ', updateUserInfo);
+    //     updateUserPoints(updateUserInfo).then(
+    //         (data) => {
+    //             if (data.success) {
+    //                 console.log('update product 성공');
 
-                } else {
-                    console.log('에러');
-                }
+    //             } else {
+    //                 console.log('에러');
+    //             }
 
-            }
-        )
-    }
+    //         }
+    //     )
+    // }
     
-    async function updateUserPoints(updateUserInfo) {    
-        const requestOptions = {
-            method: "post",
-            headers: {
-                "content-type": "application/json"
-            },
-            body: JSON.stringify(updateUserInfo)
-        };
+    // async function updateUserPoints(updateUserInfo) {    
+    //     const requestOptions = {
+    //         method: "post",
+    //         headers: {
+    //             "content-type": "application/json"
+    //         },
+    //         body: JSON.stringify(updateUserInfo)
+    //     };
 
-        const response = await fetch(
-            'http://localhost:3001/updateUserPoints',
-            requestOptions
-        );
-        const data = await response.json();
-        return data
-    }
+    //     const response = await fetch(
+    //         'http://localhost:3001/updateUserPoints',
+    //         requestOptions
+    //     );
+    //     const data = await response.json();
+    //     return data
+    // }
 
 
     useEffect(() => {
         console.log('=== useEffect ===');
         console.log('loginStatus.currentUser.user: ', loginStatus.currentUser.user);
-        setUserInfo(loginStatus.currentUser.user);
+        setUser(loginStatus.currentUser.user);
         setOrderer(loginStatus.currentUser.user.name);
         setOrdererPhone(loginStatus.currentUser.user.phone);
         setShippingAddress(loginStatus.currentUser.user.address);
@@ -532,7 +630,7 @@ const Order = props => {
                         </div>
                     </div>
                     <button
-                        onClick={handleOrder}
+                        onClick={handleCreateOrder}
                         className="order-btn shadow bg-black hover:bg-gray-700 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4"
                         type="submit">
                         주문하기
@@ -552,7 +650,7 @@ const Order = props => {
             {
                 isCreatedOrder && (
                     <div>
-                        <ConfirmOrderModal orderId={orderId} close={handleCreatedOrder} />
+                        <ConfirmOrderModal orderId={createdOrderId} close={handleCreatedOrder} />
                     </div>
                 )
             }
