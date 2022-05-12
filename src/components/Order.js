@@ -155,7 +155,7 @@ const Order = props => {
         createOrder(createOrderInfo).then(
             (data) => {
                 if (data.success) {
-                    
+                    setIsCreatedOrder(true);
                 } else {
                     console.log('에러');
                 }

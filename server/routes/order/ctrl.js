@@ -160,16 +160,24 @@ async function createOrder(req, res) {
 
         await connection.commit(); // COMMIT
 
-        // console.log('insertOrderSqlResult: ', insertOrderSqlResult);
-        // console.log('insertOrderItemSqlResult: ', insertOrderItemSqlResult);
-        // console.log('updateProductSqlResult: ', updateProductSqlResult);
-        // console.log('updateUserSqlResult: ', updateUserSqlResult);
+        console.log('insertOrderSqlResult: ', insertOrderSqlResult);
+        console.log('insertOrderItemSqlResult: ', insertOrderItemSqlResult);
+        console.log('updateProductSqlResult: ', updateProductSqlResult);
+        console.log('updateUserSqlResult: ', updateUserSqlResult);
 
+        return res.json({
+            success: true
+        })
 
     } catch(err) {
         console.log('에러! ', err);
         await connection.rollback(); // ROLLBACK
         console.log('Query Error');
+
+        return res.json({
+            success: false,
+            errorCode: err
+        })
 
     } finally {
         connection.release();
