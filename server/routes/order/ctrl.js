@@ -85,31 +85,17 @@ async function createOrder(req, res) {
     // let insertOrderSql = 'INSERT INTO `order` (id, customerId, orderDate, orderer, ordererPhone, shippingAddress, totalSalePrice, totalSaleQty, repProdName, repProdImg) VALUES ';
     let orderDetailInfo = [orderInfo.id, orderInfo.customerId, orderInfo.orderDate, orderInfo.orderer, orderInfo.ordererPhone, orderInfo.shippingAddress, orderInfo.totalSalePrice, orderInfo.totalSaleQty, orderInfo.repProdName, orderInfo.repProdImg];
     console.log('orderDetailInfo: ', orderDetailInfo);
-    // insertOrderSql += '( ' + orderDetailInfo + ' ) ';
-    // console.log('insertOrderSql: ', insertOrderSql);
-
-    // console.log('orderInfo: ', orderInfo);
-    // insertOrderSql += " ( '" + orderInfo.id + "'" + ', ';
-    // insertOrderSql += "'" + orderInfo.customerId + "'" + ', ';
-    // insertOrderSql += orderInfo.orderDate + ', ';
-    // insertOrderSql += "'" + orderInfo.orderer + "'" + ', ';
-    // insertOrderSql += "'" + orderInfo.ordererPhone + "'" + ', ';
-    // insertOrderSql += "'" + orderInfo.shippingAddress + "'" + ', ';
-    // insertOrderSql += orderInfo.totalSalePrice + ', ';
-    // insertOrderSql += orderInfo.totalSaleQty + ', ';
-    // insertOrderSql += "'" + orderInfo.repProdName + "'" + ', ';
-    // insertOrderSql += "'" + orderInfo.repProdImg + "'" + ' ) ';
-
     console.log('req.body.orderInfo: ', req.body.orderInfo);
     console.log('req.body.orderInfo.customerId: ', req.body.orderInfo.customerId);
 
     // OrderItem
     const orderItems = [];
+    let insertOrderItemSql = '';
     orderItemsInfo.forEach(item => {
-        let orderItem = [item.orderId, item.productId, item.orderQuantity, item.customerId, item.orderPrice, item.orderStatus];
+        let orderItem = ["'" + item.orderId + "'", "'" + item.productId + "'", item.orderQuantity, "'" + item.customerId + "'", item.orderPrice, "'" + item.orderStatus + "'"];
         orderItems.push(orderItem);
+        insertOrderItemSql += `INSERT INTO orderItem (orderId, productId, orderQuantity, customerId, orderPrice, orderStatus) VALUES (${orderItem});`;
     });
-    const insertOrderItemSql = 'INSERT INTO orderItem (orderId, productId, orderQuantity, customerId, orderPrice, orderStatus) VALUES ' + orderItems;
     console.log('insertOrderItemSql: ', insertOrderItemSql);
 
     // Product
@@ -160,18 +146,24 @@ async function createOrder(req, res) {
             // repProdName: orderInfo['repProdName'],
             // repProdImg: orderInfo['repProdImg']
         }
-        let insertOrderSqlResult = await connection.query(insertOrderSql, [insertOrderData]);        
+
+        let insertOrderItemSqlResult;
+        let insertOrderSqlResult = await connection.query(insertOrderSql, [insertOrderData]).then( 
+            rows => {
+                console.log('rows: ', rows);
+                insertOrderItemSqlResult = connection.query(insertOrderItemSql, [orderItems]);
+            }
+        );        
 
         let updateProductSqlResult = await connection.query(updateProductSql);
         let updateUserSqlResult = await connection.query(updateUserSql);
-        let insertOrderItemSqlResult = connection.query(insertOrderItemSql);
 
         await connection.commit(); // COMMIT
 
-        console.log('insertOrderSqlResult: ', insertOrderSqlResult);
-        console.log('insertOrderItemSqlResult: ', insertOrderItemSqlResult);
-        console.log('updateProductSqlResult: ', updateProductSqlResult);
-        console.log('updateUserSqlResult: ', updateUserSqlResult);
+        // console.log('insertOrderSqlResult: ', insertOrderSqlResult);
+        // console.log('insertOrderItemSqlResult: ', insertOrderItemSqlResult);
+        // console.log('updateProductSqlResult: ', updateProductSqlResult);
+        // console.log('updateUserSqlResult: ', updateUserSqlResult);
 
 
     } catch(err) {
