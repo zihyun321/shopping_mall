@@ -68,7 +68,7 @@ exports.updateOrder = (req, res) => {
 async function createOrder(req, res) {
     console.log('==== createOrder ====');
     console.log('req.body: ', req.body);
-    const orderInfo = req.body.orderInfo;
+    let orderInfo = req.body.orderInfo;
     const orderItemsInfo = req.body.orderItemsInfo;
     const productInfo = req.body.productsInfo;
     const userInfo = req.body.userInfo;
@@ -78,24 +78,30 @@ async function createOrder(req, res) {
     console.log('orderItemInfo: ', orderItemsInfo);
 
     // Order [Object Object]로 나와서 변환함
-    // let insertOrderSql = 'INSERT INTO `order` SET ? ' + req.body.orderInfo;
+    // console.log('orderInfo는 이거다:  ', orderInfo);
+    
+    // let insertOrderSql = 'INSERT INTO `order` SET ? ' + orderInfo;
+    let insertOrderSql = 'INSERT INTO `order` SET ? ';
+    // let insertOrderSql = 'INSERT INTO `order` (id, customerId, orderDate, orderer, ordererPhone, shippingAddress, totalSalePrice, totalSaleQty, repProdName, repProdImg) VALUES ';
+    let orderDetailInfo = [orderInfo.id, orderInfo.customerId, orderInfo.orderDate, orderInfo.orderer, orderInfo.ordererPhone, orderInfo.shippingAddress, orderInfo.totalSalePrice, orderInfo.totalSaleQty, orderInfo.repProdName, orderInfo.repProdImg];
+    console.log('orderDetailInfo: ', orderDetailInfo);
+    // insertOrderSql += '( ' + orderDetailInfo + ' ) ';
+    // console.log('insertOrderSql: ', insertOrderSql);
 
-    let insertOrderSql = 'INSERT INTO `order` (id, customerId, orderDate, orderer, ordererPhone, shippingAddress, totalSalePrice, totalSaleQty, repProdName, repProdImg) VALUES ';
-    insertOrderSql += " ( '" + orderInfo.id + "'" + ', ';
-    insertOrderSql += "'" + orderInfo.customerId + "'" + ', ';
-    insertOrderSql += orderInfo.orderDate + ', ';
-    insertOrderSql += "'" + orderInfo.orderer + "'" + ', ';
-    insertOrderSql += "'" + orderInfo.ordererPhone + "'" + ', ';
-    insertOrderSql += "'" + orderInfo.shippingAddress + "'" + ', ';
-    insertOrderSql += orderInfo.totalSalePrice + ', ';
-    insertOrderSql += orderInfo.totalSaleQty + ', ';
-    insertOrderSql += "'" + orderInfo.repProdName + "'" + ', ';
+    // console.log('orderInfo: ', orderInfo);
+    // insertOrderSql += " ( '" + orderInfo.id + "'" + ', ';
+    // insertOrderSql += "'" + orderInfo.customerId + "'" + ', ';
+    // insertOrderSql += orderInfo.orderDate + ', ';
+    // insertOrderSql += "'" + orderInfo.orderer + "'" + ', ';
+    // insertOrderSql += "'" + orderInfo.ordererPhone + "'" + ', ';
+    // insertOrderSql += "'" + orderInfo.shippingAddress + "'" + ', ';
+    // insertOrderSql += orderInfo.totalSalePrice + ', ';
+    // insertOrderSql += orderInfo.totalSaleQty + ', ';
+    // insertOrderSql += "'" + orderInfo.repProdName + "'" + ', ';
     // insertOrderSql += "'" + orderInfo.repProdImg + "'" + ' ) ';
 
     console.log('req.body.orderInfo: ', req.body.orderInfo);
     console.log('req.body.orderInfo.customerId: ', req.body.orderInfo.customerId);
-    console.log('orderInfo: ', orderInfo);
-    console.log('insertOrderSql: ', insertOrderSql);
 
     // OrderItem
     const orderItems = [];
@@ -139,7 +145,23 @@ async function createOrder(req, res) {
         // TODO 비동기 함수와 동기 함수가 똑같이 쓰면 ?... (orderItem은 꼭 order가 생성된 후에 생성되어야 한다.)
         await connection.beginTransaction(); // START TRANSACTION
 
-        let insertOrderSqlResult = await connection.query(insertOrderSql);        
+        console.log('***** insertOrderSql: ', insertOrderSql);
+
+        // let insertOrderSqlResult = await connection.query(insertOrderSql, [orderInfo]);        
+        let insertOrderData = {
+            id: orderInfo['id'],
+            customerId: orderInfo['customerId'],
+            orderDate: orderInfo['orderDate'],
+            orderer: orderInfo['orderer'],
+            ordererPhone: orderInfo['ordererPhone'],
+            shippingAddress: orderInfo['shippingAddress'],
+            totalSalePrice: orderInfo['totalSalePrice'],
+            // totalSaleQty: orderInfo['totalSaleQty'],
+            // repProdName: orderInfo['repProdName'],
+            // repProdImg: orderInfo['repProdImg']
+        }
+        let insertOrderSqlResult = await connection.query(insertOrderSql, [insertOrderData]);        
+
         let updateProductSqlResult = await connection.query(updateProductSql);
         let updateUserSqlResult = await connection.query(updateUserSql);
         let insertOrderItemSqlResult = connection.query(insertOrderItemSql);
