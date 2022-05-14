@@ -33,6 +33,7 @@ const OrderStatus = () => {
     }
 
     async function getOrderInfo() {
+        console.log('getOrderInfo: ', getOrderInfo);
         const requestOptions = {
             method: "post",
             headers: {
