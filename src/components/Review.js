@@ -57,21 +57,24 @@ const Review = () => {
                     <div className='container'>
                         <div className='text-2xl font-bold mb-2 float-left'>리뷰내역</div>
                         <br/>
-                        <table className='review-info'>
-                            <thead>
+                        <table>
+                            <thead className='h-8'>
                                 <th>NO</th>
                                 <th>주문내역</th>
                                 <th>제목</th>
                                 <th>내용</th>
                                 <th>별점</th>
                             </thead>
-                            <tbody>
+                            <tbody className='h-40 m-3'>
                                 {
                                     reviewList.map((data) => {
                                         return (
-                                            <tr key={data.id}>
+                                            <tr key={data.id} className='p-3'>
                                                 <td>{data.id}</td>
-                                                <img class="w-20 h-30" alt={data.imgUrl} src={data.imgUrl}/>
+                                                <td>
+                                                    <img className='w-20 h-28' alt={data.imgUrl} src={data.imgUrl}/>
+                                                    {data.name}
+                                                </td>
                                                 <td>{data.title}</td>
                                                 <td>{data.content}</td>
                                                 <td>{data.rate}</td>
