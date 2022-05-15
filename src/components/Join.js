@@ -2,6 +2,7 @@
 
 import React, {useState} from 'react';
 import SearchAddressModal from './modal/SearchAddressModal';
+import DaumPostcode from 'react-daum-postcode';
 
 function Join() {
     const [name, setName] = useState("")
@@ -15,6 +16,11 @@ function Join() {
     
     const [errorMsgPassword, setErrorMsgPassword] = useState("");
     const [isSearchAddressModalOpen, setSearchAddressModalOpen] = useState(false);
+
+    const [isDaumPost, setIsDaumPost] = useState(false);
+    const [zoneCode, setZoneCode] = useState('');
+    const [regionAddress, setRegionAddress] = useState('');
+    const [detailAddress, setDetailAddress] = useState('');
 
     const onIdHandler = (event) => {
         setId(event.currentTarget.value)
@@ -50,10 +56,49 @@ function Join() {
         setGender(event.currentTarget.value)
     }
 
+    const onDetailAddress = (event) => {
+        setDetailAddress(event.currentTarget.value)
+    }
+
     const handleOpenSearchModal = () => {
         setSearchAddressModalOpen(!isSearchAddressModalOpen);
     }
 
+    const handleAddress = (data) => {
+        console.log('=== handleAddress ===');
+        let AllAddress = data.address;
+        let extraAddress = ''; 
+        let zoneCodes = data.zonecode;
+        
+        if (data.addressType === 'R') {
+          if (data.bname !== '') {
+            extraAddress += data.bname;
+          }
+          if (data.buildingName !== '') {
+            extraAddress += (extraAddress !== '' ? `, ${data.buildingName}` : data.buildingName);
+          }
+          AllAddress += (extraAddress !== '' ? ` (${extraAddress})` : '');
+        }
+
+        console.log('AllAddress: ', AllAddress);
+        console.log('zoneCodes: ', zoneCodes);
+        setRegionAddress(AllAddress);
+        setZoneCode(zoneCodes);        
+    }
+
+    const modalStyle = {
+        position: "absolute",
+        top: "50px",
+        // left: "-178px",
+        zIndex: "100",
+        border: "1px solid #000000",
+        overflow: "hidden",
+        width: "500px"
+    }
+
+    const openModal = {
+        backgroundColor: 'rgba(0, 0, 0, 0.6)'
+    }
 
     // 원래꺼
     const onSubmit = (event) => {
@@ -64,7 +109,10 @@ function Join() {
             password,
             name,
             phone,
-            address,
+            zoneCode,
+            regionAddress,
+            detailAddress,
+            // address,
             gender
         }
 
@@ -141,7 +189,11 @@ function Join() {
 
         return data
     }
-    
+    const handleOpenPost = () => {
+        console.log('=== handleOpenPost ===');
+        setIsDaumPost(!isDaumPost);
+    }
+
      
     /**
      * Todo
@@ -150,7 +202,7 @@ function Join() {
     return (
         // <div class="w-full max-w-lg mx-auto text-black">
 
-        <div class="max-w-lg mx-auto text-black">
+        <div class="w-7/12	mx-auto text-black mb-3">
             <form>
                 <div class="md:flex md:items-center mb-6">
                     <div class="md:w-1/3">
@@ -251,18 +303,45 @@ function Join() {
                         </label>
                     </div>
                     <div class="md:w-2/3">
+                        <div className='mb-2'>
+                            <input
+                                class="bg-gray-200 appearance-none border-2 border-gray-200  w-32 float-left py-2 px-4 leading-tight focus:outline-none focus:bg-white focus:border-black"
+                                id="address"
+                                type="text"
+                                placeholder='우편번호'
+                                value={zoneCode}
+                                onChange={handleOpenPost}/>
+                            <button
+                            className="w-20 inline-flex float-left border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
+                            // className="border-gray-300 w-20 float-left ml-3 flex focus:outline-none cursor-pointer bg-slate-200 hover:bg-slate-300 "
+                            type="button"
+                            onClick={() => {
+                                handleOpenPost()
+                            }}>주소찾기</button>
+                        </div>
+
+
                         <input
-                            class="bg-gray-200 appearance-none border-2 border-gray-200  w-full py-2 px-4 leading-tight focus:outline-none focus:bg-white focus:border-black"
+                            className="mb-1 mt-1 bg-gray-200 appearance-none border-2 border-gray-200  w-full py-2 px-4 leading-tight focus:outline-none focus:bg-white focus:border-black"
                             id="address"
                             type="text"
-                            value={address}
-                            onChange={onAddressHandler}/>
-                        <button
-                        className="border-gray-300 w-20 flex focus:outline-none cursor-pointer bg-slate-200 hover:bg-slate-300 "
-                        type="button"
-                        onClick={() => {
-                            handleOpenSearchModal()
-                        }}>주소찾기</button>
+                            placeholder='지역주소'
+                            value={regionAddress}
+                            onChange={handleOpenPost}/>
+                        <input
+                        class="bg-gray-200 appearance-none border-2 border-gray-200  w-full py-2 px-4 leading-tight focus:outline-none focus:bg-white focus:border-black"
+                        id="address"
+                        type="text"
+                        placeholder='세부주소'
+                        value={detailAddress}
+                        onChange={onDetailAddress}/>
+                            {/* <button
+                            className="border-gray-300 w-20 flex focus:outline-none cursor-pointer bg-slate-200 hover:bg-slate-300 "
+                            type="button"
+                            onClick={() => {
+                                handleOpenSearchModal()
+                            }}>주소찾기</button> */}
+
 
                     </div>
                     <div class="md:w-1/3 break-all ml-3"></div>
@@ -327,10 +406,10 @@ function Join() {
                     {/* <div class="md:w-1/3"></div> */}
                     <div >
                         <button
-                            class="shadow bg-black hover:bg-gray-700 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4"
+                            class="w-52 shadow bg-black hover:bg-gray-700 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4"
                             onClick={onSubmit}
                             type="submit">
-                            Sign Up
+                            SIGN UP!
                         </button>
                     </div>
                 </div>
@@ -342,6 +421,19 @@ function Join() {
                             </div>
                         )
                     }
+
+            {
+                isDaumPost ? 
+                <div className='openModal'>
+                    <DaumPostcode
+                        onComplete={handleAddress}
+                        autoClose
+                        style={modalStyle}
+                        isDaumPost={isDaumPost}
+                    />
+                </div>
+                : null
+            }
 
         </div>        
     );

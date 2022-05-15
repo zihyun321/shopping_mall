@@ -30,8 +30,12 @@ exports.checkAndCreateUser = (req, res) => {
         password: req.body.password,
         name: req.body.name,
         phone: req.body.phone,
-        address: req.body.address,
-        gender: req.body.gender
+        zoneCode: req.body.zoneCode,
+        regionAddress: req.body.regionAddress,
+        detailAddress: req.body.detailAddress,
+        // address: req.body.address,
+        gender: req.body.gender,
+        points: 0
     }
 
     var searchSameUserSQL = 'SELECT id FROM customer WHERE id = ? ';
@@ -133,6 +137,7 @@ exports.updateUserPoints = (req, res) => {
     console.log('userInfo: ', userInfo);
     // let query = ' UPDATE customer SET points = ? WHERE id = ? ';
     let query = `UPDATE customer SET points = ${userInfo.points} WHERE id = '${userInfo.id}' `;
+    
     // let query = `UPDATE product SET quantity=${userInfo.quantity} WHERE id='${item.id}';`;
     connection.query(query, (error, rows, field) => {
         if (error) throw error;

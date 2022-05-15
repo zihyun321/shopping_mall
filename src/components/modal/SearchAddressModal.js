@@ -29,7 +29,22 @@ const SearchAddressModal = (props) => {
         });
     }
 
-    const onComplete = (data) => { console.log(data); }
+    const onComplete = (data) => {
+        let fullAddress = data.address;
+        let extraAddress = ''; 
+
+        if (data.addressType === 'R') {
+            if (data.bname !== '') {
+              extraAddress += data.bname;
+            }
+            if (data.buildingName !== '') {
+              extraAddress += (extraAddress !== '' ? `, ${data.buildingName}` : data.buildingName);
+            }
+            fullAddress += (extraAddress !== '' ? ` (${extraAddress})` : '');
+          }
+      
+          console.log(fullAddress);  // e.g. '서울 성동구 왕십리로2길 20 (성수동1가)'
+    }
 
     return (
         <div>
@@ -55,23 +70,11 @@ const SearchAddressModal = (props) => {
                             <div class="sm:flex sm:items-start">
                                 <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
                                     <div class="mt-2">
-                                        <DaumPostcode onComplete={onComplete}/>
-
-                                        {/* <p class="text-sm text-black">선택하신 제품이 쇼핑카트에 추가되었습니다.</p> */}
+                                        <DaumPostcode onComplete={onComplete} {...props}/>
                                     </div>
                                 </div>
                             </div>
                         </div>                        
-                        {/* <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
-                            <button
-                                type="button"
-                                onClick={clickCheckCartBtn}
-                                class="w-full inline-flex justify-center border border-transparent shadow-sm px-4 py-2 bg-black text-base font-medium text-white hover:bg-slate-700 focus:outline-none sm:ml-3 sm:w-auto sm:text-sm">쇼핑카트 확인</button>
-                            <button
-                                type="button"
-                                onClick={close}
-                                class="mt-3 w-full inline-flex justify-center border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm">쇼핑 계속하기</button>
-                        </div> */}
                     </div>
                 </div>
             </div>
