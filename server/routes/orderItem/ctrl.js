@@ -83,10 +83,20 @@ exports.getOrderItem = (req, res) => {
     sql += ' FROM orderItem as item                         ';
     sql += ' Join product as p on p.id = item.productId     ';
     sql += ' Join `order` on order.id = item.orderId        ';
-    sql += ' Where order.id = ?                             ';
-    if (orderInfo.orderStatus !== 'All') sql += ' AND item.orderStatus = ? ;                     ';
+    sql += ` Where item.orderId = '${orderInfo.orderId}'        `;
+    if (orderInfo.orderStatus !== 'All') sql += ` AND item.orderStatus = '${orderInfo.orderStatus}' ;  `;
 
-    connection.query(sql, [orderInfo.orderId, orderInfo.orderStatus], (error, rows, fields) => {
+    // let sql = ' SELECT item.id, item.orderQuantity, item.orderStatus, item.orderPrice ';
+    // sql += ' ,order.orderDate, order.id, p.id, p.name, p.price, p.imgUrl ';
+    // sql += ' FROM orderItem as item                         ';
+    // sql += ' Join product as p on p.id = item.productId     ';
+    // sql += ' Join `order` on order.id = item.orderId        ';
+    // sql += ' Where order.id = ?                             ';
+    // if (orderInfo.orderStatus !== 'All') sql += ' AND item.orderStatus = ? ;                     ';
+    console.log('sql: ', sql); 
+    
+    connection.query(sql, (error, rows, fields) => {
+        console.log('=== connection 성공 ===')
         if (error) {
             throw error
         } else {

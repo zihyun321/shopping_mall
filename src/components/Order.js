@@ -128,13 +128,17 @@ const Order = props => {
         let remainQuantity;
         let productsInfo = [];
         let productInfo = {};
-        console.log('productList: ', productList);
+        console.log('*** productList: ', productList);
+        console.log('originProductList: ', originProductList);
+        console.log('*** productList: ', productList[0]);
+        console.log('originProductList: ', originProductList[0]);
+
         for (let i=0; i<productList.length; i++) {
             remainQuantity = originProductList[i].quantity - productList[i].quantity;
             productInfo = {id: productList[i].id, quantity: remainQuantity};
             productsInfo.push(productInfo);
         }
-        console.log('productsInfo: ', productsInfo);
+        console.log('*** productsInfo: ', productsInfo);
 
         // 4. User 정보 생성
         let updatePoints = userPoints + earnedAmount;
@@ -400,9 +404,10 @@ const Order = props => {
 
     
     async function handleGetProductStock() {
+        console.log('=== handleGetProductStock ===');
         getProductStock().then((data) => {
             if (data.success) {
-                console.log('update product 성공');
+                console.log('product 정보 가져오기 성공');
                 // data.result.map((data) => {
                 //     originProductList[data.id] = data.quantity
                 // });

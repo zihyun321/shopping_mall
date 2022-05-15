@@ -20,9 +20,21 @@ const ConfirmOrderModal = (props) => {
     const clickCheckOrderBtn = () => {
         console.log('clickCheckCartBtn 버튼 누름');
         history.push({
-            pathname: '/ProfileMgmtPage/OrderStatusDetail/' + orderId,
+            // TODO orderId 넘겨주는것 잘 안되서 다시 확인필요
+            pathname: '/ProfileMgmtPage/OrderStatus'
+            // pathname: '/ProfileMgmtPage/OrderStatusDetail/' + orderId,
         });
     }
+
+    const clickCheckBtn = () => {
+        console.log('clickCheckBtn 버튼 누름');
+        history.push({
+            // TODO orderId 넘겨주는것 잘 안되서 다시 확인필요
+            pathname: '/ProfileMgmtPage/OrderStatus'
+            // pathname: '/ProfileMgmtPage/OrderStatusDetail/' + orderId,
+        });
+    }
+
 
     return (
         <div>
@@ -56,7 +68,7 @@ const ConfirmOrderModal = (props) => {
                             <button
                                 type="button"
                                 onClick={clickCheckOrderBtn}
-                                class="w-full inline-flex justify-center border border-transparent shadow-sm px-4 py-2 bg-black text-base font-medium text-white hover:bg-slate-700 focus:outline-none sm:ml-3 sm:w-auto sm:text-sm">주문내역 확인</button>
+                                class="w-full inline-flex justify-center border border-transparent shadow-sm px-4 py-2 bg-black text-base font-medium text-white hover:bg-slate-700 focus:outline-none sm:ml-3 sm:w-auto sm:text-sm">확인</button>
                             <button
                                 type="button"
                                 onClick={close}

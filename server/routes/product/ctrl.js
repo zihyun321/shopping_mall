@@ -101,10 +101,9 @@ exports.getProductStock = (req, res) => {
     console.log('req.body: ', req.body);
     console.log('productIds: ', productIds);
     console.log('productIds.length: ', productIds.length);
-    console.log('productIds.id: ', productIds[0].id);
     if (productIds.length === 1) {
         sql = 'SELECT id, quantity FROM product WHERE id=? ';
-        connection.query(sql, [productIds[0].id], (error, rows, fields) => {
+        connection.query(sql, [productIds[0]], (error, rows, fields) => {
             if (error) throw error;
             else {
                 console.log('== 결과값: ', rows);

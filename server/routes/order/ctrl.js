@@ -53,6 +53,7 @@
 //     })
 // }
 
+// TODO mysql Promise로 했을때, 안뜸
 function getOrder (req, res) {
     console.log('==== order ctrl.js getOrder');
     let userId = req.body.id;
@@ -89,12 +90,9 @@ function getOrder (req, res) {
     
     // 왜 안되지??????????????????
     conn.query(sql, [userId], (error, rows, fields) => {
-        console.log('=== pool 안으로 들어옴');
         if (error) {
-            console.log('error: ', error);
             throw error
         } else {
-            console.log('결과값: ', rows);
             return res.json({
                 success: true,
                 result: rows
@@ -186,10 +184,12 @@ async function createOrder(req, res) {
             ordererPhone: orderInfo['ordererPhone'],
             shippingAddress: orderInfo['shippingAddress'],
             totalSalePrice: orderInfo['totalSalePrice'],
-            // totalSaleQty: orderInfo['totalSaleQty'],
-            // repProdName: orderInfo['repProdName'],
-            // repProdImg: orderInfo['repProdImg']
+            totalSaleQty: orderInfo['totalSaleQty'],
+            repProdName: orderInfo['repProdName'],
+            repProdImg: orderInfo['repProdImg']
         }
+
+        console.log('==== insertOrderData ====', insertOrderData);
 
         let insertOrderItemSqlResult;
         let insertOrderSqlResult = await connection.query(insertOrderSql, [insertOrderData]).then( 
