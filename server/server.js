@@ -69,3 +69,4 @@ app.post("/updateOrderItem", orderItemRouter);   // orderItem 업데이트
 
 /** Review */
 app.post("/createReview", reviewRouter);   // review 생성
+app.post("/getReviewList", reviewRouter);   // review 가져오기

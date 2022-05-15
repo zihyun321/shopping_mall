@@ -6,6 +6,7 @@ import OrderPage from './OrderPage';
 import {Divider} from 'antd';
 import OrderStatusDetail from '../components/OrderStatusDetail';
 import OrderCancel from '../components/OrderCancel';
+import Review from '../components/Review';
 import MyInfo from '../components/MyInfo';
 
 const ProfileMgmtPage = () => {
@@ -25,6 +26,7 @@ const ProfileMgmtPage = () => {
                             <Route exact="exact" path="/ProfileMgmtPage/OrderStatus" component={props => <OrderStatus {...props}/>}/>
                             <Route path='/ProfileMgmtPage/OrderStatusDetail/:id' component={OrderStatusDetail}/>
                             <Route path='/ProfileMgmtPage/OrderCancel' component={OrderCancel}/>
+                            <Route path='/ProfileMgmtPage/Review' component={Review}/>
                             <Route path='/ProfileMgmtPage/MyInfo' component={MyInfo}/>
 
                             {/* <Route path="/login" component={props => <LoginPage {...props}/>}/>
