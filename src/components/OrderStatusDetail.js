@@ -291,9 +291,13 @@ const OrderStatusDetail = (props) => {
                                                         {
                                                             data.orderStatus === '주문완료' ? (
                                                                 <div className='mt-3'>
-                                                                    <button
-                                                                        onClick={() => clickCreateReviewBtn(data)}
-                                                                        class="shadow ml-3 bg-black hover:bg-gray-700 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4">리뷰쓰기</button>
+                                                                    {
+                                                                        !data.hasReview ? (
+                                                                            <button
+                                                                            onClick={() => clickCreateReviewBtn(data)}
+                                                                            class="shadow ml-3 bg-black hover:bg-gray-700 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4">리뷰쓰기</button>    
+                                                                        ) : null
+                                                                    }
                                                                     <button
                                                                         onClick={() => clickCancelOrderItemBtn(data)}
                                                                         class="shadow ml-3 bg-black hover:bg-gray-700 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4">취소하기</button>
