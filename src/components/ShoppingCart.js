@@ -171,7 +171,6 @@ function ShoppingCart() {
             getCartList().then((data) => {
                 if (data) {
                     console.log('성공!!!!! ');
-                    console.log('data: ', data);      
                     setCartList(data);
                     calcTotalAmount(data);
                 } else {
@@ -284,16 +283,38 @@ function ShoppingCart() {
     const handleClickOrder = (type) => {
         console.log('selectedRowKeys: ', selectedRowKeys);
         console.log('selectedRows: ', selectedRows);
+        console.log('cartList: ', cartList);
+        console.log('!!selectedRows: ', selectedRows.length);
 
-        if (type === 'part') {
+        // product data 생성
+        let productList = [];
+        let tempCartList = selectedRows.length > 0 ? selectedRows : cartList;
+        console.log('tempCartList: ', tempCartList);
+        let prod;
+        tempCartList.map((data) => {
+            prod = {
+                id: data.productId,
+                color: data.color,
+                imgUrl: data.imgUrl,
+                name: data.name,
+                price: data.price,
+                size: data.size,
+                quantity: data.quantity // cart quantity => 주문 수량
+            }
+            productList.push(prod);
+        });
+
+        console.log('productList: ', productList);
+
+        if (type === 'part') {  // selectedRows
             console.log('selectedRows.length: ', selectedRows.length);
-            console.log('selectedAmount: ', selectedAmount);
+            console.log('selectedAmount: ', selectedAmount);    
             if (selectedRows.length === 0) alert('제품을 선택해주세요.');
-            else history.push({pathname: '/Order', state: {productList: selectedRows, paymentAmount: selectedAmount}});
+            else history.push({pathname: '/Order', state: {productList: productList, paymentAmount: selectedAmount}});
         }
-        else {
+        else {  // cartList
             console.log('totalAmount: ', totalAmount);
-            history.push({pathname: '/Order', state: {productList: cartList, paymentAmount: totalAmount}});
+            history.push({pathname: '/Order', state: {productList: productList, paymentAmount: totalAmount}});
         }
     }
     

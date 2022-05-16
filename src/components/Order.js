@@ -7,16 +7,34 @@ import SearchAddressModal from './modal/SearchAddressModal';
 import { Divider } from 'antd';
 import {useHistory, withRouter} from 'react-router-dom';
 import ConfirmOrderModal from "./modal/ConfirmOrderModal";
+import Spinner from "./Spinner";
 
 const Order = props => {
 
     console.log('=== Order ===');
     const location = useLocation();
     console.log('location.state: ', location.state);
+    console.log('location.state.cartList: ', location.state.cartList);
     console.log('location.state.productList: ', location.state.productList);
     console.log('location.state.paymentAmount: ', location.state.paymentAmount);
 
     const productList = location.state.productList;
+
+    // let tempProd = {};
+    // const productList = !!location.state.productList ? location.state.productList : (
+    //     cartList.map((data) => {
+    //         tempProd = {
+    //             id: data.productId,
+    //             name: data.name,
+    //             imgUrl: data.imgUrl,
+    //             quantity: data.quantity,  // 주문한 제품 갯수
+    //             price: data.price,
+    //             size: data.size,
+    //             color: data.color
+    //         }
+    //         productList.push();
+    //     })
+    // );
     const paymentAmount = location.state.paymentAmount;
     const earnedAmount = paymentAmount * 0.01;
 
@@ -25,7 +43,7 @@ const Order = props => {
     console.log('productList: ', productList);
     productList.map((data) => {
         console.log('data: ', data);
-        productIdList.push(data.productId);
+        productIdList.push(data.id);
     })    
 
 
@@ -33,7 +51,7 @@ const Order = props => {
     const [selectFirstPN, setSelectFirstPN] = useState('1');
     const [isSearchAddressModalOpen, setSearchAddressModalOpen] = useState(false);
     const [user, setUser] = useState({});
-    const [loading, setLoading] = useState(true);
+    const [loading, setLoading] = useState(false);
     const [originProductList, setOriginProductList] = useState([]);
     const [createdOrderId , setCreatedOrderId] = useState();
     const history = useHistory();
@@ -84,6 +102,7 @@ const Order = props => {
      * 2) orderItem 레코드 생성 (order id, product id)
      * 3) 고객 레코드 업데이트 (고객 보유 포인트)
      * 4) 제품 재고 및 판매수 업데이트 (제품 재고 차감)
+     * 5) 제품 주문시, 장바구니에 있는 제품 주문하면 장바구니 삭제
      */
 
     const clickOrderBtn = () => {
@@ -123,17 +142,19 @@ const Order = props => {
         // 2. Order Item 정보 생성
         let orderItemsInfo = [];
         let orderItem;
+        let cartIdsInfo = [];
         productList.map(data => {
             orderItem = {
                 customerId: user.id,
                 orderId: orderId,
-                productId: data.productId,
+                productId: data.id,
                 orderQuantity: data.quantity,
                 orderPrice: data.quantity * data.price,
                 // deliveryStatus: '배송 준비중',
                 orderStatus: '주문완료'
             }
             orderItemsInfo.push(orderItem);
+            cartIdsInfo.push(data.id); // 5. 주문시, 장바구니에 있는 아이템 삭제
         });
 
         // 3. Product 정보 생성
@@ -147,7 +168,7 @@ const Order = props => {
 
         for (let i=0; i<productList.length; i++) {
             remainQuantity = originProductList[i].quantity - productList[i].quantity;
-            productInfo = {id: productList[i].productId, quantity: remainQuantity};
+            productInfo = {id: productList[i].id, quantity: remainQuantity};
             productsInfo.push(productInfo);
         }
         console.log('*** productsInfo: ', productsInfo);
@@ -163,21 +184,22 @@ const Order = props => {
             orderInfo: orderInfo,
             orderItemsInfo: orderItemsInfo,
             productsInfo: productsInfo,
-            userInfo: userInfo
+            userInfo: userInfo,
+            cartIdsInfo: cartIdsInfo
         };
 
-        console.log('createOrderInfo: ', createOrderInfo);
+        console.log('=== 주문시 넘겨줄 리스트: ', createOrderInfo);
 
-        createOrder(createOrderInfo).then(
-            (data) => {
-                if (data.success) {
-                    setIsCreatedOrder(true);
-                } else {
-                    console.log('에러');
-                }
+        // createOrder(createOrderInfo).then(
+        //     (data) => {
+        //         if (data.success) {
+        //             setIsCreatedOrder(true);
+        //         } else {
+        //             console.log('에러');
+        //         }
 
-            }
-        )        
+        //     }
+        // )        
     }
 
     async function createOrder(createOrderInfo) {
@@ -406,12 +428,28 @@ const Order = props => {
     useEffect(() => {
         console.log('=== useEffect ===');
         console.log('loginStatus.currentUser.user: ', loginStatus.currentUser.user);
+        setLoading(true);
+
         setUser(loginStatus.currentUser.user);
-        // setOrderer(loginStatus.currentUser.user.name);
-        // setOrdererPhone(loginStatus.currentUser.user.phone);
-        // setShippingAddress(loginStatus.currentUser.user.address);
         loginStatus.currentUser.user.points !== null ? setUserPoints(loginStatus.currentUser.user.points) : setUserPoints(0);
         handleGetProductStock();    // 기존 product 재고 - 주문한 product 갯수를 뺴주기 위해 해당 화면 렌더링할때 product 불러왔는데 해당 과정이 맞나?..
+        
+        // let tempProd = {};
+        // productList = !!productList ? location.state.productList : (
+        //     cartList.map((data) => {
+        //         tempProd = {
+        //             id: data.productId,
+        //             name: data.name,
+        //             imgUrl: data.imgUrl,
+        //             quantity: data.quantity,  // 주문한 제품 갯수
+        //             price: data.price,
+        //             size: data.size,
+        //             color: data.color
+        //         }
+        //         productList.push();
+        //     })
+        // );
+        setLoading(false);
     }, []);
 
     
@@ -519,37 +557,36 @@ const Order = props => {
                             <th>수량</th>
                             <th>가격</th>
                             <th>총 상품금액</th>
-                            {/* <th>배송비</th> */}
                         </thead>
                         <tbody>
                             {
-                                productList.map((data) => {
-                                    return (
-                                        <tr key={data.productId}>
-                                            <td>
-                                                <a href={'http://localhost:3000/ProductDetail/' + data.productId}>
-                                                    <img class="w-20 h-30" alt={data.imgUrl} src={data.imgUrl}/>
-                                                    <div>
-                                                        <p style={{fontSize: '13px'}} className="mt-3">{data.name}</p>
-                                                        <p style={{fontSize: '10px', color: 'gray'}}>옵션: {data.color} {data.size}</p>
-                                                    </div>
-                                                </a>
-                                            </td>
-                                            <td>
-                                                {data.quantity}
-                                            </td>
-                                            <td>
-                                                {data.price} 원
-                                            </td>
-                                            <td>
-                                                {data.price} 원
-                                            </td>
-                                            {/* <td>
-                                                3000원
-                                            </td> */}
-                                        </tr>
-                                    )
-                                })
+                                loading ? <Spinner/> : 
+                                (
+                                    productList.map((data) => {
+                                        return (
+                                            <tr key={data.id}>
+                                                <td>
+                                                    <a href={'http://localhost:3000/ProductDetail/' + data.id}>
+                                                        <img class="w-20 h-30" alt={data.imgUrl} src={data.imgUrl}/>
+                                                        <div>
+                                                            <p style={{fontSize: '13px'}} className="mt-3">{data.name}</p>
+                                                            <p style={{fontSize: '10px', color: 'gray'}}>옵션: {data.color} {data.size}</p>
+                                                        </div>
+                                                    </a>
+                                                </td>
+                                                <td>
+                                                    {data.quantity}
+                                                </td>
+                                                <td>
+                                                    {data.price} 원
+                                                </td>
+                                                <td>
+                                                    {data.price} 원
+                                                </td>
+                                            </tr>
+                                        )
+                                    })
+                                )
                             }
                         </tbody>
                     </table>
