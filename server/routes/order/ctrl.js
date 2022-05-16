@@ -132,10 +132,12 @@ async function createOrder(req, res) {
 
     // OrderItem
     const orderItems = [];
+    let orderItemIds = [];  // cart delete를 위한 orderitem list    // TODO cart 삭제를 해야하나?..
     let insertOrderItemSql = '';
     orderItemsInfo.forEach(item => {
         let orderItem = ["'" + item.orderId + "'", "'" + item.productId + "'", item.orderQuantity, "'" + item.customerId + "'", item.orderPrice, "'" + item.orderStatus + "'"];
         orderItems.push(orderItem);
+        orderItemIds.push(item.id);
         insertOrderItemSql += `INSERT INTO orderItem (orderId, productId, orderQuantity, customerId, orderPrice, orderStatus) VALUES (${orderItem});`;
     });
     console.log('insertOrderItemSql: ', insertOrderItemSql);
@@ -152,6 +154,9 @@ async function createOrder(req, res) {
     // User
     let updateUserSql = `UPDATE customer SET points = ${userInfo.points} WHERE id = '${userInfo.id}' `;
     console.log('updateUserSql: ', updateUserSql);
+
+    // Cart
+    let deleteCartSql = ``;
 
     // const transaction = new mysql.Transaction();
     

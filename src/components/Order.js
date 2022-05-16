@@ -154,7 +154,7 @@ const Order = props => {
                 orderStatus: '주문완료'
             }
             orderItemsInfo.push(orderItem);
-            cartIdsInfo.push(data.id); // 5. 주문시, 장바구니에 있는 아이템 삭제
+            // cartIdsInfo.push(data.id); // 5. 주문시, 장바구니에 있는 아이템 삭제 => server에서 처리
         });
 
         // 3. Product 정보 생성
@@ -185,21 +185,21 @@ const Order = props => {
             orderItemsInfo: orderItemsInfo,
             productsInfo: productsInfo,
             userInfo: userInfo,
-            cartIdsInfo: cartIdsInfo
+//            cartIdsInfo: cartIdsInfo
         };
 
         console.log('=== 주문시 넘겨줄 리스트: ', createOrderInfo);
 
-        // createOrder(createOrderInfo).then(
-        //     (data) => {
-        //         if (data.success) {
-        //             setIsCreatedOrder(true);
-        //         } else {
-        //             console.log('에러');
-        //         }
+        createOrder(createOrderInfo).then(
+            (data) => {
+                if (data.success) {
+                    setIsCreatedOrder(true);
+                } else {
+                    console.log('에러');
+                }
 
-        //     }
-        // )        
+            }
+        )        
     }
 
     async function createOrder(createOrderInfo) {
