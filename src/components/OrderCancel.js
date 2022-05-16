@@ -24,6 +24,9 @@ const OrderCancel = () => {
                     console.log('order 정보 가져오기');
                     console.log('data.result: ', data.result);
                     setOrderItemList(data.result);
+                    data.result.map((data) => {
+                      console.log('data: ', data);
+                    })
                 }
             })
             .then(setLoading(false))
@@ -45,7 +48,7 @@ const OrderCancel = () => {
         console.log('requestOptions: ', requestOptions);
 
         const response = await fetch(
-            'http://localhost:3001/getOrderItem22',
+            'http://localhost:3001/getCancelOrderItem',
             requestOptions
         );
         const data = await response.json();
@@ -74,7 +77,12 @@ const OrderCancel = () => {
                               return (
                                 <tr key={data.id}>
                                   <td>{data.orderId}</td>
-                                  <td>{data.orderCancelDate}</td>
+                                  <td>
+                                    {
+                                      !!data.orderCancelDate ? 
+                                      data.orderCancelDate.split('T')[0] : null
+                                    }
+                                  </td>
                                   <td>{data.orderStatus}</td>
                                   <td>{data.orderQuantity * data.orderPrice}</td>
                                 </tr>

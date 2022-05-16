@@ -109,10 +109,12 @@ const OrderStatus = () => {
                                             history.push({pathname: '/ProfileMgmtPage/OrderStatusDetail/' + data.id, 
                                             state: {orderId: data.id}})}}>{data.id}</td>
                                         <td>
-                                            <img class="w-20 h-30" alt={data.repProdImg} src={data.repProdImg}/>
-                                            {
-                                                data.totalSaleQty === 1 ? data.repProdName : data.repProdName + " 외 " + (data.totalSaleQty - 1) + "건"
-                                            }
+                                            <img className="w-14 h-20 float-left" alt={data.repProdImg} src={data.repProdImg}/>
+                                            <div className='mt-7'>
+                                                {
+                                                    data.totalSaleQty === 1 ? data.repProdName : data.repProdName + " 외 " + (data.totalSaleQty - 1) + "건"
+                                                }
+                                            </div>
                                         </td>
                                         <td>{data.totalSalePrice}</td>
                                     </tr>

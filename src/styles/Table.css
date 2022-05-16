@@ -41,8 +41,8 @@ table {
     
 }
 
-.order-info > thead {
-    height: 68px;
+table > thead {
+    height: 50px;
     border-bottom: 1px solid gainsboro;
 }
 

@@ -273,8 +273,12 @@ const OrderStatusDetail = (props) => {
                                         orderItemList.map((data) => {
                                             return (
                                                 <tr>
-                                                    <td>
-                                                        <img class="w-20 h-30" alt={data.imgUrl} src={data.imgUrl}/>
+                                                    <td style={{width: '450px'}}>
+                                                        <img className="w-16 h-24 float-left" alt={data.imgUrl} src={data.imgUrl}/>
+                                                        <div className="mt-5" style={{width: '300px', marginLeft: '-100px'}}>
+                                                            <div> {data.name} </div>
+                                                            <div className='text-xs text-gray-400'>{data.size}     {data.color}</div>
+                                                        </div>
                                                     </td>
                                                     <td>
                                                         {data.orderQuantity}
@@ -286,7 +290,7 @@ const OrderStatusDetail = (props) => {
                                                         {data.orderStatus}
                                                         {
                                                             data.orderStatus === '주문완료' ? (
-                                                                <div>
+                                                                <div className='mt-3'>
                                                                     <button
                                                                         onClick={() => clickCreateReviewBtn(data)}
                                                                         class="shadow ml-3 bg-black hover:bg-gray-700 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4">리뷰쓰기</button>

@@ -79,7 +79,7 @@ exports.getOrderItem = (req, res) => {
     // console.log('orderStatus: ', orderStatus);
 
     let sql = ' SELECT item.id, item.orderQuantity, item.orderStatus, item.orderPrice ';
-    sql += ' ,order.orderDate, order.id, p.id, p.name, p.price, p.imgUrl ';
+    sql += ' ,order.orderDate, order.id, p.id, p.name, p.price, p.imgUrl, p.size, p.color ';
     sql += ' FROM orderItem as item                         ';
     sql += ' Join product as p on p.id = item.productId     ';
     sql += ' Join `order` on order.id = item.orderId        ';
@@ -108,9 +108,9 @@ exports.getOrderItem = (req, res) => {
     })
 }
 
-exports.getOrderItem22 = (req, res) => {
+exports.getCancelOrderItem = (req, res) => {
 
-    console.log('==== orderItem ctrl.js getOrderItem');
+    console.log('==== orderItem ctrl.js getCancelOrderItem');
     let orderInfo = req.body;
     console.log('orderInfo: ', orderInfo);
     // let orderStatus = req.body.orderStatus;

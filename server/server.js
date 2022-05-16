@@ -63,7 +63,7 @@ app.post("/getOrder", orderRouter);             // order 내역 가져오기
 /** Order Item */
 app.post("/createOrderItem", orderItemRouter);   // orderItem 생성
 app.post("/getOrderItem", orderItemRouter);   // orderItem 조회
-app.post("/getOrderItem22", orderItemRouter);   // orderItem 조회
+app.post("/getCancelOrderItem", orderItemRouter);   // orderItem 조회
 app.post("/updateOrderItem", orderItemRouter);   // orderItem 업데이트
 // app.post("/getOrder", orderItemRouter);   // orderItem 생성
 
