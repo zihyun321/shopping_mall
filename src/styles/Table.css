@@ -92,3 +92,12 @@ input {
     display: inline;
     width: 300px;
 }
+
+.user-info > tbody > tr {
+    height: 50px;
+}
+
+.user-info > tbody > tr > th{
+    width: 30%;
+    padding: 1px;
+}

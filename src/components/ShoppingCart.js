@@ -171,6 +171,7 @@ function ShoppingCart() {
             getCartList().then((data) => {
                 if (data) {
                     console.log('성공!!!!! ');
+                    console.log('data: ', data);      
                     setCartList(data);
                     calcTotalAmount(data);
                 } else {

@@ -21,8 +21,11 @@ const Order = props => {
     const earnedAmount = paymentAmount * 0.01;
 
     let productIdList = [];
+    console.log('********* 페이지 업로드됨 *******');
+    console.log('productList: ', productList);
     productList.map((data) => {
-        productIdList.push(data.id);
+        console.log('data: ', data);
+        productIdList.push(data.productId);
     })    
 
 
@@ -36,9 +39,9 @@ const Order = props => {
     const history = useHistory();
 
     // 주문자정보
-    const [orderer, setOrderer] = useState('');
-    const [ordererPhone, setOrdererPhone] = useState('');
-    const [shippingAddress, setShippingAddress] = useState('');
+    const [orderer, setOrderer] = useState(loginStatus.currentUser.user.name);
+    const [ordererPhone, setOrdererPhone] = useState(loginStatus.currentUser.user.phone);
+    const [shippingAddress, setShippingAddress] = useState(loginStatus.currentUser.user.address);
     const [totalSalesVolume, setTotalSalesVolume] = useState();
     const [userPoints, setUserPoints] = useState(0);
     const [isCreatedOrder, setIsCreatedOrder] = useState(false);
@@ -83,9 +86,18 @@ const Order = props => {
      * 4) 제품 재고 및 판매수 업데이트 (제품 재고 차감)
      */
 
+    const clickOrderBtn = () => {
+        if (!!!orderer || !!!shippingAddress || !!!orderer) {
+            alert('다 입력하세요');
+        } else {
+            handleCreateOrder();
+        }
+    }
+
     // 2022-05-11 transction 한꺼번에 합치기
     const handleCreateOrder = () => {
         console.log('=== handleCreateOrder ===');
+        
         let todayDateTime = new Date();
         let currentDate = getCurrentDate(todayDateTime);
         let currentTime = getCurrentTime(todayDateTime);
@@ -115,7 +127,7 @@ const Order = props => {
             orderItem = {
                 customerId: user.id,
                 orderId: orderId,
-                productId: data.id,
+                productId: data.productId,
                 orderQuantity: data.quantity,
                 orderPrice: data.quantity * data.price,
                 // deliveryStatus: '배송 준비중',
@@ -135,7 +147,7 @@ const Order = props => {
 
         for (let i=0; i<productList.length; i++) {
             remainQuantity = originProductList[i].quantity - productList[i].quantity;
-            productInfo = {id: productList[i].id, quantity: remainQuantity};
+            productInfo = {id: productList[i].productId, quantity: remainQuantity};
             productsInfo.push(productInfo);
         }
         console.log('*** productsInfo: ', productsInfo);
@@ -395,9 +407,9 @@ const Order = props => {
         console.log('=== useEffect ===');
         console.log('loginStatus.currentUser.user: ', loginStatus.currentUser.user);
         setUser(loginStatus.currentUser.user);
-        setOrderer(loginStatus.currentUser.user.name);
-        setOrdererPhone(loginStatus.currentUser.user.phone);
-        setShippingAddress(loginStatus.currentUser.user.address);
+        // setOrderer(loginStatus.currentUser.user.name);
+        // setOrdererPhone(loginStatus.currentUser.user.phone);
+        // setShippingAddress(loginStatus.currentUser.user.address);
         loginStatus.currentUser.user.points !== null ? setUserPoints(loginStatus.currentUser.user.points) : setUserPoints(0);
         handleGetProductStock();    // 기존 product 재고 - 주문한 product 갯수를 뺴주기 위해 해당 화면 렌더링할때 product 불러왔는데 해당 과정이 맞나?..
     }, []);
@@ -483,7 +495,7 @@ const Order = props => {
                                     <input 
                                         className='focus:bg-white focus:outline-black w-96'
                                         value={shippingAddress}
-                                        onClick={(e) => setShippingAddress(e.target.value)}
+                                        onChange={(e) => setShippingAddress(e.target.value)}
                                     ></input>
                                     {/* <button
                                     className="border-gray-300 w-20 flex focus:outline-none cursor-pointer bg-slate-200 hover:bg-slate-300 "
@@ -513,9 +525,9 @@ const Order = props => {
                             {
                                 productList.map((data) => {
                                     return (
-                                        <tr key={data.id}>
+                                        <tr key={data.productId}>
                                             <td>
-                                                <a href={'http://localhost:3000/ProductDetail/' + data.id}>
+                                                <a href={'http://localhost:3000/ProductDetail/' + data.productId}>
                                                     <img class="w-20 h-30" alt={data.imgUrl} src={data.imgUrl}/>
                                                     <div>
                                                         <p style={{fontSize: '13px'}} className="mt-3">{data.name}</p>
@@ -636,7 +648,7 @@ const Order = props => {
                         </div>
                     </div>
                     <button
-                        onClick={handleCreateOrder}
+                        onClick={clickOrderBtn}
                         className="order-btn shadow bg-black hover:bg-gray-700 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4"
                         type="submit">
                         주문하기
