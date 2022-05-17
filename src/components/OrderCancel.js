@@ -79,8 +79,8 @@ const OrderCancel = () => {
                                   <td>{data.orderId}</td>
                                   <td>
                                     {
-                                      !!data.orderCancelDate ? 
-                                      data.orderCancelDate.split('T')[0] : null
+                                      !!data.cancelDate ? 
+                                      data.cancelDate.split('T')[0] : null
                                     }
                                   </td>
                                   <td>{data.orderStatus}</td>

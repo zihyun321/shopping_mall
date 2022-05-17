@@ -117,13 +117,14 @@ exports.getCancelOrderItem = (req, res) => {
     // console.log('orderId: ', orderId);
     // console.log('orderStatus: ', orderStatus);
 
-    let sql = ' SELECT item.id, item.orderQuantity, item.orderStatus, item.orderPrice, item.orderId, item.orderCancelDate ';
+    let sql =  ` SELECT item.id, item.orderQuantity, item.orderStatus, item.orderPrice, item.orderId, item.orderCancelDate as 'cancelDate' `;
     sql += ' , order.orderDate, order.id, p.id, p.name, p.price, p.imgUrl ';
     sql += ' FROM orderItem as item                         ';
     sql += ' Join product as p on p.id = item.productId     ';
     sql += ' Join `order` on order.id = item.orderId        ';
     sql += ' Where item.customerId = ?                      ';
     sql += ' AND item.orderStatus = ? ;                     ';
+    // sql += ' ORDER BY item.id DESC             ';    // TODO orderBy 안됨
 
     connection.query(sql, [orderInfo.customerId, orderInfo.orderStatus], (error, rows, fields) => {
         if (error) {
