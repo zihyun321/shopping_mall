@@ -58,24 +58,27 @@ const Review = () => {
                         <div className='text-2xl font-bold mb-2 float-left'>리뷰내역</div>
                         <br/>
                         <table>
-                            <thead className='h-8'>
+                            <thead>
                                 <th>NO</th>
-                                <th>주문내역</th>
-                                <th>제목</th>
-                                <th>내용</th>
+                                <th className='w-52'>주문내역</th>
+                                <th className='w-96'>내용</th>
                                 <th>별점</th>
                             </thead>
                             <tbody className='h-40 m-3'>
                                 {
-                                    reviewList.map((data) => {
+                                    reviewList.map((data, index) => {
                                         return (
                                             <tr key={data.id} className='p-3'>
-                                                <td>{data.id}</td>
-                                                <td>
-                                                    <img className='w-20 h-28' alt={data.imgUrl} src={data.imgUrl}/>
-                                                    {data.name}
+                                                <td>{index+1}</td>
+                                                <td className='p-3'>
+                                                    <img className='w-16 h-24 float-left' alt={data.imgUrl} src={data.imgUrl}/>
+                                                    <div className='ml-3 mt-3 float-left'>
+                                                        <div className='font-semibold'>{data.name}</div>
+                                                        <div className='text-xs float-left text-zinc-400'>사이즈: {data.size}</div>
+                                                        <br/>
+                                                        <div className='text-xs float-left text-zinc-400'>색상: {data.color}</div>
+                                                    </div>
                                                 </td>
-                                                <td>{data.title}</td>
                                                 <td>{data.content}</td>
                                                 <td>{data.rate}</td>
                                             </tr>

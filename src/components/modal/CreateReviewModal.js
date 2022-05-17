@@ -38,9 +38,13 @@ const CreateReviewModal = (props) => {
 
     // TODO 두가지중 하나라도 안되면 rollback
     const handleSubmitReview = () => {
-        handleCreateReview();
-        close();
-        alert('작성이 완료되었습니다.');
+        if (rate === 0) alert('별점을 입력하세요.');
+        else if (!!!content) alert('내용을 입력하세요.');
+        else {
+            handleCreateReview();
+            close();
+            alert('작성이 완료되었습니다.');    
+        }
         // TODO customer points 적립 (50점)
     }
 
@@ -50,9 +54,12 @@ const CreateReviewModal = (props) => {
     }
 
     async function handleCreateReview() {
+        console.log('=== rate: ', rate);
+        console.log('=== content: ', content);
+
         createReview().then((data) => {
             if (data.success) {} else {}
-        })
+        })    
     }
 
     async function createReview() {

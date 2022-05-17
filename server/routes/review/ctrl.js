@@ -98,8 +98,7 @@ exports.getReviewList = (req, res) => {
     console.log('req.body: ', req.body);
     const userInfo = req.body;
     let sql = ' SELECT review.id, review.content, review.createdDate, review.rate ';
-    sql += ' , product.name, product.category, product.size, product.color, product.imgUrl' +
-            ' ';
+    sql += ' , item.id, product.name, product.category, product.size, product.color, product.imgUrl';
     sql += ' FROM review ';
     sql += ' JOIN orderItem as item on item.id = review.orderItemId ';
     sql += ' JOIN product on product.id = item.productId ';
