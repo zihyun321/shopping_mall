@@ -17,9 +17,9 @@ const Order = props => {
     console.log('location.state.cartList: ', location.state.cartList);
     console.log('location.state.productList: ', location.state.productList);
     console.log('location.state.paymentAmount: ', location.state.paymentAmount);
-
+    
     const productList = location.state.productList;
-
+    const deleteCartList = location.state.deleteCartList;
     // let tempProd = {};
     // const productList = !!location.state.productList ? location.state.productList : (
     //     cartList.map((data) => {
@@ -180,12 +180,15 @@ const Order = props => {
             points: updatePoints
         }
 
+        // 5. delete cart list
+        console.log('#### deleteCartList: ', deleteCartList);
+
         const createOrderInfo = {
             orderInfo: orderInfo,
             orderItemsInfo: orderItemsInfo,
             productsInfo: productsInfo,
             userInfo: userInfo,
-//            cartIdsInfo: cartIdsInfo
+            cartIdsInfo: deleteCartList
         };
 
         console.log('=== 주문시 넘겨줄 리스트: ', createOrderInfo);

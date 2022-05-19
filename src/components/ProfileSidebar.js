@@ -68,7 +68,7 @@ const ProfileSidebar = props => {
                 className={selectedTitle === '회원정보' ? 'active' : 'text-black'} 
                 to={'/ProfileMgmtPage/MyInfo'}>회원정보수정</Link>                
             </li>
-            <li className='mt-1'>포인트 현황</li>
+            {/* <li className='mt-1'>포인트 현황</li> */}
         </ul>
     </div>
   )

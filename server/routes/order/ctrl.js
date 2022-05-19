@@ -114,6 +114,7 @@ async function createOrder(req, res) {
     const orderItemsInfo = req.body.orderItemsInfo;
     const productInfo = req.body.productsInfo;
     const userInfo = req.body.userInfo;
+    const cartIdsInfo = req.body.cartIdsInfo;
 
     console.log('')
 
@@ -156,7 +157,14 @@ async function createOrder(req, res) {
     console.log('updateUserSql: ', updateUserSql);
 
     // Cart
-    let deleteCartSql = ``;
+    // cartIdsInfo
+    let deleteCartSql;
+    if (cartIdsInfo.length >= 1) {
+        deleteCartSql = `DELETE FROM shoppingCart WHERE id IN (${cartIdsInfo})`;
+    } else if (cartIdsInfo.length === 1) {
+        deleteCartSql = `DELETE FROM shoppingCart WHERE id='${cartIdsInfo}'`;
+    }
+    console.log('deleteCartSql: ', deleteCartSql);
 
     // const transaction = new mysql.Transaction();
     
@@ -194,6 +202,8 @@ async function createOrder(req, res) {
             repProdImg: orderInfo['repProdImg']
         }
 
+        let deleteCartIds = {};
+
         console.log('==== insertOrderData ====', insertOrderData);
 
         let insertOrderItemSqlResult;
@@ -206,13 +216,20 @@ async function createOrder(req, res) {
 
         let updateProductSqlResult = await connection.query(updateProductSql);
         let updateUserSqlResult = await connection.query(updateUserSql);
+        console.log('cartIdsInfo.length: ', cartIdsInfo.length);
+        let deleteCartSqlResult;
+        if (cartIdsInfo.length !== 0) {
+            console.log('cartIdsInfo 여기 탄다');
+            deleteCartSqlResult = await connection.query(deleteCartSql);
+        }
+        
+        // await connection.commit(); // COMMIT
 
-        await connection.commit(); // COMMIT
-
-        console.log('insertOrderSqlResult: ', insertOrderSqlResult);
-        console.log('insertOrderItemSqlResult: ', insertOrderItemSqlResult);
-        console.log('updateProductSqlResult: ', updateProductSqlResult);
-        console.log('updateUserSqlResult: ', updateUserSqlResult);
+        // console.log('insertOrderSqlResult: ', insertOrderSqlResult);
+        // console.log('insertOrderItemSqlResult: ', insertOrderItemSqlResult);
+        // console.log('updateProductSqlResult: ', updateProductSqlResult);
+        // console.log('updateUserSqlResult: ', updateUserSqlResult);
+        console.log('deleteCartSqlResult: ', deleteCartSqlResult);
 
         return res.json({
             success: true

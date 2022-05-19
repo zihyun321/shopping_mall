@@ -29,11 +29,13 @@ const MyInfo = () => {
 
     const onConfirmPasswordHandler = (event) => {
         setConfirmPassword(event.currentTarget.value);
-        
-        if (event.currentTarget.value !== password) setErrorMsgPassword("비밀번호를 확인해주세요.");
-        else setErrorMsgPassword("");
-    }
 
+        if (event.currentTarget.value !== password) 
+            setErrorMsgPassword("비밀번호를 확인해주세요.");
+        else 
+            setErrorMsgPassword("");
+        }
+    
     const onPhoneHandler = (event) => {
         setPhone(event.currentTarget.value)
     }
@@ -51,23 +53,31 @@ const MyInfo = () => {
     const handleAddress = (data) => {
         console.log('=== handleAddress ===');
         let AllAddress = data.address;
-        let extraAddress = ''; 
+        let extraAddress = '';
         let zoneCodes = data.zonecode;
-        
+
         if (data.addressType === 'R') {
-          if (data.bname !== '') {
-            extraAddress += data.bname;
-          }
-          if (data.buildingName !== '') {
-            extraAddress += (extraAddress !== '' ? `, ${data.buildingName}` : data.buildingName);
-          }
-          AllAddress += (extraAddress !== '' ? ` (${extraAddress})` : '');
+            if (data.bname !== '') {
+                extraAddress += data.bname;
+            }
+            if (data.buildingName !== '') {
+                extraAddress += (
+                    extraAddress !== ''
+                        ? `, ${data.buildingName}`
+                        : data.buildingName
+                );
+            }
+            AllAddress += (
+                extraAddress !== ''
+                    ? ` (${extraAddress})`
+                    : ''
+            );
         }
 
         console.log('AllAddress: ', AllAddress);
         console.log('zoneCodes: ', zoneCodes);
         setRegionAddress(AllAddress);
-        setZoneCode(zoneCodes);        
+        setZoneCode(zoneCodes);
     }
 
     const modalStyle = {
@@ -89,15 +99,11 @@ const MyInfo = () => {
             password: password
         }
 
-        changeUserInfo(changedInfo).then(
-            (data) => {
-                if (data.success) {
-                    alert('정상적으로 변경되었습니다.');
-                } else {
-
-                }
-            }
-        )
+        changeUserInfo(changedInfo).then((data) => {
+            if (data.success) {
+                alert('정상적으로 변경되었습니다.');
+            } else {}
+        })
     }
 
     async function changeUserInfo(changedInfo) {
@@ -109,7 +115,10 @@ const MyInfo = () => {
             body: JSON.stringify(changedInfo)
         };
 
-        const response = await fetch('http://localhost:3001/createUser', requestOptions);
+        const response = await fetch(
+            'http://localhost:3001/createUser',
+            requestOptions
+        );
         const data = await response.json();
         console.log('response: ', response);
         console.log('data: ', data);
@@ -127,7 +136,7 @@ const MyInfo = () => {
                     <tbody>
                         <tr>
                             <th>아이디</th>
-                            <td>
+                            <td className='text-left'>
                                 {userInfo.id}
                             </td>
                         </tr>
@@ -135,34 +144,35 @@ const MyInfo = () => {
                         <tr>
                             <th>비밀번호</th>
                             <td>
-                            <input
-                            class="bg-gray-200 appearance-none border-2 border-gray-200  w-full py-2 px-4 leading-tight focus:outline-none focus:bg-white focus:border-black"
-                            id="password"
-                            type="password"
-                            value={password}
-                            onChange={onPasswordHandler}
-                            placeholder="***********"/>
+                                <input
+                                    class="bg-gray-200 appearance-none border-2 border-gray-200  w-full py-2 px-4 leading-tight focus:outline-none focus:bg-white focus:border-black"
+                                    id="password"
+                                    type="password"
+                                    value={password}
+                                    onChange={onPasswordHandler}
+                                    placeholder="***********"/>
                             </td>
                         </tr>
                         <tr>
                             <th>비밀번호 확인</th>
                             <td>
-                            <input
-                            class="bg-gray-200 appearance-none border-2 border-gray-200  w-full py-2 px-4 leading-tight focus:outline-none focus:bg-white focus:border-black"
-                            id="confirm-password"
-                            type="password"
-                            value={confirmPassword}
-                            onChange={onConfirmPasswordHandler}
-                            placeholder="***********"/>
-                            {
-                                errorMsgPassword !== "" ? (
-                                    <div class="text-red-600">{errorMsgPassword}</div>) : null
-                                    
-                            }                            </td>
+                                <input
+                                    class="bg-gray-200 appearance-none border-2 border-gray-200  w-full py-2 px-4 leading-tight focus:outline-none focus:bg-white focus:border-black"
+                                    id="confirm-password"
+                                    type="password"
+                                    value={confirmPassword}
+                                    onChange={onConfirmPasswordHandler}
+                                    placeholder="***********"/> {
+                                    errorMsgPassword !== ""
+                                        ? (<div class="text-red-600">{errorMsgPassword}</div>)
+                                        : null
+
+                                }
+                            </td>
                         </tr>
                         <tr>
                             <th>이름</th>
-                            <td>
+                            <td className='text-left'>
                                 {userInfo.name}
                                 {/* <input
                             className='focus:bg-white focus:outline-black w-96'
@@ -177,45 +187,48 @@ const MyInfo = () => {
                             <th>핸드폰</th>
                             <td>
                                 <input
-                                class="bg-gray-200 appearance-none border-2 border-gray-200  w-full py-2 px-4 leading-tight focus:outline-none focus:bg-white focus:border-black"
-                                id="phone"
-                                type="text"
-                                value={phone}
-                                onChange={onPhoneHandler}
-                                placeholder="010-0000-0000"/>
+                                    class="bg-gray-200 appearance-none border-2 border-gray-200  w-full py-2 px-4 leading-tight focus:outline-none focus:bg-white focus:border-black"
+                                    id="phone"
+                                    type="text"
+                                    value={phone}
+                                    onChange={onPhoneHandler}
+                                    placeholder="010-0000-0000"/>
                             </td>
                         </tr>
                         <tr>
                             <th>주소</th>
                             <div className='mb-2'>
+                                <div className='mb-2'>
+                                    <input
+                                        class="bg-gray-200 appearance-none border-2 border-gray-200  w-32 float-left py-2 px-4 leading-tight focus:outline-none focus:bg-white focus:border-black"
+                                        id="address"
+                                        type="text"
+                                        placeholder='우편번호'
+                                        value={zoneCode}
+                                        onChange={handleOpenPost}/>
+                                    <button className="w-20 inline-flex float-left border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
+                                        // className="border-gray-300 w-20 float-left ml-3 flex focus:outline-none cursor-pointer bg-slate-200 hover:bg-slate-300 "
+                                        type="button" onClick={() => {
+                                            handleOpenPost()
+                                        }}>주소찾기</button>
+                                </div>
+
                                 <input
-                                    class="bg-gray-200 appearance-none border-2 border-gray-200  w-32 float-left py-2 px-4 leading-tight focus:outline-none focus:bg-white focus:border-black"
+                                    className="mb-1 mt-1 bg-gray-200 appearance-none border-2 border-gray-200  w-full py-2 px-4 leading-tight focus:outline-none focus:bg-white focus:border-black"
                                     id="address"
                                     type="text"
-                                    placeholder='우편번호'
-                                    value={zoneCode}
+                                    placeholder='지역주소'
+                                    value={regionAddress}
                                     onChange={handleOpenPost}/>
-                                <button className="w-20 inline-flex float-left border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
-                                    // className="border-gray-300 w-20 float-left ml-3 flex focus:outline-none cursor-pointer bg-slate-200 hover:bg-slate-300 "
-                                    type="button" onClick={() => {
-                                        handleOpenPost()
-                                    }}>주소찾기</button>
+                                <input
+                                    class="bg-gray-200 appearance-none border-2 border-gray-200  w-full py-2 px-4 leading-tight focus:outline-none focus:bg-white focus:border-black"
+                                    id="address"
+                                    type="text"
+                                    placeholder='세부주소'
+                                    value={detailAddress}
+                                    onChange={onDetailAddress}/>
                             </div>
 
-                            <input
-                                className="mb-1 mt-1 bg-gray-200 appearance-none border-2 border-gray-200  w-full py-2 px-4 leading-tight focus:outline-none focus:bg-white focus:border-black"
-                                id="address"
-                                type="text"
-                                placeholder='지역주소'
-                                value={regionAddress}
-                                onChange={handleOpenPost}/>
-                            <input
-                                class="bg-gray-200 appearance-none border-2 border-gray-200  w-full py-2 px-4 leading-tight focus:outline-none focus:bg-white focus:border-black"
-                                id="address"
-                                type="text"
-                                placeholder='세부주소'
-                                value={detailAddress}
-                                onChange={onDetailAddress}/>
                         </tr>
                     </tbody>
                 </table>
@@ -229,16 +242,15 @@ const MyInfo = () => {
                 </div>
             </div>
             {
-                isDaumPost ? 
-                <div className='openModal'>
-                    <DaumPostcode
-                        onComplete={handleAddress}
-                        autoClose
-                        style={modalStyle}
-                        isDaumPost={isDaumPost}
-                    />
-                </div>
-                : null
+                isDaumPost
+                    ? <div className='openModal'>
+                            <DaumPostcode
+                                onComplete={handleAddress}
+                                autoClose="autoClose"
+                                style={modalStyle}
+                                isDaumPost={isDaumPost}/>
+                        </div>
+                    : null
             }
 
         </div>

@@ -288,9 +288,11 @@ function ShoppingCart() {
 
         // product data 생성
         let productList = [];
+        let deleteCartList = [];
         let tempCartList = selectedRows.length > 0 ? selectedRows : cartList;
         console.log('tempCartList: ', tempCartList);
         let prod;
+        // let cart;
         tempCartList.map((data) => {
             prod = {
                 id: data.productId,
@@ -302,6 +304,7 @@ function ShoppingCart() {
                 quantity: data.quantity // cart quantity => 주문 수량
             }
             productList.push(prod);
+            deleteCartList.push(data.id);
         });
 
         console.log('productList: ', productList);
@@ -310,11 +313,11 @@ function ShoppingCart() {
             console.log('selectedRows.length: ', selectedRows.length);
             console.log('selectedAmount: ', selectedAmount);    
             if (selectedRows.length === 0) alert('제품을 선택해주세요.');
-            else history.push({pathname: '/Order', state: {productList: productList, paymentAmount: selectedAmount}});
+            else history.push({pathname: '/Order', state: {productList: productList, paymentAmount: selectedAmount, deleteCartList: deleteCartList}});
         }
         else {  // cartList
             console.log('totalAmount: ', totalAmount);
-            history.push({pathname: '/Order', state: {productList: productList, paymentAmount: totalAmount}});
+            history.push({pathname: '/Order', state: {productList: productList, paymentAmount: totalAmount, deleteCartList: deleteCartList}});
         }
     }
     
