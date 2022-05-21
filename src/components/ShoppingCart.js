@@ -221,6 +221,9 @@ function ShoppingCart() {
      * @description 장바구니 리스트에서 해당 목록 삭제
      */
     async function deleteCart() {
+        console.log('=== deleteCart ===');
+        console.log('selectedRowKeys: ', selectedRowKeys);
+        let deleteCartIds = {id: selectedRowKeys};
         const requestOptions = {
             method: "post", //통신방법
             headers: {

@@ -139,13 +139,19 @@ exports.deleteCart = (req, res) => {
     var sql = ' DELETE FROM shoppingCart ';
     // sql += ' WHERE id in ?';
 
-    if (idList.length = 1) {
-        sql += ' WHERE id=? ';
-    } else {
-        sql += ' WHERE id in ?';
-    }
+    console.log('idList: ', idList);
+    console.log('idList.length: ', idList.length);
+    // console.log('idList[id]: ', idList['id']);
 
-    connection.query(sql, [idList], (error, rows, fields) => {
+    if (idList.length === 1) {
+        sql += ` WHERE id='${idList}' `;
+    } else {
+        sql += ` WHERE id in (${idList}) `;
+    }
+    console.log('sql: ', sql);
+    
+
+    connection.query(sql, (error, rows, fields) => {
         if (error)
             throw error;
         else {
