@@ -25,21 +25,25 @@ function ShoppingCart() {
     const columns = [
         {
             title: '제품',
-            children: [
-                {
-                    title: '',
-                    dataIndex: 'imgUrl',
-                    key: 'imgUrl',
-                    width: 60,
+            key: 'product',
+            dataIndex: 'product',
+            render: (text, record) => setProduct(text, record)
+
+            // children: [
+            //     {
+            //         title: '',
+            //         dataIndex: 'imgUrl',
+            //         key: 'imgUrl',
+            //         width: 60,
     
-                    render: imgUrl => <img alt={imgUrl} src={imgUrl} />
-                },
-                {
-                    title: '',
-                    dataIndex: 'name',
-                    key: 'name'
-                }, 
-            ]
+            //         render: imgUrl => <img alt={imgUrl} src={imgUrl} />
+            //     },
+            //     {
+            //         title: '',
+            //         dataIndex: 'name',
+            //         key: 'name'
+            //     }, 
+            // ]
         }, {
             title: '사이즈',
             dataIndex: 'size',
@@ -67,6 +71,21 @@ function ShoppingCart() {
             render: (text, record) => setProductCount(text, record) }
     ];
 
+    const setProduct = (text, record) => {
+        return (
+            <div>
+                <div className='float-left'>
+                    <img 
+                    className="w-10"
+                    alt={record.imgUrl} src={record.imgUrl} />
+                </div>
+                <div className='w-44 ml-12'>
+                    {record.name}
+                </div>
+            </div>
+        )
+    }
+
     const setProductCount = (text, record) => {
         console.log('cartList: ', cartList);
         console.log('record: ', record);
@@ -74,7 +93,7 @@ function ShoppingCart() {
         var prodId = record.id;
         return (
             <div class="flex">
-                <div class="box-border h-4 w-4 p-4 border self-center">
+                <div class="h-4 w-4 p-4 border self-center">
                     <div className='self-center text-center mb-3'>{record.quantity}</div>
                 </div>
                 <div className='grid '>
