@@ -149,8 +149,9 @@ function ProductDetailPage() {
     return (
         <div>
             <div class="flex font-sans">
-                <div class="flex-none w-64 relative">
+                <div class="flex-none w-80 relative">
                     <img
+                        // className="w-80" 여기다가 style 넣으면 이미지 잘안뜸
                         src={productInfo.imgUrl}
                         alt=""
                         class="absolute inset-0 w-full h-full object-cover"/>

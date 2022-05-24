@@ -93,25 +93,27 @@ function ShoppingCart() {
         var prodId = record.id;
         return (
             <div class="flex">
-                <div class="h-4 w-4 p-4 border self-center">
-                    <div className='self-center text-center mb-3'>{record.quantity}</div>
+                <div class="h-8 w-8 border self-center">
+                    <div className='self-center text-center mt-2'>{record.quantity}</div>
                 </div>
-                <div className='grid '>
+                <div className='grid'>
                     <button 
-                    class="shadow text-black font-bold w-3 h-3 col-span-2"
+                    class="shadow text-black font-bold w-3 col-span-2"
+                    style={{height: '14px'}}
                     type='submit' onClick={()=> clickTochangeQuantity(record, 'plus')}>
                     +
                     </button>
                     <button 
-                    class="shadow text-black font-bold w-3 h-3 col-span-2"
+                    class="shadow text-black font-bold w-3 col-span-2"
+                    style={{height: '14px'}}
                     type='submit' onClick={()=> clickTochangeQuantity(record, 'minus')}>
                     -
                     </button>
                 </div>
                 <div>
                     <button 
-                        class="shadow text-black font-bold w-8 ml-3"
-                        style={{marginTop: '-10px'}}
+                        class="shadow text-black font-bold w-8 ml-3 text-xs mt-2"
+                        // style={{marginTop: '-10px'}}
                         onClick={() => submitChangedQuantity(record)}                    
                     >
                         변경
