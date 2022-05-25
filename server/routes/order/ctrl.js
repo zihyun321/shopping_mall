@@ -164,6 +164,11 @@ async function createOrder(req, res) {
     } else if (cartIdsInfo.length === 1) {
         deleteCartSql = `DELETE FROM shoppingCart WHERE id='${cartIdsInfo}'`;
     }
+
+    // let deleteCartSql = '';
+    // cartIdsInfo.map((id) => {
+    //     deleteCartSql += ` DELETE FROM shoppingCart WHERE id='${id}'; `;
+    // })
     console.log('deleteCartSql: ', deleteCartSql);
 
     // const transaction = new mysql.Transaction();
@@ -187,6 +192,14 @@ async function createOrder(req, res) {
         await connection.beginTransaction(); // START TRANSACTION
 
         console.log('***** insertOrderSql: ', insertOrderSql);
+
+        let deleteCartSqlResult = await connection.query(deleteCartSql);
+        // let deleteCartSqlResult;
+        // if (cartIdsInfo.length !== 0) {
+        //     console.log('cartIdsInfo 여기 탄다');
+        //     console.log('deleteCartSql: ', deleteCartSql);
+        //     deleteCartSqlResult = await connection.query(deleteCartSql);
+        // }
 
         // let insertOrderSqlResult = await connection.query(insertOrderSql, [orderInfo]);        
         let insertOrderData = {
@@ -217,11 +230,6 @@ async function createOrder(req, res) {
         let updateProductSqlResult = await connection.query(updateProductSql);
         let updateUserSqlResult = await connection.query(updateUserSql);
         console.log('cartIdsInfo.length: ', cartIdsInfo.length);
-        let deleteCartSqlResult;
-        if (cartIdsInfo.length !== 0) {
-            console.log('cartIdsInfo 여기 탄다');
-            deleteCartSqlResult = await connection.query(deleteCartSql);
-        }
         
         // await connection.commit(); // COMMIT
 
