@@ -4,7 +4,7 @@ import '../styles/Table.css'
 import {useHistory, useLocation, withRouter} from 'react-router-dom';
 
 const OrderStatus = () => {
-    
+
     const history = useHistory();
 
     const loginStatus = useSelector((state) => state);
@@ -21,15 +21,13 @@ const OrderStatus = () => {
 
     async function handleGetOrderInfo() {
         console.log('=== handleGetOrderInfo ===');
-        getOrderInfo().then(
-            (data) => {
-                if (data.success) {
-                    console.log('order 정보 가져오기');
-                    console.log('data.result: ', data.result);
-                    setOrderList(data.result);
-                }
+        getOrderInfo().then((data) => {
+            if (data.success) {
+                console.log('order 정보 가져오기');
+                console.log('data.result: ', data.result);
+                setOrderList(data.result);
             }
-        )
+        })
     }
 
     async function getOrderInfo() {
@@ -43,49 +41,24 @@ const OrderStatus = () => {
         }
         console.log('requestOptions: ', requestOptions);
 
-        const response = await fetch(
-            'http://localhost:3001/getOrder',
-            requestOptions
-        );
+        const response = await fetch('http://localhost:3001/getOrder', requestOptions);
         const data = await response.json();
         return data
     }
-    
-    // async function handleGetOrderItemInfo() {
-    //     console.log('=== handleGetOrderInfo ===');
-    //     getOrderItemInfo().then(
-    //         (data) => {
-    //             if (data.success) {
-    //                 console.log('order 정보 가져오기');
-    //                 setOrderItemList(data.result);
-    //                 console.log('data.result: ', data.result);
-    //             }
-    //             else {
-    //                 console.log('에러');
-    //             }
-    //         }
-    //     )
-    // }
 
-    // async function getOrderItemInfo() {
-    //     console.log('=== getOrderItemInfo ===');
-    //     const requestOptions = {
-    //         method: "post",
-    //         headers: {
-    //             "content-type": "application/json"
-    //         },
-    //         body: JSON.stringify(loginStatus.currentUser.user)
-    //     }
-    //     console.log('requestOptions: ', requestOptions);
-
-    //     const response = await fetch(
-    //         'http://localhost:3001/getOrder',
-    //         requestOptions
-    //     );
-    //     const data = await response.json();
-    //     return data
-    // }
-
+    // async function handleGetOrderItemInfo() {     console.log('===
+    // handleGetOrderInfo ===');     getOrderItemInfo().then(         (data) => {
+    // if (data.success) {                 console.log('order 정보 가져오기');
+    // setOrderItemList(data.result);                 console.log('data.result: ',
+    // data.result);             }             else {
+    // console.log('에러');             }         }     ) } async function
+    // getOrderItemInfo() {     console.log('=== getOrderItemInfo ===');     const
+    // requestOptions = {         method: "post",         headers: {
+    // "content-type": "application/json"         },         body:
+    // JSON.stringify(loginStatus.currentUser.user)     }
+    // console.log('requestOptions: ', requestOptions);     const response = await
+    // fetch(         'http://localhost:3001/getOrder',         requestOptions
+    // );     const data = await response.json();     return data }
 
     return (
         <div className='flex'>
@@ -104,15 +77,32 @@ const OrderStatus = () => {
                             orderList.map((data) => {
                                 return (
                                     <tr key={data.id}>
-                                        <td>{data.orderDate.split('T')[0]}</td>
-                                        <td onClick={() => {
-                                            history.push({pathname: '/ProfileMgmtPage/OrderStatusDetail/' + data.id, 
-                                            state: {orderId: data.id}})}}>{data.id}</td>
+                                        <td>{
+                                                data
+                                                    .orderDate
+                                                    .split('T')[0]
+                                            }</td>
+                                        <td
+                                            onClick={() => {
+                                                history.push({
+                                                    pathname: '/ProfileMgmtPage/OrderStatusDetail/' + data.id,
+                                                    state: {
+                                                        orderId: data.id
+                                                    }
+                                                })
+                                            }}>{data.id}</td>
                                         <td>
-                                            <img className="w-14 h-20 float-left" alt={data.repProdImg} src={data.repProdImg}/>
+                                            <img
+                                                className="w-14 h-20 float-left"
+                                                alt={data.repProdImg}
+                                                src={data.repProdImg}/>
                                             <div className='mt-7'>
                                                 {
-                                                    data.totalSaleQty === 1 ? data.repProdName : data.repProdName + " 외 " + (data.totalSaleQty - 1) + "건"
+                                                    data.totalSaleQty === 1
+                                                        ? data.repProdName
+                                                        : data.repProdName + " 외 " + (
+                                                            data.totalSaleQty - 1
+                                                        ) + "건"
                                                 }
                                             </div>
                                         </td>

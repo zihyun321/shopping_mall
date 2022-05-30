@@ -31,19 +31,27 @@ const SearchAddressModal = (props) => {
 
     const onComplete = (data) => {
         let fullAddress = data.address;
-        let extraAddress = ''; 
+        let extraAddress = '';
 
         if (data.addressType === 'R') {
             if (data.bname !== '') {
-              extraAddress += data.bname;
+                extraAddress += data.bname;
             }
             if (data.buildingName !== '') {
-              extraAddress += (extraAddress !== '' ? `, ${data.buildingName}` : data.buildingName);
+                extraAddress += (
+                    extraAddress !== ''
+                        ? `, ${data.buildingName}`
+                        : data.buildingName
+                );
             }
-            fullAddress += (extraAddress !== '' ? ` (${extraAddress})` : '');
-          }
-      
-          console.log(fullAddress);  // e.g. '서울 성동구 왕십리로2길 20 (성수동1가)'
+            fullAddress += (
+                extraAddress !== ''
+                    ? ` (${extraAddress})`
+                    : ''
+            );
+        }
+
+        console.log(fullAddress); // e.g. '서울 성동구 왕십리로2길 20 (성수동1가)'
     }
 
     return (
@@ -60,13 +68,12 @@ const SearchAddressModal = (props) => {
                         class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"
                         aria-hidden="true"></div>
                     <span
-                    
                         class="hidden sm:inline-block sm:align-middle sm:h-screen"
                         aria-hidden="true">&#8203;</span>
                     <div
                         class="relative inline-block align-bottom bg-white text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
                         <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
-                            
+
                             <div class="sm:flex sm:items-start">
                                 <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
                                     <div class="mt-2">
@@ -74,7 +81,7 @@ const SearchAddressModal = (props) => {
                                     </div>
                                 </div>
                             </div>
-                        </div>                        
+                        </div>
                     </div>
                 </div>
             </div>

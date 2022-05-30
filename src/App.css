@@ -1,17 +1,17 @@
 .App {
-  text-align: center;
-  font-family: 'NaBaRegular';
+    text-align: center;
+    font-family: 'NaBaRegular';
 }
 
 .App-logo {
-  height: 40vmin;
-  pointer-events: none;
+    height: 40vmin;
+    pointer-events: none;
 }
 
 @media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+    .App-logo {
+        animation: App-logo-spin infinite 20s linear;
+    }
 }
 
 /* .App-header {
@@ -26,16 +26,16 @@
 } */
 
 .App-link {
-  color: #61dafb;
+    color: #61dafb;
 }
 
 @keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
 }
 
 /**
@@ -43,46 +43,46 @@
 ***/
 
 @font-face {
-  font-family: "BebasNeue";
-  src: url('./fonts/BebasNeue-Regular.ttf');
+    font-family: "BebasNeue";
+    src: url("./fonts/BebasNeue-Regular.ttf");
 }
 
 @font-face {
-  font-family: "DancingScript";
-  src: url('./fonts/DancingScript-VariableFont_wght.ttf');
+    font-family: "DancingScript";
+    src: url("./fonts/DancingScript-VariableFont_wght.ttf");
 }
 
 @font-face {
-  font-family: "EBGaramond";
-  src: url('./fonts/EBGaramond-VariableFont_wght.ttf');
+    font-family: "EBGaramond";
+    src: url("./fonts/EBGaramond-VariableFont_wght.ttf");
 }
 
 @font-face {
-  font-family: "NaBaRegular";
-  src: url('./fonts/NanumBarunGothic.otf');
+    font-family: "NaBaRegular";
+    src: url("./fonts/NanumBarunGothic.otf");
 }
 
 @font-face {
-  font-family: "NaBaBold";
-  src: url('./fonts/NanumBarunGothicBold.otf');
+    font-family: "NaBaBold";
+    src: url("./fonts/NanumBarunGothicBold.otf");
 }
 
 @font-face {
-  font-family: "NaBaLight";
-  src: url('./fonts/NanumBarunGothicLight.otf');
+    font-family: "NaBaLight";
+    src: url("./fonts/NanumBarunGothicLight.otf");
 }
 
 @font-face {
-  font-family: "NaBaUltraLight";
-  src: url('./fonts/NanumBarunGothicUltraLight.otf');
+    font-family: "NaBaUltraLight";
+    src: url("./fonts/NanumBarunGothicUltraLight.otf");
 }
 
 @font-face {
-  font-family: "Praise";
-  src: url('./fonts/Praise-Regular.ttf');
+    font-family: "Praise";
+    src: url("./fonts/Praise-Regular.ttf");
 }
 
 @font-face {
-  font-family: "Shizuru";
-  src: url('./fonts/Shizuru-Regular.ttf');
+    font-family: "Shizuru";
+    src: url("./fonts/Shizuru-Regular.ttf");
 }

@@ -20,10 +20,10 @@ const connection = mysql.createPool({
 });
 
 const pool = mysqlPromise.createPool({
-    host: process.env.DB_HOST, 
-    port: process.env.SERVER_PORT, 
-    user: process.env.DB_USER, 
-    password: process.env.DB_PASSWORD, 
+    host: process.env.DB_HOST,
+    port: process.env.SERVER_PORT,
+    user: process.env.DB_USER,
+    password: process.env.DB_PASSWORD,
     database: process.env.DB_NAME,
     waitForConnections: true,
     connectionLimit: 10,
@@ -33,12 +33,12 @@ const pool = mysqlPromise.createPool({
 });
 
 /**
- * 
- * @param {*} req 
+ *
+ * @param {*} req
  * @param {*} res
  * @description
  * 1. Review 생성
- * 2. 해당하는 orderItem 플래그 필드 업데이트 (hasReview) 
+ * 2. 해당하는 orderItem 플래그 필드 업데이트 (hasReview)
  */
 async function createReview(req, res) {
 
@@ -65,30 +65,19 @@ async function createReview(req, res) {
 
         console.log('insertReviewSqlResult: ', insertReviewSqlResult);
 
-        return res.json({
-            success: true
-        })
+        return res.json({success: true})
 
     } catch (err) {
         console.log('에러! ', err);
         await conn.rollback(); // ROLLBACK
         console.log('Query Error');
 
-        return res.json({
-            success: false,
-            errorCode: err
-        })
-    } finally {
-        
-    }
+        return res.json({success: false, errorCode: err})
+    } finally {}
 
-    // connection.query(sql, [reviewInfo], (error, rows, field) => {
-    //     if (error) {
-    //         throw error
-    //     } else {
-    //         return res.json({success: true})
-    //     }
-    // })
+    // connection.query(sql, [reviewInfo], (error, rows, field) => {     if (error)
+    // {         throw error     } else {         return res.json({success: true})
+    // } })
 }
 
 module.exports.createReview = createReview;
@@ -98,7 +87,8 @@ exports.getReviewList = (req, res) => {
     console.log('req.body: ', req.body);
     const userInfo = req.body;
     let sql = ' SELECT review.id, review.content, review.createdDate, review.rate ';
-    sql += ' , item.id, product.name, product.category, product.size, product.color, product.imgUrl';
+    sql += ' , item.id, product.name, product.category, product.size, product.color, produ' +
+            'ct.imgUrl';
     sql += ' FROM review ';
     sql += ' JOIN orderItem as item on item.id = review.orderItemId ';
     sql += ' JOIN product on product.id = item.productId ';

@@ -8,10 +8,10 @@ const mysql = require('mysql2');
 
 // DB 연결시작
 const connection = mysql.createPool({
-    host: process.env.DB_HOST, 
-    port: process.env.SERVER_PORT, 
-    user: process.env.DB_USER, 
-    password: process.env.DB_PASSWORD, 
+    host: process.env.DB_HOST,
+    port: process.env.SERVER_PORT,
+    user: process.env.DB_USER,
+    password: process.env.DB_PASSWORD,
     database: process.env.DB_NAME,
     waitForConnections: true,
     connectionLimit: 10,
@@ -20,52 +20,47 @@ const connection = mysql.createPool({
 });
 
 exports.createOrderItem = (req, res) => {
-    const insertSql = 'INSERT INTO orderItem (orderId, productId, orderQuantity, customerId, orderPrice, orderStatus) VALUES ? ';
+    const insertSql = 'INSERT INTO orderItem (orderId, productId, orderQuantity, customerId, orderPri' +
+            'ce, orderStatus) VALUES ? ';
     const orderItems = [];
     console.log('req.body: ', req.body);
 
-    req.body.forEach(item => {
-        let orderItem = [item.orderId, item.productId, item.orderQuantity, item.customerId, item.orderPrice, item.orderStatus];
-        orderItems.push(orderItem);
-    });
+    req
+        .body
+        .forEach(item => {
+            let orderItem = [
+                item.orderId,
+                item.productId,
+                item.orderQuantity,
+                item.customerId,
+                item.orderPrice,
+                item.orderStatus
+            ];
+            orderItems.push(orderItem);
+        });
     console.log('orderItems: ', orderItems);
     connection.query(insertSql, [orderItems], (error, rows, fields) => {
         if (error) {
             throw error
-        }
-        else {
-            return res.json({
-                success: true
-            })
+        } else {
+            return res.json({success: true})
         }
     })
 
 }
 
-// exports.getOrder = (req, res) => {
-//     console.log('==== orderItem ctrl.js getOrderItem');
-//     let userId = req.body.id;
-//     console.log('userId: ', userId);
-
-//     let sql = ' SELECT item.id, item.orderQuantity, item.orderStatus, item.deliveryStatus, item.orderPrice ';
-//     sql += ' ,order.orderDate, order.id, p.name, p.price, p.imgUrl ';
-//     sql += ' FROM orderItem as item                         ';
-//     sql += ' Join product as p on p.id = item.productId     ';
-//     sql += ' Join `order` on order.id = item.orderId        ';
-//     sql += ' Where item.customerId = ?                      ';
-//     // sql += ' GROUP BY order.id                              ';
- 
-//     connection.query(sql, [userId], (error, rows, fields) => {
-//         if (error) {
-//             throw error
-//         } else {
-//             return res.json({
-//                 success: true,
-//                 result: rows
-//             })
-//         }
-//     })
-// }
+// exports.getOrder = (req, res) => {     console.log('==== orderItem ctrl.js
+// getOrderItem');     let userId = req.body.id;     console.log('userId: ',
+// userId);     let sql = ' SELECT item.id, item.orderQuantity,
+// item.orderStatus, item.deliveryStatus, item.orderPrice ';     sql += '
+// ,order.orderDate, order.id, p.name, p.price, p.imgUrl ';     sql += ' FROM
+// orderItem as item                         ';     sql += ' Join product as p
+// on p.id = item.productId     ';     sql += ' Join `order` on order.id =
+// item.orderId        ';     sql += ' Where item.customerId = ?
+// ';      sql += ' GROUP BY order.id                              ';
+// connection.query(sql, [userId], (error, rows, fields) => {         if (error)
+// {             throw error         } else {             return res.json({
+// success: true,                 result: rows             })         }     }) }
 
 exports.getOrderItem = (req, res) => {
 
@@ -74,36 +69,35 @@ exports.getOrderItem = (req, res) => {
     console.log('orderInfo: ', orderInfo);
     console.log('orderInfo.orderId: ', orderInfo.orderId);
     console.log('orderInfo.orderStatus: ', orderInfo.orderStatus);
-    // let orderStatus = req.body.orderStatus;
-    // console.log('orderId: ', orderId);
+    // let orderStatus = req.body.orderStatus; console.log('orderId: ', orderId);
     // console.log('orderStatus: ', orderStatus);
 
-    let sql = ' SELECT item.id, item.orderQuantity, item.orderStatus, item.orderPrice, item.hasReview ';
-    sql += ' , order.orderDate, order.id, p.id, p.name, p.price, p.imgUrl, p.size, p.color ';
+    let sql = ' SELECT item.id, item.orderQuantity, item.orderStatus, item.orderPrice, item.h' +
+            'asReview ';
+    sql += ' , order.orderDate, order.id, p.id, p.name, p.price, p.imgUrl, p.size, p.color' +
+            ' ';
     sql += ' FROM orderItem as item                         ';
     sql += ' Join product as p on p.id = item.productId     ';
     sql += ' Join `order` on order.id = item.orderId        ';
     sql += ` Where item.orderId = '${orderInfo.orderId}'        `;
-    if (orderInfo.orderStatus !== 'All') sql += ` AND item.orderStatus = '${orderInfo.orderStatus}' ;  `;
-
-    // let sql = ' SELECT item.id, item.orderQuantity, item.orderStatus, item.orderPrice ';
-    // sql += ' ,order.orderDate, order.id, p.id, p.name, p.price, p.imgUrl ';
-    // sql += ' FROM orderItem as item                         ';
-    // sql += ' Join product as p on p.id = item.productId     ';
-    // sql += ' Join `order` on order.id = item.orderId        ';
-    // sql += ' Where order.id = ?                             ';
-    // if (orderInfo.orderStatus !== 'All') sql += ' AND item.orderStatus = ? ;                     ';
-    console.log('sql: ', sql); 
+    if (orderInfo.orderStatus !== 'All') 
+        sql += ` AND item.orderStatus = '${orderInfo.orderStatus}' ;  `;
     
+    // let sql = ' SELECT item.id, item.orderQuantity, item.orderStatus,
+    // item.orderPrice '; sql += ' ,order.orderDate, order.id, p.id, p.name,
+    // p.price, p.imgUrl '; sql += ' FROM orderItem as item
+    // '; sql += ' Join product as p on p.id = item.productId     '; sql += ' Join
+    // `order` on order.id = item.orderId        '; sql += ' Where order.id = ?
+    // '; if (orderInfo.orderStatus !== 'All') sql += ' AND item.orderStatus = ? ;
+    // ';
+    console.log('sql: ', sql);
+
     connection.query(sql, (error, rows, fields) => {
         console.log('=== connection 성공 ===')
         if (error) {
             throw error
         } else {
-            return res.json({
-                success: true,
-                result: rows
-            })
+            return res.json({success: true, result: rows})
         }
     })
 }
@@ -113,28 +107,26 @@ exports.getCancelOrderItem = (req, res) => {
     console.log('==== orderItem ctrl.js getCancelOrderItem');
     let orderInfo = req.body;
     console.log('orderInfo: ', orderInfo);
-    // let orderStatus = req.body.orderStatus;
-    // console.log('orderId: ', orderId);
+    // let orderStatus = req.body.orderStatus; console.log('orderId: ', orderId);
     // console.log('orderStatus: ', orderStatus);
 
-    let sql =  ` SELECT item.id, item.orderQuantity, item.orderStatus, item.orderPrice, item.orderId, item.orderCancelDate as 'cancelDate' `;
+    let sql = ` SELECT item.id, item.orderQuantity, item.orderStatus, item.orderPrice, item.orderId, item.orderCancelDate as 'cancelDate' `;
     sql += ' , order.orderDate, order.id, p.id, p.name, p.price, p.imgUrl ';
     sql += ' FROM orderItem as item                         ';
     sql += ' Join product as p on p.id = item.productId     ';
     sql += ' Join `order` on order.id = item.orderId        ';
     sql += ' Where item.customerId = ?                      ';
     sql += ' AND item.orderStatus = ? ;                     ';
-    // sql += ' ORDER BY item.id DESC             ';    // TODO orderBy 안됨
+    // sql += ' ORDER BY item.id DESC             ';     TODO orderBy 안됨
 
-    connection.query(sql, [orderInfo.customerId, orderInfo.orderStatus], (error, rows, fields) => {
+    connection.query(sql, [
+        orderInfo.customerId, orderInfo.orderStatus
+    ], (error, rows, fields) => {
         if (error) {
             throw error
         } else {
             console.log('=== rows: ', rows);
-            return res.json({
-                success: true,
-                result: rows
-            })
+            return res.json({success: true, result: rows})
         }
     })
 }
@@ -146,15 +138,12 @@ exports.updateOrderItem = (req, res) => {
     query += ` UPDATE orderItem SET orderStatus='주문취소', orderCancelDate='${orderItemInfo.orderCancelDate}' `;
     query += ` WHERE orderId='${orderItemInfo.orderId}' AND productId='${orderItemInfo.productId}' `;
     connection.query(query, (error, rows, field) => {
-        if (error) throw error;
+        if (error) 
+            throw error;
         else {
-            return res.json({
-                success: true
-            })
+            return res.json({success: true})
         }
     })
 }
 
-exports.deleteOrderItem = (req, res) => {
-
-}
+exports.deleteOrderItem = (req, res) => {}

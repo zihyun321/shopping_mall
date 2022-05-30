@@ -38,7 +38,7 @@ function Join() {
             setErrorMsgPassword("비밀번호를 확인해주세요.");
         else 
             setErrorMsgPassword("");
-    }
+        }
     
     const onPhoneHandler = (event) => {
         setPhone(event.currentTarget.value)
@@ -167,7 +167,7 @@ function Join() {
                             id="id"
                             type="text"
                             value={id}
-                            onChange={onIdHandler}/> 
+                            onChange={onIdHandler}/>
                     </div>
                     <div class="md:w-1/3 break-all ml-3"></div>
                 </div>
@@ -284,7 +284,7 @@ function Join() {
                             type="text"
                             placeholder='세부주소'
                             value={detailAddress}
-                            onChange={onDetailAddress}/> 
+                            onChange={onDetailAddress}/>
                     </div>
                     <div class="md:w-1/3 break-all ml-3"></div>
 

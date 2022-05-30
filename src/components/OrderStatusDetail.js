@@ -66,7 +66,9 @@ const OrderStatusDetail = (props) => {
 
     const getCurrentDate = (todayDateTime) => {
         let year = todayDateTime.getFullYear();
-        let month = ('0' + (todayDateTime.getMonth() + 1)).slice(-2);
+        let month = ('0' + (
+            todayDateTime.getMonth() + 1
+        )).slice(-2);
         let day = ('0' + todayDateTime.getDate()).slice(-2);
         let dateString = year + month + day;
         return dateString
@@ -127,9 +129,11 @@ const OrderStatusDetail = (props) => {
 
     // 기존 제품 재고 알기
     async function getProductStock(productId) {
-        const productInfo = [{
-            id: productId
-        }]
+        const productInfo = [
+            {
+                id: productId
+            }
+        ]
         const requestOptions = {
             method: "post",
             headers: {
@@ -150,10 +154,12 @@ const OrderStatusDetail = (props) => {
         console.log('==== handleUpdateProduct ===');
         console.log('productInfo: ', productInfo);
         console.log('orderQuantity: ', orderQuantity);
-        let updateProductInfo = [{
-            id: productInfo[0].id,
-            quantity: productInfo[0].quantity - orderQuantity
-        }]
+        let updateProductInfo = [
+            {
+                id: productInfo[0].id,
+                quantity: productInfo[0].quantity - orderQuantity
+            }
+        ]
         updateProduct(updateProductInfo).then((data) => {
             if (data.success) {
                 console.log('성공')
@@ -259,8 +265,8 @@ const OrderStatusDetail = (props) => {
                     ? <Spinner/>
                     : (
                         <div className='container'>
-                        <div className='text-2xl font-bold mb-2 float-left'>주문상세내역</div>
-                        <br/>
+                            <div className='text-2xl font-bold mb-2 float-left'>주문상세내역</div>
+                            <br/>
                             <table className='order-info'>
                                 <thead>
                                     <th>상품정보</th>
@@ -273,11 +279,22 @@ const OrderStatusDetail = (props) => {
                                         orderItemList.map((data) => {
                                             return (
                                                 <tr>
-                                                    <td style={{width: '450px'}}>
+                                                    <td
+                                                        style={{
+                                                            width: '450px'
+                                                        }}>
                                                         <img className="w-16 h-24 float-left" alt={data.imgUrl} src={data.imgUrl}/>
-                                                        <div className="mt-5" style={{width: '300px', marginLeft: '-100px'}}>
-                                                            <div> {data.name} </div>
-                                                            <div className='text-xs text-gray-400'>{data.size}     {data.color}</div>
+                                                        <div
+                                                            className="mt-5"
+                                                            style={{
+                                                                width: '300px',
+                                                                marginLeft: '-100px'
+                                                            }}>
+                                                            <div>
+                                                                {data.name}
+                                                            </div>
+                                                            <div className='text-xs text-gray-400'>{data.size}
+                                                                {data.color}</div>
                                                         </div>
                                                     </td>
                                                     <td>
@@ -289,20 +306,24 @@ const OrderStatusDetail = (props) => {
                                                     <td>
                                                         {data.orderStatus}
                                                         {
-                                                            data.orderStatus === '주문완료' ? (
-                                                                <div className='mt-3'>
-                                                                    {
-                                                                        !data.hasReview ? (
-                                                                            <button
-                                                                            onClick={() => clickCreateReviewBtn(data)}
-                                                                            class="shadow ml-3 bg-black hover:bg-gray-700 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4">리뷰쓰기</button>    
-                                                                        ) : null
-                                                                    }
-                                                                    <button
-                                                                        onClick={() => clickCancelOrderItemBtn(data)}
-                                                                        class="shadow ml-3 bg-black hover:bg-gray-700 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4">취소하기</button>
-                                                                </div>
-                                                            ) : null                                                            
+                                                            data.orderStatus === '주문완료'
+                                                                ? (
+                                                                    <div className='mt-3'>
+                                                                        {
+                                                                            !data.hasReview
+                                                                                ? (
+                                                                                    <button
+                                                                                        onClick={() => clickCreateReviewBtn(data)}
+                                                                                        class="shadow ml-3 bg-black hover:bg-gray-700 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4">리뷰쓰기</button>
+                                                                                )
+                                                                                : null
+                                                                        }
+                                                                        <button
+                                                                            onClick={() => clickCancelOrderItemBtn(data)}
+                                                                            class="shadow ml-3 bg-black hover:bg-gray-700 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4">취소하기</button>
+                                                                    </div>
+                                                                )
+                                                                : null
                                                         }
                                                     </td>
 

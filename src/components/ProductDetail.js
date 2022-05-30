@@ -13,10 +13,9 @@ function ProductDetailPage() {
     // location.state); const productImg = props.productImg;
     const productInfo = location.state.productInfo;
     console.log('productInfo: ', productInfo);
-    const productList = [productInfo];       // Order Component에서 활용하기 위한 list. 하지만 필요할지가 의문
+    const productList = [productInfo]; // Order Component에서 활용하기 위한 list. 하지만 필요할지가 의문
     console.log('productInfo: ', productInfo);
     console.log('productInfo: ', productInfo.price);
-   
 
     const [quantity, setQuantity] = useState(1);
     const [isCartModalOpen, setCartModalOpen] = useState(false);
@@ -30,7 +29,6 @@ function ProductDetailPage() {
         setUserInfo(loginStatus.currentUser.user);
     }, [loginStatus])
 
-
     const handleCount = (type) => {
         var count = quantity;
         if (type === 'minus') {
@@ -43,25 +41,25 @@ function ProductDetailPage() {
         setQuantity(count);
     }
 
-
     /**
      * 이거 왜 안되는지 확인!!!
      * 상품 디테일 페이지에서 입력한 수량이 왜 안넘어가는지 체크 !!!
      * => 문제해결: 해당 버튼 type이 submit으로 되어있었더니 오류가 났다. 이는 왜 그런지 확인
-     * + 또다른 오류: order page 에 product를 넘겨주는데, 원래는 전체 product를 넘겨주어서 array기 때문에 map을 사용했다. 
+     * + 또다른 오류: order page 에 product를 넘겨주는데, 원래는 전체 product를 넘겨주어서 array기 때문에 map을 사용했다.
      * 하지만 이 같은 경우 단일건이기 때문에 해당 사항을 수정해야한다.
      */
     const handleBuynowBtn = () => {
         let orderProductInfo = productList;
-        orderProductInfo[0].quantity = quantity;    // product 재고가 아닌, 고객이 선택한 수량 넣어줌
+        orderProductInfo[0].quantity = quantity; // product 재고가 아닌, 고객이 선택한 수량 넣어줌
         let paymentAmount = orderProductInfo[0].quantity * orderProductInfo[0].price;
         history.push({
-        pathname: "/Order",
-        state: {productList: orderProductInfo, paymentAmount: paymentAmount}
-          })
+            pathname: "/Order",
+            state: {
+                productList: orderProductInfo,
+                paymentAmount: paymentAmount
+            }
+        })
 
-
-  
     }
 
     const decrement = () => {
@@ -93,28 +91,26 @@ function ProductDetailPage() {
 
     const handleOpenCartModal = () => {
         console.log('창 닫기');
-        if (isUserLogin) setCartModalOpen(!isCartModalOpen);
+        if (isUserLogin) 
+            setCartModalOpen(!isCartModalOpen);
         else {
             alert('로그인 후 이용가능합니다.');
             history.push('/login');
-        }        
+        }
     }
 
     const clickCheckCartBtn = () => {
         console.log('clickCheckCartBtn 버튼 누름');
 
         // user db에 장바구니 데이터 넣기
-        addProductToCart().then(
-            (data) => {
-                if (data.success) {
-                    console.log('성공!!!!! ');
-                    // alert(data.msg);
-                    // window.location.href = '/';                                
-                } else {
-                    alert(data.msg);
-                }
-            } 
-        );
+        addProductToCart().then((data) => {
+            if (data.success) {
+                console.log('성공!!!!! ');
+                // alert(data.msg); window.location.href = '/';
+            } else {
+                alert(data.msg);
+            }
+        });
 
         handleOpenCartModal();
     }
@@ -127,7 +123,7 @@ function ProductDetailPage() {
         const createCartInfo = {
             customerId: userInfo.id,
             productId: productInfo.id,
-            quantity: quantity 
+            quantity: quantity
         }
 
         const requestOptions = {
@@ -138,12 +134,15 @@ function ProductDetailPage() {
             body: JSON.stringify(createCartInfo)
         };
 
-        const response = await fetch('http://localhost:3001/createCart', requestOptions);
+        const response = await fetch(
+            'http://localhost:3001/createCart',
+            requestOptions
+        );
         const data = await response.json();
         console.log('response: ', response);
         console.log('data: ', data);
 
-        return data    
+        return data
     }
 
     return (
@@ -152,15 +151,17 @@ function ProductDetailPage() {
                 <div class="flex-none w-80 relative">
                     <img
                         // className="w-80" 여기다가 style 넣으면 이미지 잘안뜸
-                        src={productInfo.imgUrl}
-                        alt=""
-                        class="absolute inset-0 w-full h-full object-cover"/>
+                        src={productInfo.imgUrl} alt="" class="absolute inset-0 w-full h-full object-cover"/>
                 </div>
 
                 <form class="flex-auto p-6">
                     <div class="flex flex-wrap">
                         <h1 class="flex-auto text-xl font-bold text-slate-900">
-                            {productInfo.name.toUpperCase()}
+                            {
+                                productInfo
+                                    .name
+                                    .toUpperCase()
+                            }
                         </h1>
                         <div class="text-lg font-semibold text-slate-500">
                             {productInfo.price}원
@@ -245,14 +246,11 @@ function ProductDetailPage() {
                     <div class="flex space-x-4 mb-6 text-sm font-medium">
                         <div class="flex-auto flex space-x-4">
                             <button
-                             onClick={() => {
-                                handleBuynowBtn()
-                            //      history.push({
-                            //     pathname: "/Order",
-                            //     state: {productList: productList, paymentAmount: productInfo.price}
-                            //   })
-                            }
-                            } 
+                                onClick={() => {
+                                    handleBuynowBtn()
+                                    // history.push({     pathname: "/Order",     state: {productList: productList,
+                                    // paymentAmount: productInfo.price}   })
+                                }}
                                 class="h-10 px-6 font-semibold hover:text-teal-100 bg-black text-white"
                                 type="button">
                                 Buy now
@@ -276,15 +274,17 @@ function ProductDetailPage() {
                             </svg>
                         </button>
                     </div>
-                    <p class="text-sm text-slate-700">
-                    </p>
+                    <p class="text-sm text-slate-700"></p>
                 </form>
             </div>
 
             {
                 isCartModalOpen && isUserLogin && (
                     <div>
-                        <AddToCartModal productInfo={productInfo} close={handleOpenCartModal} quantity={quantity}/>
+                        <AddToCartModal
+                            productInfo={productInfo}
+                            close={handleOpenCartModal}
+                            quantity={quantity}/>
                     </div>
                 )
             }

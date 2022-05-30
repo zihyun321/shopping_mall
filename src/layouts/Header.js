@@ -24,18 +24,12 @@ const headerStyle = {
     fontSize: '27px'
 };
 
-
-
-
-
-
 function LoggedinHeader() {
     const [isProfileModalOpen, setProfileModalOpen] = useState(false);
 
     const history = useHistory();
     const dispatch = useDispatch();
 
-    
     const handleClickProfile = () => {
         setProfileModalOpen(!isProfileModalOpen);
     }
@@ -48,7 +42,9 @@ function LoggedinHeader() {
         // history.push('/OrderStatus');
         history.push({
             pathname: '/ProfileMgmtPage/OrderStatus',
-            state: {selectedTitle: '주문조회'}
+            state: {
+                selectedTitle: '주문조회'
+            }
         });
 
         handleClickProfile();
@@ -57,20 +53,19 @@ function LoggedinHeader() {
     const handleClickMyPage = () => {
         history.push({
             pathname: '/ProfileMgmtPage/MyInfo',
-            state: {selectedTitle: '회원정보'}
+            state: {
+                selectedTitle: '회원정보'
+            }
         });
 
         handleClickProfile();
     }
 
-    
-
     const handleClickLogout = () => {
-        dispatch({type: 'LOG_OUT', user: ''});        
+        dispatch({type: 'LOG_OUT', user: ''});
         window.location.href = '/';
-        handleClickProfile();        
+        handleClickProfile();
     }
-
 
     return (
         <div>
@@ -104,14 +99,11 @@ function LoggedinHeader() {
             {
                 isProfileModalOpen
                     ? (
-                        // Dropdown menu, show/hide based on menu state.
-
-                        //         Entering: "transition ease-out duration-100"
-                        //         From: "transform opacity-0 scale-95"
-                        //         To: "transform opacity-100 scale-100"
-                        //         Leaving: "transition ease-in duration-75"
-                        //         From: "transform opacity-100 scale-100"
-                        //         To: "transform opacity-0 scale-95"
+                        // Dropdown menu, show/hide based on menu state.         Entering: "transition
+                        // ease-out duration-100"         From: "transform opacity-0 scale-95"
+                        // To: "transform opacity-100 scale-100"         Leaving: "transition ease-in
+                        // duration-75"         From: "transform opacity-100 scale-100"         To:
+                        // "transform opacity-0 scale-95"
                         <div>
                             <div
                                 class="z-10	origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none"
@@ -155,15 +147,15 @@ function LoggedOutHeader() {
     function handleClickLogin() {
         window.location.href = '/login';
     }
-    
+
     function handleClickJoin() {
         window.location.href = '/join';
     }
 
-    function  handleClickCart() {
+    function handleClickCart() {
         window.location.href = '/login';
     }
-    
+
     return (
         <div>
             <div
@@ -203,7 +195,7 @@ function Header() {
     const [userInfo, setUserInfo] = useState({});
     const [isUserLogin, setIsUserLogin] = useState(false);
     const [isProfileModalOpen, setProfileModalOpen] = useState(false);
-    
+
     const loginStatus = useSelector((state) => state);
 
     useEffect(() => {
@@ -212,7 +204,6 @@ function Header() {
     }, [loginStatus])
 
     const history = useHistory();
-
 
     /**
      * - React Hook을 사용할 경우 => 메서드명 맨앞 글자가 대문자
@@ -298,9 +289,12 @@ function Header() {
                         <div
                             class="flex-1 flex items-center justify-center sm:items-stretch sm:justify-start">
                             <div class="flex-shrink-0 flex items-center">
-                                <p class="my-0	cursor-pointer" 
-                                onClick={()=>{history.push('/')}}
-                                style={headerStyle}>Shopping Mall</p>
+                                <p
+                                    class="my-0	cursor-pointer"
+                                    onClick={() => {
+                                        history.push('/')
+                                    }}
+                                    style={headerStyle}>Shopping Mall</p>
                             </div>
                         </div>
 
@@ -309,7 +303,6 @@ function Header() {
                                 ? <LoggedinHeader/>
                                 : <LoggedOutHeader/>
                         }
-
 
                     </div>
                 </div>
@@ -401,32 +394,41 @@ function Header() {
                                     {/* <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" --> */}
                                     <a
                                         // href="/ProductList/Outer"
-                                        onClick={() => {history.push('/ProductList/Outer')}}
-                                        style={menu}
-                                        class="text-white hover:text-teal-100 px-3 py-2 rounded-md text-sm font-medium"
-                                        aria-current="page">Outer</a>
+                                        onClick={() => {
+                                            history.push('/ProductList/Outer')
+                                        }} style={menu} class="text-white hover:text-teal-100 px-3 py-2 rounded-md text-sm font-medium" aria-current="page">Outer</a>
                                     <a
-                                        onClick={() => {history.push('/ProductList/Top')}}
+                                        onClick={() => {
+                                            history.push('/ProductList/Top')
+                                        }}
                                         style={menu}
                                         class="text-white hover:text-teal-100 px-3 py-2 rounded-md text-sm font-medium"
                                         aria-current="page">Top</a>
 
                                     <a
-                                        onClick={() => {history.push('/ProductList/Bottom')}}
+                                        onClick={() => {
+                                            history.push('/ProductList/Bottom')
+                                        }}
                                         style={menu}
                                         class="text-white hover:text-teal-100 px-3 py-2 rounded-md text-sm font-medium">Bottom</a>
 
                                     <a
-                                        onClick={() => {history.push('/ProductList/Shoes')}}
+                                        onClick={() => {
+                                            history.push('/ProductList/Shoes')
+                                        }}
                                         style={menu}
                                         class="text-white hover:text-teal-100 px-3 py-2 rounded-md text-sm font-medium">Shoes</a>
                                     <a
-                                        onClick={() => {history.push('/ProductList/Bag')}}
+                                        onClick={() => {
+                                            history.push('/ProductList/Bag')
+                                        }}
                                         style={menu}
                                         class="text-white hover:text-teal-100 px-3 py-2 rounded-md text-sm font-medium">Bag</a>
 
                                     <a
-                                        onClick={() => {history.push('/ProductList/Acc')}}
+                                        onClick={() => {
+                                            history.push('/ProductList/Acc')
+                                        }}
                                         style={menu}
                                         class="text-white hover:text-teal-100 px-3 py-2 rounded-md text-sm font-medium">Acc</a>
                                 </div>

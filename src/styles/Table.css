@@ -38,7 +38,7 @@ table {
 
 .shipping-info > tbody > tr > td {
     width: 730px;
-    
+
 }
 
 table > thead {
@@ -52,7 +52,7 @@ table > thead {
 
 }
 .order-info > tbody > tr > td > a > img {
-    display: block;    
+    display: block;
     float: left;
     margin-right: 20px;
 }
@@ -72,11 +72,10 @@ table > thead {
     font-size: 14px;
 }
 
-
 input {
     height: 40px;
     background-color: #f2f2f2;
-    
+
 }
 
 .payment-info {
@@ -97,7 +96,7 @@ input {
     height: 50px;
 }
 
-.user-info > tbody > tr > th{
+.user-info > tbody > tr > th {
     width: 30%;
     padding: 1px;
 }

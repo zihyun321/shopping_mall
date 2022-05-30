@@ -4,7 +4,7 @@ import {Divider} from 'antd';
 // import ShoppingCartData from '../components/ShoppingCartData';
 
 export default function ShoppingCartPage() {
-    return(
+    return (
         <div className='mt-10'>
             <div className='text-3xl'>SHOPPING CART</div>
             <Divider/>

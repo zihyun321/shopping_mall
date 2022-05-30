@@ -1,16 +1,15 @@
 import React, {useEffect, useState} from 'react';
-import { useSelector } from 'react-redux';
+import {useSelector} from 'react-redux';
 import styled from 'styled-components';
 
 const imgStyle = {
-    // width: "640px",
-    // height: "600px"
+    // width: "640px", height: "600px"
 }
 
 function Home(props) {
     return (
         <div class="w-screen">
-            
+
             <div class="float-left">
                 <img src="image/carousel1.jpg"/>
             </div>
@@ -21,7 +20,6 @@ function Home(props) {
                 <img src="image/carousel3.jpg"/>
             </div>
 
-
             {/* <div
                 id="carouselExampleSlidesOnly"
                 class="carousel slide"
@@ -31,10 +29,10 @@ function Home(props) {
                         <img src="image/acc6.jpg" class="d-block w-100" alt="..." style={imgStyle}/>
                     </div>
                 </div>
-            </div> */}
+            </div> */
+            }
         </div>
     )
 }
-
 
 export default Home;

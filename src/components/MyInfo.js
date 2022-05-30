@@ -40,9 +40,7 @@ const MyInfo = () => {
         setPhone(event.currentTarget.value)
     }
 
-    const clickChangeInfo = () => {
-        
-    }
+    const clickChangeInfo = () => {}
 
     const handleOpenPost = () => {
         console.log('=== handleOpenPost ===');

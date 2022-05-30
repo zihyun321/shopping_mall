@@ -10,10 +10,20 @@ function Carousel(props) {
     const slideLength = dataSlider.length;
 
     const moveSlide = (direction) => {
-        if (direction === 'prev') setCurrent(current === 0 ? slideLength - 1 : current - 1);
-        else setCurrent(current === slideLength - 1 ? 0 : current + 1);
-    }
-
+        if (direction === 'prev') 
+            setCurrent(
+                current === 0
+                    ? slideLength - 1
+                    : current - 1
+            );
+        else 
+            setCurrent(
+                current === slideLength - 1
+                    ? 0
+                    : current + 1
+            );
+        }
+    
     if (!Array.isArray(dataSlider) || dataSlider.lengh <= 0) {
         return null;
     }
@@ -22,26 +32,21 @@ function Carousel(props) {
         <div>
             <div className='container-slider'>
                 <LeftOutlined className='left-arrow' onClick={() => moveSlide('prev')}/>
-                <RightOutlined className='right-arrow' onClick={() => moveSlide('next')}/>
-
-            {
-                dataSlider && 
-                dataSlider.map((data, index) => {
-                    return (
-                        <div className={index === current ? 'slide active' : 'slide'} key={index}>
-                            {
-                                index === current &&
-                                <img className='img' src={data.imgUrl} alt="slide img"/>
-                            }
-                        </div>
-                    )
-                })
-            }
+                <RightOutlined className='right-arrow' onClick={() => moveSlide('next')}/> {
+                    dataSlider && dataSlider.map((data, index) => {
+                        return (
+                            <div
+                                className={index === current
+                                    ? 'slide active'
+                                    : 'slide'}
+                                key={index}>
+                                {index === current && <img className='img' src={data.imgUrl} alt="slide img"/>}
+                            </div>
+                        )
+                    })
+                }
             </div>
         </div>
-        
-
-
 
     )
 }

@@ -3,7 +3,7 @@ import Join from '../components/Join';
 import {Divider} from 'antd';
 
 export default function JoinPage() {
-    return(
+    return (
         <div className='mt-10 '>
             <div className='text-3xl'>SIGN UP</div>
             <Divider/>

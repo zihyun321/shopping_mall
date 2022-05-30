@@ -157,5 +157,5 @@ exports.updateUserInfo = (req, res) => {
 // exports.getUserInfo = (req, res) => {     const userInfo = req.body;     var
 // id = req.body.id;     var sql = 'SELECT * FROM customer WHERE id = ? ';
 // connection.query(sql, [id], (error, rows, fields) => {         if (error)
-// throw error;         else {             return res.send(rows);         }
-// }); }
+// throw error;         else {             return res.send(rows);         } });
+// }

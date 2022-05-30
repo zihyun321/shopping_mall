@@ -2,12 +2,10 @@ import React from 'react'
 import DaumPostcode from 'react-daum-postcode';
 
 const SearchAddress = () => {
-  return (
-    <div>
+    return (<div>
 
         <DaumPostcode/>
-    </div>
-  )
+    </div>)
 }
 
 export default SearchAddress

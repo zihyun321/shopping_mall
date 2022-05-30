@@ -24,9 +24,11 @@ const OrderCancel = () => {
                     console.log('order 정보 가져오기');
                     console.log('data.result: ', data.result);
                     setOrderItemList(data.result);
-                    data.result.map((data) => {
-                      console.log('data: ', data);
-                    })
+                    data
+                        .result
+                        .map((data) => {
+                            console.log('data: ', data);
+                        })
                 }
             })
             .then(setLoading(false))
@@ -61,37 +63,41 @@ const OrderCancel = () => {
                 loading && orderItemList.length == 0
                     ? <Spinner/>
                     : (
-                    <div className='container'>
-                      <div className='text-2xl font-bold mb-2 float-left'>취소내역</div>
-                      <br/>
-                      <table>
-                        <thead>
-                          <th>주문번호</th>
-                          <th>취소일</th>
-                          <th>주문상태</th>
-                          <th>취소금액</th>
-                        </thead>
-                        <tbody>
-                          {
-                            orderItemList.map((data) => {
-                              return (
-                                <tr key={data.id}>
-                                  <td>{data.orderId}</td>
-                                  <td>
+                        <div className='container'>
+                            <div className='text-2xl font-bold mb-2 float-left'>취소내역</div>
+                            <br/>
+                            <table>
+                                <thead>
+                                    <th>주문번호</th>
+                                    <th>취소일</th>
+                                    <th>주문상태</th>
+                                    <th>취소금액</th>
+                                </thead>
+                                <tbody>
                                     {
-                                      !!data.cancelDate ? 
-                                      data.cancelDate.split('T')[0] : null
+                                        orderItemList.map((data) => {
+                                            return (
+                                                <tr key={data.id}>
+                                                    <td>{data.orderId}</td>
+                                                    <td>
+                                                        {
+                                                            !!data.cancelDate
+                                                                ? data
+                                                                    .cancelDate
+                                                                    .split('T')[0]
+                                                                : null
+                                                        }
+                                                    </td>
+                                                    <td>{data.orderStatus}</td>
+                                                    <td>{data.orderQuantity * data.orderPrice}</td>
+                                                </tr>
+                                            )
+                                        })
                                     }
-                                  </td>
-                                  <td>{data.orderStatus}</td>
-                                  <td>{data.orderQuantity * data.orderPrice}</td>
-                                </tr>
-                              )
-                            })
-                          }
-                        </tbody>
-                      </table>
-                    </div>)
+                                </tbody>
+                            </table>
+                        </div>
+                    )
             }
         </div>
     )

@@ -3,7 +3,7 @@ import Order from '../components/Order';
 import {Divider} from 'antd';
 
 export default function OrderPage() {
-    return(
+    return (
         <div className='mt-10'>
             <div className='text-3xl'>CHECK OUT</div>
             <Divider/>

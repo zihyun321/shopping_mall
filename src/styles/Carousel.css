@@ -20,22 +20,21 @@
     transition-duration: 1s;
 }
 
-.img {
-}
+.img {}
 
 .left-arrow {
-    position: absolute;   
+    position: absolute;
     top: 50%;
     /* left: 32px; */
     font-size: 3rem;
     user-select: none;
     z-index: 1;
-    opacity: 0.8; 
-    
+    opacity: 0.8;
+
 }
 
 .right-arrow {
-    position: absolute;   
+    position: absolute;
     top: 50%;
     right: 10px;
     font-size: 3rem;

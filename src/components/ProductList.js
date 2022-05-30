@@ -33,19 +33,14 @@ function ProductList(props) {
     // useEffect 뒤에 ,[] 붙이면 한번만 실행된다.
     useEffect(() => {
         setLoading(true);
-        // getProductList().then(
-        //     (data) => {
-        //         console.log('data: ', data);
-        //         // console.log('json: ', json);
-        //         // json.map(data => setTestData(json))
-        //         // // , tempData.push(data));
-        //         // console.log('testData: ', testData);
-        //         // console.log('testData: ', testData);
-        //     }
-        // );
+        // getProductList().then(     (data) => {         console.log('data: ', data);
+        // console.log('json: ', json);          json.map(data => setTestData(json)) ,
+        // tempData.push(data));          console.log('testData: ', testData);
+        // console.log('testData: ', testData);     } );
         const productCategory = {
             category
-        };        fetch("http://localhost:3001/getProductList", {
+        };
+        fetch("http://localhost:3001/getProductList", {
             method: "POST", //통신방법
             headers: {
                 "content-type": "application/json"
@@ -57,8 +52,7 @@ function ProductList(props) {
                 console.log('json: ', json);
                 json.map(data => setProductList(json))
                 setLoading(false);
-                // , tempData.push(data));
-                // console.log('testData: ', testData);
+                // , tempData.push(data)); console.log('testData: ', testData);
             })
     }, [props.category]);
 
@@ -72,22 +66,23 @@ function ProductList(props) {
             body: JSON.stringify(category)
         };
 
-        const response = await fetch('http://localhost:3001/getProductList', requestOptions);
+        const response = await fetch(
+            'http://localhost:3001/getProductList',
+            requestOptions
+        );
         const data = await response.json();
         console.log('data: ', data);
         return data
     }
-
-
 
     return (
         <div>
             {/* <NavLink to="/ProductDetailPage">detail page</NavLink> */}
             <ul class="inline-grid grid-cols-3 gap-4">
                 {
-                    loading ? <Spinner/> :
-                    (
-                        productList.map(data => {
+                    loading
+                        ? <Spinner/>
+                        : (productList.map(data => {
                             return (
                                 <div key={data.id}>
                                     {/* <Link to={"/ProductDetail/" + data.id} state={{data: data}}> */}
@@ -100,7 +95,7 @@ function ProductList(props) {
                                         }}>
                                         <img src={data.imgUrl} alt="Lights" style={imgStyle}/>
                                     </Link>
-    
+
                                     {/* <img
                                         // onClick={() => {history.push("/ProductDetailPage")}}
                                         src={data.imgUrl} class="d-block w-100" alt="..." style={imgStyle}/> */
@@ -115,10 +110,9 @@ function ProductList(props) {
                                             : null
                                     }
                                 </div>
-    
+
                             )
-                        })
-                    )
+                        }))
                 }
 
                 {/* {
@@ -147,7 +141,8 @@ function ProductList(props) {
 
                         )
                     })
-                } */}
+                } */
+                }
             </ul>
 
             {/* <ul

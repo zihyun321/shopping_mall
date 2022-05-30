@@ -33,10 +33,10 @@ class App extends React.Component {
                             return (<ProductDetailPage/>)
                         }}/>
                     <Switch>
-                        <Route exact="exact" path="/" component={props => <HomePage {...props}/>}/> 
+                        <Route exact="exact" path="/" component={props => <HomePage {...props}/>}/>
                         <Route path="/login" component={props => <LoginPage {...props}/>}/>
                         <Route path="/join" component={JoinPage}/>
-                        <Route path="/ProductList/:category" component={ProductListPage} />
+                        <Route path="/ProductList/:category" component={ProductListPage}/>
                         <Route exact="exact" path='/ShoppingCart' component={ShoppingCartPage}/>
                         <Route exact="exact" path='/Order' component={OrderPage}/>
                         <Route path='/OrderStatus' component={OrderStatusPage}/>
