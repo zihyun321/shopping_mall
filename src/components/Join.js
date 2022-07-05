@@ -3,11 +3,22 @@
 import React, {useState} from 'react';
 import SearchAddressModal from './modal/SearchAddressModal';
 import DaumPostcode from 'react-daum-postcode';
+import { FieldErrors, useForm } from "react-hook-form";
 
 function Join() {
-    const [name, setName] = useState("")
-    const [password, setPassword] = useState("")
-    const [confirmPassword, setConfirmPassword] = useState("")
+    const {register, watch, handleSubmit, formState: { errors }} = useForm({ mode: "onChange" });
+    console.log(watch());
+    const onValid = (data) => {
+        console.log('data: ', data);
+    };
+    
+    const onInvalid = (errors) => {
+        console.log('errors: ', errors);
+    }
+
+    // const [name, setName] = useState("")
+    // const [password, setPassword] = useState("")
+    // const [confirmPassword, setConfirmPassword] = useState("")
     const [phone, setPhone] = useState("");
     const [id, setId] = useState("");
     const [gender, setGender] = useState("F");
@@ -24,29 +35,29 @@ function Join() {
         setId(event.currentTarget.value)
     }
 
-    const onNameHandler = (event) => {
-        setName(event.currentTarget.value)
-    }
+    // const onNameHandler = (event) => {
+    //     setName(event.currentTarget.value)
+    // }
 
-    const onPasswordHandler = (event) => {
-        setPassword(event.currentTarget.value)
-    }
+    // const onPasswordHandler = (event) => {
+    //     setPassword(event.currentTarget.value)
+    // }
 
-    const onConfirmPasswordHandler = (event) => {
-        setConfirmPassword(event.currentTarget.value);
-        if (event.currentTarget.value !== password) 
-            setErrorMsgPassword("비밀번호를 확인해주세요.");
-        else 
-            setErrorMsgPassword("");
-        }
+    // // const onConfirmPasswordHandler = (event) => {
+    //     setConfirmPassword(event.currentTarget.value);
+    //     if (event.currentTarget.value !== password) 
+    //         setErrorMsgPassword("비밀번호를 확인해주세요.");
+    //     else 
+    //         setErrorMsgPassword("");
+    //     }
     
-    const onPhoneHandler = (event) => {
-        setPhone(event.currentTarget.value)
-    }
+    // const onPhoneHandler = (event) => {
+    //     setPhone(event.currentTarget.value)
+    // }
 
-    const onGenderHandler = (event) => {
-        setGender(event.currentTarget.value)
-    }
+    // const onGenderHandler = (event) => {
+    //     setGender(event.currentTarget.value)
+    // }
 
     const onDetailAddress = (event) => {
         setDetailAddress(event.currentTarget.value)
@@ -153,7 +164,7 @@ function Join() {
 
     return (
         <div class="w-7/12	mx-auto text-black mb-3">
-            <form>
+            <form onSubmit={handleSubmit(onValid, onInvalid)}>
                 <div class="md:flex md:items-center mb-6">
                     <div class="md:w-1/3">
                         <label class="block mr-4 md:text-right mb-1 md:mb-0 pr-4" htmlFor="id">
@@ -162,14 +173,18 @@ function Join() {
                     </div>
                     <div class="md:w-2/3">
                         <input
-                            required="required"
+                            {...register("id", {
+                                required: "아이디를 입력하세요",
+                            })}
+                            // required="required"
                             class="bg-gray-200 appearance-none border-2 border-gray-200  w-full py-2 px-4 leading-tight focus:outline-none focus:bg-white focus:border-black"
                             id="id"
                             type="text"
-                            value={id}
-                            onChange={onIdHandler}/>
+                            // value={id}
+                            // onChange={onIdHandler}
+                        />
                     </div>
-                    <div class="md:w-1/3 break-all ml-3"></div>
+                    <div class="md:w-1/3 break-all ml-3">{errors?.id?.message}</div>
                 </div>
                 <div class="md:flex md:items-center mb-6">
                     <div class="md:w-1/3">
@@ -177,16 +192,33 @@ function Join() {
                             비밀번호
                         </label>
                     </div>
+
+                    {/* <input
+                {...register("username", {
+                    required: "Username is required",
+                    minLength: {
+                      message: "The username should be longer than 5 chars.",
+                      value: 5,
+                    },
+                })}
+                type="text"
+                placeholder="Username"
+            /> */}
                     <div class="md:w-2/3">
                         <input
+                            {
+                                ...register("password", {
+                                required: "비밀번호를 입력하세요.",
+                                minLength: 4
+                            })}
                             class="bg-gray-200 appearance-none border-2 border-gray-200  w-full py-2 px-4 leading-tight focus:outline-none focus:bg-white focus:border-black"
                             id="password"
                             type="password"
-                            value={password}
-                            onChange={onPasswordHandler}
-                            placeholder="***********"/>
+                            // value={password}
+                            // onChange={onPasswordHandler}
+                            placeholder="***********"/> 
                     </div>
-                    <div class="md:w-1/3 break-all ml-3"></div>
+                    <div class="md:w-1/3 break-all ml-3"> {errors.password?.message} </div>
                 </div>
                 <div class="md:flex md:items-center mb-6">
                     <div class="md:w-1/3">
@@ -198,20 +230,25 @@ function Join() {
                     </div>
                     <div class="md:w-2/3">
                         <input
+                            {...register("confirmPassword", {
+                                required: "비밀번호를 확인하세요.",
+                                validate: (value) => value !== password || "입력한 Password와 같지 않습니다."
+                            })}
                             class="bg-gray-200 appearance-none border-2 border-gray-200  w-full py-2 px-4 leading-tight focus:outline-none focus:bg-white focus:border-black"
                             id="confirm-password"
                             type="password"
-                            value={confirmPassword}
-                            onChange={onConfirmPasswordHandler}
-                            placeholder="***********"/> {
-                            errorMsgPassword !== ""
-                                ? (<div class="text-red-600">{errorMsgPassword}</div>)
-                                : null
+                            // value={confirmPassword}
+                            // onChange={onConfirmPasswordHandler}
+                            placeholder="***********"/> 
+                            {
+                            // errorMsgPassword !== ""
+                            //     ? (<div class="text-red-600">{errorMsgPassword}</div>)
+                            //     : null
 
                         }
 
                     </div>
-                    <div class="md:w-1/3 break-all ml-3"></div>
+                    <div class="md:w-1/3 break-all ml-3"> {errors.confirmPassword?.message} </div>
                 </div>
                 <div class="md:flex md:items-center mb-6">
                     <div class="md:w-1/3">
@@ -221,13 +258,17 @@ function Join() {
                     </div>
                     <div class="md:w-2/3">
                         <input
+                            {...register("name", {
+                                required: "이름을 입력하세요.",
+                            })}
                             class="bg-gray-200 appearance-none border-2 border-gray-200  w-full py-2 px-4 leading-tight focus:outline-none focus:bg-white focus:border-black"
                             id="name"
                             placeholder="ex) 홍길동"
-                            value={name}
-                            onChange={onNameHandler}/>
+                            // value={name}
+                            // onChange={onNameHandler}
+                            />
                     </div>
-                    <div class="md:w-1/3 break-all ml-3"></div>
+                    <div class="md:w-1/3 break-all ml-3"> {errors?.name?.message} </div>
 
                 </div>
                 <div class="md:flex md:items-center mb-6">
@@ -238,11 +279,12 @@ function Join() {
                     </div>
                     <div class="md:w-2/3">
                         <input
+                            {...register("phone")}
                             class="bg-gray-200 appearance-none border-2 border-gray-200  w-full py-2 px-4 leading-tight focus:outline-none focus:bg-white focus:border-black"
                             id="phone"
                             type="text"
-                            value={phone}
-                            onChange={onPhoneHandler}
+                            // value={phone}
+                            // onChange={onPhoneHandler}
                             placeholder="010-0000-0000"/>
                     </div>
                     <div class="md:w-1/3 break-all ml-3"></div>
@@ -257,12 +299,14 @@ function Join() {
                     <div class="md:w-2/3">
                         <div className='mb-2'>
                             <input
+                                {...register("zoneCode")}
                                 class="bg-gray-200 appearance-none border-2 border-gray-200  w-32 float-left py-2 px-4 leading-tight focus:outline-none focus:bg-white focus:border-black"
                                 id="address"
                                 type="text"
                                 placeholder='우편번호'
-                                value={zoneCode}
-                                onChange={handleOpenPost}/>
+                                // value={zoneCode}
+                                onChange={handleOpenPost}
+                                />
                             <button
                                 className="w-20 inline-flex float-left border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
                                 type="button"
@@ -272,18 +316,20 @@ function Join() {
                         </div>
 
                         <input
+                            {...register("regionAddress")}
                             className="mb-1 mt-1 bg-gray-200 appearance-none border-2 border-gray-200  w-full py-2 px-4 leading-tight focus:outline-none focus:bg-white focus:border-black"
                             id="address"
                             type="text"
                             placeholder='지역주소'
-                            value={regionAddress}
+                            // value={regionAddress}
                             onChange={handleOpenPost}/>
                         <input
+                            {...register("detailAddress")}
                             class="bg-gray-200 appearance-none border-2 border-gray-200  w-full py-2 px-4 leading-tight focus:outline-none focus:bg-white focus:border-black"
                             id="address"
                             type="text"
                             placeholder='세부주소'
-                            value={detailAddress}
+                            // value={detailAddress}
                             onChange={onDetailAddress}/>
                     </div>
                     <div class="md:w-1/3 break-all ml-3"></div>
@@ -302,12 +348,13 @@ function Join() {
                             <div class="flex place-content-evenly">
                                 <div class="form-check">
                                     <input
+                                        {...register("gender")}
                                         class="form-check-input rounded-full h-4 w-4 border border-gray-300 bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
                                         type="radio"
-                                        name="female"
+                                        name="gender"
                                         value="F"
                                         checked={gender === 'F'}
-                                        onChange={onGenderHandler}
+                                        // onChange={onGenderHandler}
                                         id="female"/>
                                     <label class="form-check-label inline-block" htmlFor="female">
                                         여자
@@ -317,12 +364,13 @@ function Join() {
 
                                 <div class="form-check">
                                     <input
+                                        {...register("gender")}
                                         class="form-check-input rounded-full h-4 w-4 border border-gray-300 bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
                                         type="radio"
                                         value="M"
-                                        name="male"
+                                        name="gender"
                                         checked={gender === 'M'}
-                                        onChange={onGenderHandler}
+                                        // onChange={onGenderHandler}
                                         id="male"/>
                                     <label class="form-check-label inline-block" htmlFor="male">
                                         남자
@@ -339,7 +387,7 @@ function Join() {
                     <div >
                         <button
                             class="w-52 shadow bg-black hover:bg-gray-700 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4"
-                            onClick={onSubmit}
+                            // onClick={onSubmit}
                             type="submit">
                             SIGN UP!
                         </button>
