@@ -6,64 +6,52 @@ import DaumPostcode from 'react-daum-postcode';
 import { FieldErrors, useForm } from "react-hook-form";
 
 function Join() {
-    const {register, watch, handleSubmit, formState: { errors }} = useForm({ mode: "onChange" });
+    const {register, watch, handleSubmit, reset, formState: { errors }} = useForm({ mode: "onChange" });
     console.log(watch());
+
     const onValid = (data) => {
         console.log('data: ', data);
+        const userInfo = {
+            id,
+            password,
+            name,
+            phone,
+            zoneCode,
+            regionAddress,
+            detailAddress,
+            gender
+        }
+        console.log('userInfo: ', userInfo);
+
+        createUserFetch(userInfo).then((data) => {
+            if (data.success) {
+                console.log('성공!!!!! ');
+                alert(data.msg);
+                window.location.href = '/';
+            } else {
+                alert(data.msg);
+            }
+        });        
     };
     
     const onInvalid = (errors) => {
         console.log('errors: ', errors);
+        alert(erorrs);
     }
 
-    // const [name, setName] = useState("")
-    // const [password, setPassword] = useState("")
-    // const [confirmPassword, setConfirmPassword] = useState("")
-    const [phone, setPhone] = useState("");
-    const [id, setId] = useState("");
-    const [gender, setGender] = useState("F");
-
-    const [errorMsgPassword, setErrorMsgPassword] = useState("");
+    // === Address 관련 변수 & 함수
     const [isSearchAddressModalOpen, setSearchAddressModalOpen] = useState(false);
-
     const [isDaumPost, setIsDaumPost] = useState(false);
     const [zoneCode, setZoneCode] = useState('');
     const [regionAddress, setRegionAddress] = useState('');
     const [detailAddress, setDetailAddress] = useState('');
 
-    const onIdHandler = (event) => {
-        setId(event.currentTarget.value)
-    }
-
-    // const onNameHandler = (event) => {
-    //     setName(event.currentTarget.value)
-    // }
-
-    // const onPasswordHandler = (event) => {
-    //     setPassword(event.currentTarget.value)
-    // }
-
-    // // const onConfirmPasswordHandler = (event) => {
-    //     setConfirmPassword(event.currentTarget.value);
-    //     if (event.currentTarget.value !== password) 
-    //         setErrorMsgPassword("비밀번호를 확인해주세요.");
-    //     else 
-    //         setErrorMsgPassword("");
-    //     }
-    
-    // const onPhoneHandler = (event) => {
-    //     setPhone(event.currentTarget.value)
-    // }
-
-    // const onGenderHandler = (event) => {
-    //     setGender(event.currentTarget.value)
-    // }
-
     const onDetailAddress = (event) => {
         setDetailAddress(event.currentTarget.value)
     }
-
     const handleAddress = (data) => {
+        console.log('=== handleAddress ===');
+        console.log('data: ', data);
         let AllAddress = data.address;
         let extraAddress = '';
         let zoneCodes = data.zonecode;
@@ -100,46 +88,42 @@ function Join() {
         width: "500px"
     }
 
-    const openModal = {
-        backgroundColor: 'rgba(0, 0, 0, 0.6)'
-    }
+    // const onSubmit = (event) => {
+    //     event.preventDefault();
 
-    const onSubmit = (event) => {
-        event.preventDefault();
+    //     const userInfo = {
+    //         id,
+    //         password,
+    //         name,
+    //         phone,
+    //         zoneCode,
+    //         regionAddress,
+    //         detailAddress,
+    //         gender
+    //     }
 
-        const userInfo = {
-            id,
-            password,
-            name,
-            phone,
-            zoneCode,
-            regionAddress,
-            detailAddress,
-            gender
-        }
+    //     var hasEmptyInfo = false;
+    //     for (var i in userInfo) {
+    //         if (!userInfo[i]) {
+    //             hasEmptyInfo = true;
+    //         }
+    //     }
 
-        var hasEmptyInfo = false;
-        for (var i in userInfo) {
-            if (!userInfo[i]) {
-                hasEmptyInfo = true;
-            }
-        }
+    //     if (hasEmptyInfo) 
+    //         alert('모든 항목을 다 입력해야 합니다.');
+    //     else {
+    //         createUserFetch(userInfo).then((data) => {
+    //             if (data.success) {
+    //                 console.log('성공!!!!! ');
+    //                 alert(data.msg);
+    //                 window.location.href = '/';
+    //             } else {
+    //                 alert(data.msg);
+    //             }
+    //         });
+    //     }
 
-        if (hasEmptyInfo) 
-            alert('모든 항목을 다 입력해야 합니다.');
-        else {
-            createUserFetch(userInfo).then((data) => {
-                if (data.success) {
-                    console.log('성공!!!!! ');
-                    alert(data.msg);
-                    window.location.href = '/';
-                } else {
-                    alert(data.msg);
-                }
-            });
-        }
-
-    }
+    // }
 
     async function createUserFetch(userInfo) {
         const requestOptions = {
@@ -232,7 +216,7 @@ function Join() {
                         <input
                             {...register("confirmPassword", {
                                 required: "비밀번호를 확인하세요.",
-                                validate: (value) => value !== password || "입력한 Password와 같지 않습니다."
+                                // validate: value => value === password || "입력한 Password와 같지 않습니다."      // => Todo 안되는 원인 찾기. 맞게 입력해도 계속 에러뜸
                             })}
                             class="bg-gray-200 appearance-none border-2 border-gray-200  w-full py-2 px-4 leading-tight focus:outline-none focus:bg-white focus:border-black"
                             id="confirm-password"
@@ -299,12 +283,11 @@ function Join() {
                     <div class="md:w-2/3">
                         <div className='mb-2'>
                             <input
-                                {...register("zoneCode")}
                                 class="bg-gray-200 appearance-none border-2 border-gray-200  w-32 float-left py-2 px-4 leading-tight focus:outline-none focus:bg-white focus:border-black"
                                 id="address"
                                 type="text"
                                 placeholder='우편번호'
-                                // value={zoneCode}
+                                value={zoneCode}
                                 onChange={handleOpenPost}
                                 />
                             <button
@@ -316,20 +299,18 @@ function Join() {
                         </div>
 
                         <input
-                            {...register("regionAddress")}
                             className="mb-1 mt-1 bg-gray-200 appearance-none border-2 border-gray-200  w-full py-2 px-4 leading-tight focus:outline-none focus:bg-white focus:border-black"
                             id="address"
                             type="text"
                             placeholder='지역주소'
-                            // value={regionAddress}
+                            value={regionAddress}
                             onChange={handleOpenPost}/>
                         <input
-                            {...register("detailAddress")}
                             class="bg-gray-200 appearance-none border-2 border-gray-200  w-full py-2 px-4 leading-tight focus:outline-none focus:bg-white focus:border-black"
                             id="address"
                             type="text"
                             placeholder='세부주소'
-                            // value={detailAddress}
+                            value={detailAddress}
                             onChange={onDetailAddress}/>
                     </div>
                     <div class="md:w-1/3 break-all ml-3"></div>
@@ -353,7 +334,7 @@ function Join() {
                                         type="radio"
                                         name="gender"
                                         value="F"
-                                        checked={gender === 'F'}
+                                        // checked={gender === 'F'}
                                         // onChange={onGenderHandler}
                                         id="female"/>
                                     <label class="form-check-label inline-block" htmlFor="female">
@@ -369,7 +350,7 @@ function Join() {
                                         type="radio"
                                         value="M"
                                         name="gender"
-                                        checked={gender === 'M'}
+                                        // checked={gender === 'M'}
                                         // onChange={onGenderHandler}
                                         id="male"/>
                                     <label class="form-check-label inline-block" htmlFor="male">
